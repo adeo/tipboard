@@ -43,12 +43,16 @@ def testTipboardUpdate(checker, fake_client, TILE_ID, data):
 
 
 def sendDataToTipboard(tile_id=None, data=None, tile_template=None, isTest=False, meta=None):
+    # Problème vient d'ici
     configTile = dict(tile_id=tile_id, tile_template=tile_template, data=json.dumps(data))
     if meta is not None:
         configTile['meta'] = json.dumps(meta)
-    print(f"{configTile}")
+    print(f"config tile : {configTile}")
     if not isTest:
-        return requests.post(TIPBOARD_URL + '/push', data=configTile)
+        try:
+            return requests.post(TIPBOARD_URL + '/push', data=configTile, verify=False)
+        except:
+            print(f'La requête a échouée')
 
 
 def buildChartUpdateRandomly(nbrDataset=None, nbrLabel=None, colorTabIndataset=False, data=None):

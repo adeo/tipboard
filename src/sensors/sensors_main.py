@@ -47,11 +47,11 @@ def addSchedule(scheduler, sonde, timeToRun=datetime.now(), second=8):
 def scheduleYourSensors(scheduler):  # pragma: no cover
     now = datetime.now()
     # scheduler.add_job(sonde1, 'interval', seconds=2)
-    # # addSchedule(scheduler, sonde2, timeToRun=now + timedelta(milliseconds=100), second=40)
+    # addSchedule(scheduler, sonde2, timeToRun=now + timedelta(milliseconds=100), second=40)
     # addSchedule(scheduler, sonde3, timeToRun=now + timedelta(milliseconds=200), second=3)
     # addSchedule(scheduler, sonde4, timeToRun=now + timedelta(milliseconds=300), second=19)
     # addSchedule(scheduler, sonde5, timeToRun=now + timedelta(milliseconds=400), second=16)
-    # # scheduler.add_job(sonde6, 'interval', seconds=45)
+    # scheduler.add_job(sonde6, 'interval', seconds=45)
     # scheduler.add_job(sonde7, 'interval', seconds=1,
     #                   next_run_time=now + timedelta(milliseconds=500), args=[False, False])
     # scheduler.add_job(sonde7, 'interval', seconds=1,
@@ -78,6 +78,6 @@ def stopTheSensors(localScheduler):
 if __name__ == "__main__":  # pragma: no cover
     print(f"(+) Tipboard  sensors initialisation", flush=True)
     start_time = time.time()
-    # launch_sensors()
+    launch_sensors()
     scheduleYourSensors(BlockingScheduler())  # If you need actualized data :)
     end(title="startUp", start_time=start_time)
