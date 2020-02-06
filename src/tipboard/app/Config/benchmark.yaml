@@ -1,0 +1,46 @@
+details:
+    page_title: Benchmark DataBoard
+layout:
+    - row_1_of_2:
+        - col_1_of_3:
+            - tile_template: just_value
+              tile_id: error
+              title: Error
+              classes:
+
+        - col_1_of_3:
+            - tile_template: listing
+              tile_id: list_devices
+              title: Devices
+              classes:
+
+        - col_1_of_3:
+            - tile_template: big_value
+              tile_id: nbr_test
+              title: Tests
+              classes:
+
+    - row_1_of_2:
+        - col_1_of_4:
+            - tile_template: norm_chart
+              tile_id: cpu
+              title: CPU
+              classes:
+
+        - col_1_of_4:
+            - tile_template: norm_chart
+              tile_id: gpu
+              title: GPU
+              classes:
+
+        - col_1_of_4:
+            - tile_template: norm_chart
+              tile_id: network
+              title: Network
+              classes:
+
+        - col_1_of_4:
+            - tile_template: norm_chart
+              tile_id: battery
+              title: Battery
+              classes:

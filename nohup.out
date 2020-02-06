@@ -1,0 +1,110 @@
+13974:C 05 Feb 2020 17:11:33.639 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13974:C 05 Feb 2020 17:11:33.639 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=13974, just started
+13974:C 05 Feb 2020 17:11:33.639 # Configuration loaded
+13974:M 05 Feb 2020 17:11:33.642 * Running mode=standalone, port=6379.
+13974:M 05 Feb 2020 17:11:33.642 # Server initialized
+13974:M 05 Feb 2020 17:11:33.642 * Ready to accept connections
+14011:C 05 Feb 2020 17:12:02.813 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+14011:C 05 Feb 2020 17:12:02.813 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=14011, just started
+14011:C 05 Feb 2020 17:12:02.813 # Configuration loaded
+14011:M 05 Feb 2020 17:12:02.815 # Could not create server TCP listening socket *:6379: bind: Address already in use
+14075:C 05 Feb 2020 17:17:04.062 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+14075:C 05 Feb 2020 17:17:04.063 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=14075, just started
+14075:C 05 Feb 2020 17:17:04.063 # Configuration loaded
+14075:M 05 Feb 2020 17:17:04.065 # Could not create server TCP listening socket *:6379: bind: Address already in use
+14512:C 06 Feb 2020 08:42:03.129 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+14512:C 06 Feb 2020 08:42:03.129 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=14512, just started
+14512:C 06 Feb 2020 08:42:03.129 # Configuration loaded
+14512:M 06 Feb 2020 08:42:03.130 # Could not create server TCP listening socket *:6379: bind: Address already in use
+14658:C 06 Feb 2020 09:11:51.005 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+14658:C 06 Feb 2020 09:11:51.005 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=14658, just started
+14658:C 06 Feb 2020 09:11:51.005 # Configuration loaded
+14658:M 06 Feb 2020 09:11:51.006 # Could not create server TCP listening socket *:6379: bind: Address already in use
+14765:C 06 Feb 2020 09:23:19.689 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+14765:C 06 Feb 2020 09:23:19.689 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=14765, just started
+14765:C 06 Feb 2020 09:23:19.689 # Configuration loaded
+14765:M 06 Feb 2020 09:23:19.691 # Could not create server TCP listening socket *:6379: bind: Address already in use
+14884:C 06 Feb 2020 09:24:40.660 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+14884:C 06 Feb 2020 09:24:40.660 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=14884, just started
+14884:C 06 Feb 2020 09:24:40.660 # Configuration loaded
+14884:M 06 Feb 2020 09:24:40.664 # Could not create server TCP listening socket *:6379: bind: Address already in use
+15047:C 06 Feb 2020 09:40:47.018 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15047:C 06 Feb 2020 09:40:47.018 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=15047, just started
+15047:C 06 Feb 2020 09:40:47.018 # Configuration loaded
+15047:M 06 Feb 2020 09:40:47.020 # Could not create server TCP listening socket *:6379: bind: Address already in use
+15089:C 06 Feb 2020 09:42:45.086 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15089:C 06 Feb 2020 09:42:45.087 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=15089, just started
+15089:C 06 Feb 2020 09:42:45.087 # Configuration loaded
+15089:M 06 Feb 2020 09:42:45.089 # Could not create server TCP listening socket *:6379: bind: Address already in use
+15122:C 06 Feb 2020 09:42:53.589 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15122:C 06 Feb 2020 09:42:53.589 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=15122, just started
+15122:C 06 Feb 2020 09:42:53.589 # Configuration loaded
+15122:M 06 Feb 2020 09:42:53.591 # Could not create server TCP listening socket *:6379: bind: Address already in use
+15152:C 06 Feb 2020 09:43:20.260 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15152:C 06 Feb 2020 09:43:20.260 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=15152, just started
+15152:C 06 Feb 2020 09:43:20.260 # Configuration loaded
+15152:M 06 Feb 2020 09:43:20.263 # Could not create server TCP listening socket *:6379: bind: Address already in use
+15193:C 06 Feb 2020 09:50:46.849 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15193:C 06 Feb 2020 09:50:46.849 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=15193, just started
+15193:C 06 Feb 2020 09:50:46.849 # Configuration loaded
+15193:M 06 Feb 2020 09:50:46.851 # Could not create server TCP listening socket *:6379: bind: Address already in use
+15226:C 06 Feb 2020 09:51:33.381 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15226:C 06 Feb 2020 09:51:33.381 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=15226, just started
+15226:C 06 Feb 2020 09:51:33.381 # Configuration loaded
+15226:M 06 Feb 2020 09:51:33.382 # Could not create server TCP listening socket *:6379: bind: Address already in use
+15265:C 06 Feb 2020 09:52:10.597 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15265:C 06 Feb 2020 09:52:10.597 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=15265, just started
+15265:C 06 Feb 2020 09:52:10.597 # Configuration loaded
+15265:M 06 Feb 2020 09:52:10.600 # Could not create server TCP listening socket *:6379: bind: Address already in use
+15298:C 06 Feb 2020 09:53:24.126 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15298:C 06 Feb 2020 09:53:24.126 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=15298, just started
+15298:C 06 Feb 2020 09:53:24.126 # Configuration loaded
+15298:M 06 Feb 2020 09:53:24.127 # Could not create server TCP listening socket *:6379: bind: Address already in use
+15332:C 06 Feb 2020 09:54:41.018 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15332:C 06 Feb 2020 09:54:41.018 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=15332, just started
+15332:C 06 Feb 2020 09:54:41.018 # Configuration loaded
+15332:M 06 Feb 2020 09:54:41.020 # Could not create server TCP listening socket *:6379: bind: Address already in use
+15450:C 06 Feb 2020 10:06:58.414 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15450:C 06 Feb 2020 10:06:58.414 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=15450, just started
+15450:C 06 Feb 2020 10:06:58.414 # Configuration loaded
+15450:M 06 Feb 2020 10:06:58.416 # Could not create server TCP listening socket *:6379: bind: Address already in use
+15494:C 06 Feb 2020 10:09:45.406 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15494:C 06 Feb 2020 10:09:45.406 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=15494, just started
+15494:C 06 Feb 2020 10:09:45.406 # Configuration loaded
+15494:M 06 Feb 2020 10:09:45.408 # Could not create server TCP listening socket *:6379: bind: Address already in use
+15532:C 06 Feb 2020 10:12:14.430 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15532:C 06 Feb 2020 10:12:14.430 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=15532, just started
+15532:C 06 Feb 2020 10:12:14.430 # Configuration loaded
+15532:M 06 Feb 2020 10:12:14.432 # Could not create server TCP listening socket *:6379: bind: Address already in use
+15572:C 06 Feb 2020 10:13:02.110 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15572:C 06 Feb 2020 10:13:02.110 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=15572, just started
+15572:C 06 Feb 2020 10:13:02.110 # Configuration loaded
+15572:M 06 Feb 2020 10:13:02.112 # Could not create server TCP listening socket *:6379: bind: Address already in use
+15611:C 06 Feb 2020 10:13:57.202 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15611:C 06 Feb 2020 10:13:57.202 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=15611, just started
+15611:C 06 Feb 2020 10:13:57.202 # Configuration loaded
+15611:M 06 Feb 2020 10:13:57.204 # Could not create server TCP listening socket *:6379: bind: Address already in use
+15693:C 06 Feb 2020 10:20:59.243 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15693:C 06 Feb 2020 10:20:59.244 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=15693, just started
+15693:C 06 Feb 2020 10:20:59.244 # Configuration loaded
+15693:M 06 Feb 2020 10:20:59.246 # Could not create server TCP listening socket *:6379: bind: Address already in use
+15760:C 06 Feb 2020 10:23:33.542 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15760:C 06 Feb 2020 10:23:33.542 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=15760, just started
+15760:C 06 Feb 2020 10:23:33.542 # Configuration loaded
+15760:M 06 Feb 2020 10:23:33.543 # Could not create server TCP listening socket *:6379: bind: Address already in use
+15797:C 06 Feb 2020 10:24:06.989 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15797:C 06 Feb 2020 10:24:06.989 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=15797, just started
+15797:C 06 Feb 2020 10:24:06.989 # Configuration loaded
+15797:M 06 Feb 2020 10:24:06.992 # Could not create server TCP listening socket *:6379: bind: Address already in use
+15843:C 06 Feb 2020 10:26:02.234 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15843:C 06 Feb 2020 10:26:02.234 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=15843, just started
+15843:C 06 Feb 2020 10:26:02.234 # Configuration loaded
+15843:M 06 Feb 2020 10:26:02.236 # Could not create server TCP listening socket *:6379: bind: Address already in use
+15903:C 06 Feb 2020 10:26:44.141 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15903:C 06 Feb 2020 10:26:44.141 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=15903, just started
+15903:C 06 Feb 2020 10:26:44.141 # Configuration loaded
+15903:M 06 Feb 2020 10:26:44.142 # Could not create server TCP listening socket *:6379: bind: Address already in use
+15992:C 06 Feb 2020 10:34:58.575 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15992:C 06 Feb 2020 10:34:58.575 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=15992, just started
+15992:C 06 Feb 2020 10:34:58.575 # Configuration loaded
+15992:M 06 Feb 2020 10:34:58.576 # Could not create server TCP listening socket *:6379: bind: Address already in use
