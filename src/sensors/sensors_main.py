@@ -63,7 +63,7 @@ def scheduleYourSensors(scheduler):  # pragma: no cover
     # addSchedule(scheduler, sonde15, timeToRun=now + timedelta(milliseconds=250), second=28)
     # addSchedule(scheduler, sonde16, timeToRun=now + timedelta(milliseconds=350), second=30)
     # addSchedule(scheduler, sonde17, timeToRun=now + timedelta(milliseconds=350), second=30)
-    addSchedule(scheduler, sonde_bench, timeToRun=now + timedelta(milliseconds=350), second=30)
+    addSchedule(scheduler, sonde_bench, timeToRun=now + timedelta(milliseconds=350), second=300)
 
     print(f"(+) Tipboard starting schedul task", flush=True)
     scheduler.start()

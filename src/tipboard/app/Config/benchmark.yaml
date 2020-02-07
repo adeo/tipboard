@@ -21,26 +21,20 @@ layout:
               classes:
 
     - row_1_of_2:
-        - col_1_of_4:
+        - col_1_of_3:
             - tile_template: norm_chart
               tile_id: cpu
               title: CPU
               classes:
 
-        - col_1_of_4:
+        - col_1_of_3:
             - tile_template: norm_chart
               tile_id: gpu
               title: GPU
               classes:
 
-        - col_1_of_4:
+        - col_1_of_3:
             - tile_template: norm_chart
               tile_id: network
               title: Network
-              classes:
-
-        - col_1_of_4:
-            - tile_template: norm_chart
-              tile_id: battery
-              title: Battery
               classes:

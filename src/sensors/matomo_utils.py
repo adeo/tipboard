@@ -18,7 +18,7 @@ def basicMatomoRequest(method="", query=None):
     params['module'] = "API"
     params['method'] = method
     params["period"] = "range"
-    params["date"] = "2020-01-13,2020-03-10"
+    params["date"] = "2020-01-15,2020-03-10"
     params["format"] = "JSON"
     params["idSite"] = "1"
     params.update(query)

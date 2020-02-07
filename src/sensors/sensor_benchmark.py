@@ -22,29 +22,24 @@ def updateNormChartTipBoard(bench, tile, isTest=False):
 
 
 def updateListingTipBoard(list, tile, isTest=False):
-    data = {'items': list}
-    tipboardAnswer = sendDataToTipboard(data=data, tile_template='norm_chart', tile_id=tile, isTest=isTest)
+    data = {"items": list}
+    # print(f'Liste des devices testés : {data}')
+    tipboardAnswer = sendDataToTipboard(data=data, tile_template='listing', tile_id=tile, isTest=isTest)
     end(title=f'{tile} -> {tile}', start_time=time.time(), tipboardAnswer=tipboardAnswer, TILE_ID=tile)
 
 
 def updateCPUTipBoard(isTest=False):
-    print(f'CPU function')
     cpu_bench = valueFromAction("ackleyBenchmark")
-    # print(f'CPU = {cpu_bench}')
     updateNormChartTipBoard(cpu_bench, 'cpu', isTest)
 
 
 def updateGPUTipBoard(isTest=False):
-    print(f'GPU function')
     gpu_bench = valueFromAction("scroll")
-    # print(f'GPU = {gpu_bench}')
     updateNormChartTipBoard(gpu_bench, 'gpu', isTest)
 
 
 def updateNetworkTipBoard(isTest=False):
-    print(f'Network function')
     network_bench = valueFromAction("dowloadFile")
-    # print(f'network function result : {network_bench}')
     updateNormChartTipBoard(network_bench, 'network', isTest)
 
 
@@ -54,10 +49,7 @@ def updateDevicesTipBoard(isTest=False):
 
 
 def sonde_bench(isTest=False):
-    updateCPUTipBoard(isTest)
-    updateGPUTipBoard(isTest)
-    # updateNetworkTipBoard(isTest)
-    # updateDevicesTipBoard(isTest)
-
-
-sonde_bench()
+    updateCPUTipBoard(isTest)  # OK
+    updateGPUTipBoard(isTest)  # OK
+    updateNetworkTipBoard(isTest)  # OK
+    updateDevicesTipBoard(isTest)
