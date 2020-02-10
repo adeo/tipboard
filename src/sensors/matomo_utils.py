@@ -3,7 +3,7 @@ import json
 from statistics import mean
 
 import requests
-import logging
+import urllib.parse
 
 base_url = "http://benchmark-analytics-open.apps.op.acp.adeo.com/"
 token = "0b44547f5f0c9d526b46247c65aeef57"
@@ -18,7 +18,7 @@ def basicMatomoRequest(method="", query=None):
     params['module'] = "API"
     params['method'] = method
     params["period"] = "range"
-    params["date"] = "2020-01-15,2020-03-10"
+    params["date"] = "2020-01-13,2020-03-10"
     params["format"] = "JSON"
     params["idSite"] = "1"
     params.update(query)
@@ -42,7 +42,11 @@ def getActionsIdByCategory(segment):
     params = dict()
     params["segment"] = segment
     response = basicMatomoRequest(method="Events.getAction", query=params)
+    # print(f'URL ciblée : {response.url}')
     if response.status_code == 200:
+        # print(f'🍔 Model : {segment} || response.json() : {response.json()}')
+        for test in response.json():
+            print(test["label"])
         idSubList = []
         for action in response.json():
             idSubList.append({k: action[k] for k in ('label', 'idsubdatatable')})
@@ -67,6 +71,10 @@ def valueFromAction(action):
     for segment in categoryList:
         x = dict()
         x["device"] = segment["label"]
+        print(f'❌  device : {segment["label"]}')
+        if segment["label"] == "TC52 - 8.1.0":
+            # segment["segment"] = urllib.parse.quote(segment["segment"])
+            segment["segment"] = "eventCategory%3D%3DTC52%2520-%25208.1.0"
         idSubList = getActionsIdByCategory(segment["segment"])
         for id in idSubList:
             if id["label"] == action:
