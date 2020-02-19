@@ -77,5 +77,19 @@ def valueFromAction(action):
     return test
 
 
+def valueFromTypeAction(tab):
+    result = list()
+    for action in tab:
+        if len(result) is 0:
+            result = valueFromAction(action)
+        else:
+            value = valueFromAction(action)
+            for index in range(len(value)):
+                l1 = result[index]["values"]
+                l2 = value[index]["values"]
+                result[index]["values"] = [l1[i] + l2[i] for i in range(min(len(l1), len(l2)))]
+    return result
+
+
 def getDevices():
     return [label["label"] for label in getCategories()]

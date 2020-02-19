@@ -1,6 +1,6 @@
 import time
 
-from src.sensors.matomo_utils import valueFromAction, getDevices
+from src.sensors.matomo_utils import getDevices, valueFromTypeAction, valueFromAction
 from src.sensors.utils import end, sendDataToTipboard
 from src.tipboard.app.properties import COLOR_TAB
 
@@ -29,14 +29,14 @@ def updateListingTipBoard(list, tile, isTest=False):
 
 def updateCPUTipBoard(isTest=False):
     print(f'CPU function')
-    cpu_bench = valueFromAction("ackleyBenchmark")
+    cpu_bench = valueFromTypeAction(["ackleyBenchmark", "bealeBenchmark", "xinSheBenchmark", "facteurPremierBenchmark"])
     # print(f'CPU = {cpu_bench}')
     updateNormChartTipBoard(cpu_bench, 'cpu', isTest)
 
 
 def updateGPUTipBoard(isTest=False):
     print(f'GPU function')
-    gpu_bench = valueFromAction("scroll")
+    gpu_bench = valueFromTypeAction(["scroll", "buildParagraph", "bitmapGetPixelsBenchmark", "bitmapGetPixelBenchmark"])
     # print(f'GPU = {gpu_bench}')
     updateNormChartTipBoard(gpu_bench, 'gpu', isTest)
 
@@ -56,8 +56,5 @@ def updateDevicesTipBoard(isTest=False):
 def sonde_bench(isTest=False):
     updateCPUTipBoard(isTest)
     updateGPUTipBoard(isTest)
-    # updateNetworkTipBoard(isTest)
-    # updateDevicesTipBoard(isTest)
-
-
-sonde_bench()
+    updateNetworkTipBoard(isTest)
+    updateDevicesTipBoard(isTest)
