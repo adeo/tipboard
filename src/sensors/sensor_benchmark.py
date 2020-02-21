@@ -32,9 +32,8 @@ def updateCPUTipBoard(isTest=False):
     cpu_bench = valueFromTypeAction(["ackleyBenchmark", "bealeBenchmark", "xinSheBenchmark", "facteurPremierBenchmark"])
     print(f'CPU = {cpu_bench}')
     updateNormChartTipBoard(cpu_bench, 'cpu', isTest)
-    test = [t["device"] + " avg: " + str("{0:.2f}".format(t["avg"])) for t in cpu_bench]
-    print(test)
-    updateListingTipBoard(test, 'cpu_list', isTest)
+    listing = [bench["device"] + " avg: " + str("{0:.2f}".format(bench["avg"])) for bench in cpu_bench]
+    updateListingTipBoard(listing, 'cpu_list', isTest)
 
 
 def updateGPUTipBoard(isTest=False):
@@ -42,6 +41,8 @@ def updateGPUTipBoard(isTest=False):
     gpu_bench = valueFromTypeAction(["scroll", "buildParagraph", "bitmapGetPixelsBenchmark", "bitmapGetPixelBenchmark"])
     # print(f'GPU = {gpu_bench}')
     updateNormChartTipBoard(gpu_bench, 'gpu', isTest)
+    listing = [bench["device"] + " avg: " + str("{0:.2f}".format(bench["avg"])) for bench in gpu_bench]
+    updateListingTipBoard(listing, 'gpu_list', isTest)
 
 
 def updateNetworkTipBoard(isTest=False):
@@ -49,6 +50,8 @@ def updateNetworkTipBoard(isTest=False):
     network_bench = valueFromAction("dowloadFile")
     # print(f'network function result : {network_bench}')
     updateNormChartTipBoard(network_bench, 'network', isTest)
+    listing = [bench["device"] + " avg: " + str("{0:.2f}".format(bench["avg"])) for bench in network_bench]
+    updateListingTipBoard(listing, 'network_list', isTest)
 
 
 def updateDevicesTipBoard(isTest=False):

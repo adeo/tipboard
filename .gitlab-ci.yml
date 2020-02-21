@@ -4,8 +4,6 @@ include:
 
 
 stages:
-  - test_src
-  - unit_test
   - push_registry
   - trigger_deploy
 
