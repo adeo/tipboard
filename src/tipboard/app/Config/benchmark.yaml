@@ -14,7 +14,7 @@ layout:
               title: Devices
               classes:
     - row_1_of_2:
-        - col_1_of_4 flip-time-8:
+        - col_1_of_4 flip-time-20:
             - tile_template: norm_chart
               tile_id: cpu
               title: cpu
@@ -22,23 +22,33 @@ layout:
 
             - tile_template: listing
               tile_id: cpu_list
-              title: half_doughnut
+              title: Moyenne CPU
               classes:
 
-        - col_1_of_4:
+        - col_1_of_4 flip-time-20:
             - tile_template: norm_chart
-              tile_id: gpu
+              tile_id: gcpu
               title: GPU
               classes:
 
-        - col_1_of_4:
+            - tile_template: listing
+              tile_id: gpu_list
+              title: Moyenne GPU
+              classes:
+
+        - col_1_of_4 flip-time-20:
             - tile_template: norm_chart
               tile_id: network
-              title: Network
+              title: network
+              classes:
+
+            - tile_template: listing
+              tile_id: network_list
+              title: Moyenne Network
               classes:
 
         - col_1_of_4:
-            - tile_template: norm_chart
+            - tile_template: listing
               tile_id: battery
               title: Battery
               classes:
