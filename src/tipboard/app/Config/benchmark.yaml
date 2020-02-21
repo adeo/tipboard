@@ -27,7 +27,7 @@ layout:
 
         - col_1_of_4 flip-time-20:
             - tile_template: norm_chart
-              tile_id: gcpu
+              tile_id: gcu
               title: GPU
               classes:
 
