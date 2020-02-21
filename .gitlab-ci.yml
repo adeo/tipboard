@@ -1,46 +1,54 @@
-image: docker:latest
+include:
+  - project: adeotech/lmfr/datatech/lmfr-datatech-gitlab-ci
+    file: DockerCI.gitlab-ci.yml
 
-services:
-  - docker:dind
 
 stages:
-- build
-- test
-- integration
-- deploy
+  - test_src
+  - unit_test
+  - push_registry
+  - trigger_deploy
 
-variables:
-  IMAGE_TAG: docker.pkg.github.com/the-maux/tipboard/tipboard:latest-gitlab
 
-build_img:
-  stage: build
-  script:
-    - docker build -t tipboard:untested .
+check_quality:
+  stage: test_src
+  extends: .test_python_src
 
-test:
-  stage: test
-  script:
-    - docker build -t tipboard:untested .
-    - docker run --entrypoint python tipboard:untested src/manage.py test
 
-ci_github_dev:
-  stage: integration
-  only: ['wip']
-  script:
-    - docker login -u themaux -p ${CI_GITHUB_PACKAGE} docker.pkg.github.com
-    - docker build -t docker.pkg.github.com/the-maux/tipboard/tipboard:latest .
-    - docker push docker.pkg.github.com/the-maux/tipboard/tipboard:latest
+test_coverage:
+  stage: unit_test
+  extends: .unit_test
+  variables:
+    TEST_UNIT: manage.py test
 
-ci_github_master:
-  stage: integration
+
+push_jfrog_dev:
+  stage: push_registry
+  extends: .ci_jfrog
+  only: ['dev']
+  variables:
+    JFROG_DOCKER_URL: ${JFROG_DOCKER_DEV_URL}
+    IMAGE_NAME: ${JFROG_DOCKER_DEV_URL}/lmfr-datatech-mobility-tipboard-benchmark:dev
+
+
+push_img_to_jfrog_release:
+  stage: push_registry
+  extends: .ci_jfrog
   only: ['master']
-  script:
-    - docker login -u themaux -p ${CI_GITHUB_PACKAGE} docker.pkg.github.com
-    - docker build -t docker.pkg.github.com/the-maux/tipboard/tipboard:1.6.0 .
-    - docker push docker.pkg.github.com/the-maux/tipboard/tipboard:1.6.0
+  variables:
+    JFROG_DOCKER_URL: ${JFROG_DOCKER_RELEASE_URL}
+    IMAGE_NAME: ${JFROG_DOCKER_RELEASE_URL}/lmfr-datatech-mobility-tipboard-benchmark:master
 
-deploy_aws:
-  stage: deploy
-  only: ['gitlab-cd/aws']
-  script:
-    - docker run --entrypoint python tipboard:untested src/manage.py test
+deploy_preprod:
+  stage: trigger_deploy
+  extends: .pipepline_trigger
+  only: ['dev']
+  variables:
+    WEB_HOOK: curl -X POST -F token=${TOKEN_WEBHOOK} -F ref=develop https://gitlab.com/api/v4/projects/17036390/trigger/pipeline
+
+deploy_prod:
+  stage: trigger_deploy
+  extends: .pipepline_trigger
+  only: ['feat/benchmark']
+  variables:
+    WEB_HOOK: curl -X POST -F token=${TOKEN_WEBHOOK} -F ref=master https://gitlab.com/api/v4/projects/17036390/trigger/pipeline

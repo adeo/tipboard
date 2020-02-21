@@ -108,3 +108,143 @@
 15992:C 06 Feb 2020 10:34:58.575 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=15992, just started
 15992:C 06 Feb 2020 10:34:58.575 # Configuration loaded
 15992:M 06 Feb 2020 10:34:58.576 # Could not create server TCP listening socket *:6379: bind: Address already in use
+5699:C 06 Feb 15:26:28.911 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+5699:C 06 Feb 15:26:28.911 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=5699, just started
+5699:C 06 Feb 15:26:28.911 # Configuration loaded
+5699:M 06 Feb 15:26:28.912 # Creating Server TCP listening socket *:6379: bind: Address already in use
+5807:C 06 Feb 15:27:01.287 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+5807:C 06 Feb 15:27:01.287 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=5807, just started
+5807:C 06 Feb 15:27:01.287 # Configuration loaded
+5807:M 06 Feb 15:27:01.288 # Creating Server TCP listening socket *:6379: bind: Address already in use
+5888:C 06 Feb 15:27:52.166 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+5888:C 06 Feb 15:27:52.166 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=5888, just started
+5888:C 06 Feb 15:27:52.166 # Configuration loaded
+5888:M 06 Feb 15:27:52.169 # Creating Server TCP listening socket *:6379: bind: Address already in use
+6245:C 06 Feb 15:30:44.968 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+6245:C 06 Feb 15:30:44.968 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=6245, just started
+6245:C 06 Feb 15:30:44.968 # Configuration loaded
+6245:M 06 Feb 15:30:44.969 # Creating Server TCP listening socket *:6379: bind: Address already in use
+6583:C 06 Feb 17:15:23.188 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+6583:C 06 Feb 17:15:23.188 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=6583, just started
+6583:C 06 Feb 17:15:23.188 # Configuration loaded
+6583:M 06 Feb 17:15:23.190 # Creating Server TCP listening socket *:6379: bind: Address already in use
+4168:C 19 Feb 10:20:22.935 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+4168:C 19 Feb 10:20:22.936 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=4168, just started
+4168:C 19 Feb 10:20:22.936 # Configuration loaded
+4168:M 19 Feb 10:20:22.937 # Creating Server TCP listening socket *:6379: bind: Address already in use
+3241:C 19 Feb 14:31:21.671 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+3241:C 19 Feb 14:31:21.673 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=3241, just started
+3241:C 19 Feb 14:31:21.673 # Configuration loaded
+3241:M 19 Feb 14:31:21.675 # Creating Server TCP listening socket *:6379: bind: Address already in use
+3643:C 19 Feb 14:34:22.274 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+3643:C 19 Feb 14:34:22.276 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=3643, just started
+3643:C 19 Feb 14:34:22.276 # Configuration loaded
+3643:M 19 Feb 14:34:22.277 # Creating Server TCP listening socket *:6379: bind: Address already in use
+15536:C 19 Feb 15:30:47.844 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15536:C 19 Feb 15:30:47.845 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=15536, just started
+15536:C 19 Feb 15:30:47.845 # Configuration loaded
+15536:M 19 Feb 15:30:47.846 # Creating Server TCP listening socket *:6379: bind: Address already in use
+15560:C 19 Feb 15:32:15.212 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15560:C 19 Feb 15:32:15.212 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=15560, just started
+15560:C 19 Feb 15:32:15.212 # Configuration loaded
+15560:M 19 Feb 15:32:15.214 # Creating Server TCP listening socket *:6379: bind: Address already in use
+16011:C 19 Feb 15:43:32.246 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+16011:C 19 Feb 15:43:32.246 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=16011, just started
+16011:C 19 Feb 15:43:32.246 # Configuration loaded
+16011:M 19 Feb 15:43:32.248 # Creating Server TCP listening socket *:6379: bind: Address already in use
+16018:C 19 Feb 15:43:51.602 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+16018:C 19 Feb 15:43:51.602 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=16018, just started
+16018:C 19 Feb 15:43:51.602 # Configuration loaded
+16018:M 19 Feb 15:43:51.603 # Creating Server TCP listening socket *:6379: bind: Address already in use
+16550:C 19 Feb 15:52:33.831 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+16550:C 19 Feb 15:52:33.831 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=16550, just started
+16550:C 19 Feb 15:52:33.831 # Configuration loaded
+16550:M 19 Feb 15:52:33.832 # Creating Server TCP listening socket *:6379: bind: Address already in use
+22448:C 19 Feb 16:59:52.842 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+22448:C 19 Feb 16:59:52.842 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=22448, just started
+22448:C 19 Feb 16:59:52.842 # Configuration loaded
+22448:M 19 Feb 16:59:52.842 # Creating Server TCP listening socket *:6379: bind: Address already in use
+22529:C 19 Feb 17:01:19.650 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+22529:C 19 Feb 17:01:19.650 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=22529, just started
+22529:C 19 Feb 17:01:19.650 # Configuration loaded
+22529:M 19 Feb 17:01:19.653 # Creating Server TCP listening socket *:6379: bind: Address already in use
+22747:C 19 Feb 17:02:54.595 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+22747:C 19 Feb 17:02:54.595 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=22747, just started
+22747:C 19 Feb 17:02:54.595 # Configuration loaded
+22747:M 19 Feb 17:02:54.596 # Creating Server TCP listening socket *:6379: bind: Address already in use
+23007:C 19 Feb 17:06:29.312 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+23007:C 19 Feb 17:06:29.312 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=23007, just started
+23007:C 19 Feb 17:06:29.312 # Configuration loaded
+23007:M 19 Feb 17:06:29.313 # Creating Server TCP listening socket *:6379: bind: Address already in use
+23028:C 19 Feb 17:06:30.124 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+23028:C 19 Feb 17:06:30.124 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=23028, just started
+23028:C 19 Feb 17:06:30.124 # Configuration loaded
+23028:M 19 Feb 17:06:30.125 # Creating Server TCP listening socket *:6379: bind: Address already in use
+23122:C 19 Feb 17:08:25.929 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+23122:C 19 Feb 17:08:25.929 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=23122, just started
+23122:C 19 Feb 17:08:25.929 # Configuration loaded
+23122:M 19 Feb 17:08:25.930 # Creating Server TCP listening socket *:6379: bind: Address already in use
+23135:C 19 Feb 17:08:49.278 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+23135:C 19 Feb 17:08:49.278 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=23135, just started
+23135:C 19 Feb 17:08:49.278 # Configuration loaded
+23135:M 19 Feb 17:08:49.281 # Creating Server TCP listening socket *:6379: bind: Address already in use
+23239:C 19 Feb 17:09:13.773 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+23239:C 19 Feb 17:09:13.773 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=23239, just started
+23239:C 19 Feb 17:09:13.773 # Configuration loaded
+23239:M 19 Feb 17:09:13.774 # Creating Server TCP listening socket *:6379: bind: Address already in use
+23561:C 19 Feb 17:16:52.170 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+23561:C 19 Feb 17:16:52.170 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=23561, just started
+23561:C 19 Feb 17:16:52.170 # Configuration loaded
+23561:M 19 Feb 17:16:52.171 # Creating Server TCP listening socket *:6379: bind: Address already in use
+23841:C 19 Feb 17:21:40.496 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+23841:C 19 Feb 17:21:40.496 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=23841, just started
+23841:C 19 Feb 17:21:40.496 # Configuration loaded
+23841:M 19 Feb 17:21:40.497 # Creating Server TCP listening socket *:6379: bind: Address already in use
+23953:C 19 Feb 17:23:23.664 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+23953:C 19 Feb 17:23:23.664 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=23953, just started
+23953:C 19 Feb 17:23:23.664 # Configuration loaded
+23953:M 19 Feb 17:23:23.666 # Creating Server TCP listening socket *:6379: bind: Address already in use
+24106:C 19 Feb 17:24:22.385 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+24106:C 19 Feb 17:24:22.385 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=24106, just started
+24106:C 19 Feb 17:24:22.385 # Configuration loaded
+24106:M 19 Feb 17:24:22.386 # Creating Server TCP listening socket *:6379: bind: Address already in use
+24142:C 19 Feb 17:24:39.784 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+24142:C 19 Feb 17:24:39.784 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=24142, just started
+24142:C 19 Feb 17:24:39.784 # Configuration loaded
+24142:M 19 Feb 17:24:39.785 # Creating Server TCP listening socket *:6379: bind: Address already in use
+24261:C 19 Feb 17:25:12.924 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+24261:C 19 Feb 17:25:12.924 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=24261, just started
+24261:C 19 Feb 17:25:12.924 # Configuration loaded
+24261:M 19 Feb 17:25:12.927 # Creating Server TCP listening socket *:6379: bind: Address already in use
+24370:C 19 Feb 17:25:36.909 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+24370:C 19 Feb 17:25:36.909 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=24370, just started
+24370:C 19 Feb 17:25:36.909 # Configuration loaded
+24370:M 19 Feb 17:25:36.910 # Creating Server TCP listening socket *:6379: bind: Address already in use
+24486:C 19 Feb 17:26:49.470 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+24486:C 19 Feb 17:26:49.470 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=24486, just started
+24486:C 19 Feb 17:26:49.470 # Configuration loaded
+24486:M 19 Feb 17:26:49.471 # Creating Server TCP listening socket *:6379: bind: Address already in use
+24708:C 19 Feb 17:32:49.401 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+24708:C 19 Feb 17:32:49.402 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=24708, just started
+24708:C 19 Feb 17:32:49.402 # Configuration loaded
+24708:M 19 Feb 17:32:49.403 # Creating Server TCP listening socket *:6379: bind: Address already in use
+6675:C 20 Feb 10:34:55.718 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+6675:C 20 Feb 10:34:55.718 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=6675, just started
+6675:C 20 Feb 10:34:55.718 # Configuration loaded
+6675:M 20 Feb 10:34:55.720 # Creating Server TCP listening socket *:6379: bind: Address already in use
+9161:C 20 Feb 10:40:10.796 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+9161:C 20 Feb 10:40:10.796 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=9161, just started
+9161:C 20 Feb 10:40:10.796 # Configuration loaded
+9161:M 20 Feb 10:40:10.797 # Creating Server TCP listening socket *:6379: bind: Address already in use
+9471:C 20 Feb 10:45:59.003 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+9471:C 20 Feb 10:45:59.003 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=9471, just started
+9471:C 20 Feb 10:45:59.003 # Configuration loaded
+9471:M 20 Feb 10:45:59.005 # Creating Server TCP listening socket *:6379: bind: Address already in use
+26555:C 20 Feb 15:40:08.077 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+26555:C 20 Feb 15:40:08.078 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=26555, just started
+26555:C 20 Feb 15:40:08.078 # Configuration loaded
+26555:M 20 Feb 15:40:08.078 # Creating Server TCP listening socket *:6379: bind: Address already in use
+26907:C 20 Feb 15:42:13.173 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+26907:C 20 Feb 15:42:13.173 # Redis version=4.0.9, bits=64, commit=00000000, modified=0, pid=26907, just started
+26907:C 20 Feb 15:42:13.173 # Configuration loaded
+26907:M 20 Feb 15:42:13.175 # Creating Server TCP listening socket *:6379: bind: Address already in use
