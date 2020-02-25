@@ -16,13 +16,13 @@ layout:
 
     - row_1_of_2:
         - col_1_of_2:
-            - tile_template: norm_chart
+            - tile_template: just_value
               tile_id: SSL_errors
               title: SSL Errors
               classes:
 
         - col_1_of_2:
-            - tile_template: norm_chart
+            - tile_template: just_value
               tile_id: Crashes
               title: Crash
               classes:

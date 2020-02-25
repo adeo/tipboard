@@ -30,7 +30,7 @@ def getUsersConnected():
     if response.status_code == 200:
         list_of_users = []
         for user in response.json():
-            print(f'🧐 User connected with the Kiosk app : {user["label"]}')
+            # print(f'🧐 User connected with the Kiosk app : {user["label"]}')
             list_of_users.append(user["label"])
         return list_of_users
     raise
