@@ -21,3 +21,4 @@ src/tipboard/webserver/__pycache__/
 tipboard2.0.egg-info/
 /.coverage
 benchmark-tipboard
+.vscode/
