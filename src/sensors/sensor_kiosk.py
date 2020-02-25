@@ -1,7 +1,7 @@
 import random
 import time
 
-from src.sensors.matomo_utils import getUsersConnected, getMatomoActions
+from src.sensors.matomo_utils import getUsersConnected, getMatomoActions, getProfiles, getNbUsersConnected
 from src.sensors.utils import end, sendDataToTipboard
 from src.tipboard.app.properties import COLOR_TAB, BACKGROUND_TAB
 
@@ -25,13 +25,11 @@ def updateNormChartTipBoard(bench, tile, isTest=False):
 
 
 def updateJustValueTipBoard(bench, tile, isTest=False):
-    print(f'data passed to function => {bench}')
     data = {
         'title': "",
         'description': "",
         'just-value': bench[0]["nb_visits"]
     }
-    print(data)
     meta = dict(big_value_color=BACKGROUND_TAB[random.randrange(0, 3)],
                 fading_background=False)
     tipboardAnswer = sendDataToTipboard(tile_id=tile, data=data, tile_template='just_value', meta=meta, isTest=isTest)
@@ -45,10 +43,21 @@ def updateListingTipBoard(param_list, tile, isTest=False):
     end(title=f'{tile} -> {tile}', start_time=time.time(), tipboardAnswer=tipboardAnswer, TILE_ID=tile)
 
 
-def updateConnectedUsers(isTest=False):
-    list_of_users = getUsersConnected()
+def updateNbConnectedUsers(isTest=False):
+    list_of_users = getNbUsersConnected()
     # print(list_of_users)
-    updateListingTipBoard(list_of_users, 'list_connected_users', isTest)
+    # updateJustValueTipBoard(list_of_users, 'list_connected_users', isTest)
+    # Pour l'instant on part sur un mode dégradé
+    data = {
+        'title': "",
+        'description': "",
+        'just-value': list_of_users[0]
+    }
+    tile = "list_connected_users"
+    meta = dict(big_value_color=BACKGROUND_TAB[0],
+                fading_background=False)
+    tipboardAnswer = sendDataToTipboard(tile_id=tile, data=data, tile_template='just_value', meta=meta, isTest=isTest)
+    end(title=f'{tile} -> {tile}', start_time=time.time(), tipboardAnswer=tipboardAnswer, TILE_ID=tile)
 
 
 def updateSSLError(isTest=False):
@@ -63,7 +72,14 @@ def updateNbCrash(isTest=False):
     updateJustValueTipBoard(list_of_crashes, 'Crashes', isTest)
 
 
+def updateLoadedProfiles(isTest=False):
+    list_of_profiles = getProfiles()
+    # print(f'Liste des profils : {list_of_profiles}')
+    updateListingTipBoard(list_of_profiles, 'list_loaded_profiles', isTest)
+
+
 def sonde_kiosk():
-    updateConnectedUsers()
+    updateNbConnectedUsers()
     updateSSLError()
     updateNbCrash()
+    updateLoadedProfiles()
