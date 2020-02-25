@@ -2,7 +2,7 @@ import time
 from datetime import datetime, timedelta
 from apscheduler.schedulers.blocking import BlockingScheduler
 
-from src.sensors.sensor_benchmark import sonde_bench
+from src.sensors.sensor_kiosk import sonde_kiosk
 from src.sensors.sensors1_text import sonde1
 # from src.sensors.sensors2_piechart import sonde2
 from src.sensors.sensors3_linechart import sonde3
@@ -63,7 +63,7 @@ def scheduleYourSensors(scheduler):  # pragma: no cover
     # addSchedule(scheduler, sonde15, timeToRun=now + timedelta(milliseconds=250), second=28)
     # addSchedule(scheduler, sonde16, timeToRun=now + timedelta(milliseconds=350), second=30)
     # addSchedule(scheduler, sonde17, timeToRun=now + timedelta(milliseconds=350), second=30)
-    addSchedule(scheduler, sonde_bench, timeToRun=now + timedelta(milliseconds=350), second=300)
+    addSchedule(scheduler, sonde_kiosk, timeToRun=now + timedelta(milliseconds=350), second=300)
 
     print(f"(+) Tipboard starting schedul task", flush=True)
     scheduler.start()
