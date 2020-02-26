@@ -29,5 +29,4 @@ USER 1001
 RUN pip install --user -r requirements.txt
 
 EXPOSE 8080
-EXPOSE 6379
 CMD ["bash", "entrypoint.sh"]
