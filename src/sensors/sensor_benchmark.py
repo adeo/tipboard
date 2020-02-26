@@ -6,7 +6,7 @@ from src.tipboard.app.properties import COLOR_TAB
 
 
 def updateNormChartTipBoard(bench, tile, isTest=False):
-    if not "values" in bench[0]:
+    if "values" not in bench[0]:
         return
     datasetLength = len(bench)
     data = dict()
@@ -32,7 +32,10 @@ def updateCPUTipBoard(isTest=False):
     cpu_bench = valueFromTypeAction(["ackleyBenchmark", "bealeBenchmark", "xinSheBenchmark", "facteurPremierBenchmark"])
     print(f'CPU = {cpu_bench}')
     updateNormChartTipBoard(cpu_bench, 'cpu', isTest)
-    listing = [bench["device"] + " avg: " + str("{0:.2f}".format(bench["avg"])) for bench in sorted(cpu_bench, key = lambda i: i['avg'])]
+    listing = [
+        bench["device"] + " avg: " + str("{0:.2f}".format(bench["avg"]))
+        for bench in sorted(cpu_bench, key=lambda i: i['avg'])
+    ]
     updateListingTipBoard(listing, 'cpu_list', isTest)
 
 
@@ -41,7 +44,10 @@ def updateGPUTipBoard(isTest=False):
     gpu_bench = valueFromTypeAction(["scroll", "buildParagraph", "bitmapGetPixelsBenchmark", "bitmapGetPixelBenchmark"])
     # print(f'GPU = {gpu_bench}')
     updateNormChartTipBoard(gpu_bench, 'gpu', isTest)
-    listing = [bench["device"] + " avg: " + str("{0:.2f}".format(bench["avg"])) for bench in sorted(gpu_bench, key = lambda i: i['avg'])]
+    listing = [
+        bench["device"] + " avg: " + str("{0:.2f}".format(bench["avg"]))
+        for bench in sorted(gpu_bench, key=lambda i: i['avg'])
+    ]
     updateListingTipBoard(listing, 'gpu_list', isTest)
 
 
@@ -50,7 +56,10 @@ def updateNetworkTipBoard(isTest=False):
     network_bench = valueFromAction("dowloadFile")
     # print(f'network function result : {network_bench}')
     updateNormChartTipBoard(network_bench, 'network', isTest)
-    listing = [bench["device"] + " avg: " + str("{0:.2f}".format(bench["avg"])) for bench in sorted(network_bench, key = lambda i: i['avg'])]
+    listing = [
+        bench["device"] + " avg: " + str("{0:.2f}".format(bench["avg"]))
+        for bench in sorted(network_bench, key=lambda i: i['avg'])
+    ]
     updateListingTipBoard(listing, 'network_list', isTest)
 
 

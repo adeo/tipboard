@@ -1,9 +1,7 @@
 # coding: utf-8
-import json
 from statistics import mean
 
 import requests
-import urllib.parse
 
 base_url = "http://benchmark-analytics-open.apps.op.acp.adeo.com/"
 token = "0b44547f5f0c9d526b46247c65aeef57"
