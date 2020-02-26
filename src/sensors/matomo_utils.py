@@ -115,10 +115,11 @@ def getWeeklyDatas():
     if response.status_code == 200:
         for day in response.json():
             print(day)
-            average_day['labels'].append(day["label"])
-            if (day["nb_visits"] > 0) and (day["day_of_week"] is not 6 or day["day_of_week"] is not 7):
-                average_day["datasets"][0]["data"].append(int(day["nb_users"]))
-            elif (day["nb_visits"] == 0) and (day["day_of_week"] is not 6 or day["day_of_week"] is not 7):
-                average_day["datasets"][0]["data"].append(0)
+            if day["day_of_week"] is not 6 or day["day_of_week"] is not 7:
+                average_day['labels'].append(day["label"])
+                average_day["datasets"][0]["data"].append(int(day["nb_visits"]))
         return average_day
     raise
+
+
+
