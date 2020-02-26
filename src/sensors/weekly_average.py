@@ -84,7 +84,7 @@ def getInfosForDay(day):
     params['module'] = "API"
     params['method'] = "VisitTime.getVisitInformationPerLocalTime"
     params["period"] = "month"
-    params["date"] = "2020-02-25"
+    params["date"] = day
     params["format"] = "JSON"
     params["idSite"] = "2"
     try:
@@ -106,7 +106,7 @@ def getInfosForToday():
         while rcx < len(resme):
             try:
                 hour = resme[rcx]
-                visitors = visitors + hour.get('nb_uniq_visitors')
+                visitors = visitors + hour.get('sum_daily_nb_uniq_visitors')
                 visits = visits + hour.get('nb_visits')
                 actions = actions + hour.get('nb_actions')
                 # We want infos between 6h00 and 21h00
@@ -130,6 +130,7 @@ def executeScript():
     datasets['averageWeek'] = getInfosForWeek()
     # Get actions / hout for today between 6h and 21h
     datasets['today'] = getInfosForToday()
+    print(datasets['today'])
     if not datasets['today']:
         datasets['today'] = []
     if not datasets['averageWeek']:
