@@ -88,7 +88,7 @@ def valueFromAction(action):
 def valueFromTypeAction(tab):
     result = list()
     for action in tab:
-        if len(result) is 0:
+        if len(result) == 0:
             result = valueFromAction(action)
         else:
             value = valueFromAction(action)
