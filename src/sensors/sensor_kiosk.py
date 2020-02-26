@@ -20,6 +20,7 @@ def updateNormChartTipBoard(bench, tile, isTest=False):
         data['datasets'].append(
             dict(label=bench[index]["label"],
                  data=bench[index]["nb_visits"],
+                 borderBackgroundColor=COLOR_TAB[index],
                  borderColor=COLOR_TAB[index]))
     print(f'🧐 data sent to Tipboard : {data}')
     tipboardAnswer = sendDataToTipboard(data=data, tile_template='norm_chart', tile_id=tile, isTest=isTest)

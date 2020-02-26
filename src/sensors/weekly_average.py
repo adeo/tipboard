@@ -35,7 +35,7 @@ def getAverageWeek(week):
         averageActions = averageActions / len(week)
         averageWeek.append(averageActions)
         indexHour = indexHour + 1
-    # print(datetime.datetime.now().strftime("[%H:%M]:") + "(+) Average week: " + str(averageWeek))
+    print(datetime.datetime.now().strftime("[%H:%M]:") + "(+) Average week: " + str(averageWeek))
     return averageWeek
 
 
@@ -51,6 +51,19 @@ def getInfosForWeek():
         if dayOfWeek is not 6:  # not sunday i guess
             resme = getInfosForDay(day)
             res.append(list())
+            if not resme:
+                for hour in range(0, 24):
+                    resme.append({'label': hour,
+                                  'nb_uniq_visitors': 0,
+                                  'nb_visits': 0,
+                                  'nb_actions': 0,
+                                  'nb_users': 0,
+                                  'max_actions': 0,
+                                  'sum_visit_length': 0,
+                                  'bounce_count': 0,
+                                  'nb_visits_converted': 0,
+                                  'segment': 'visitLocalHour==' + str(hour)
+                                  })
             if resme is not None:
                 index = 0
                 actions = 0
@@ -83,7 +96,7 @@ def getInfosForDay(day):
     params['token_auth'] = token
     params['module'] = "API"
     params['method'] = "VisitTime.getVisitInformationPerLocalTime"
-    params["period"] = "month"
+    params["period"] = "day"
     params["date"] = day
     params["format"] = "JSON"
     params["idSite"] = "2"
@@ -106,7 +119,7 @@ def getInfosForToday():
         while rcx < len(resme):
             try:
                 hour = resme[rcx]
-                visitors = visitors + hour.get('sum_daily_nb_uniq_visitors')
+                visitors = visitors + hour.get('nb_uniq_visitors')
                 visits = visits + hour.get('nb_visits')
                 actions = actions + hour.get('nb_actions')
                 # We want infos between 6h00 and 21h00
@@ -125,12 +138,10 @@ def getInfosForToday():
 
 def executeScript():
     datasets = dict()
-    print(getTimeStr() + "(+) Matomo Actions / Hour")
     # Get average actions / hour for last week including yesterday but not Sundays between 6h and 21h
     datasets['averageWeek'] = getInfosForWeek()
     # Get actions / hout for today between 6h and 21h
     datasets['today'] = getInfosForToday()
-    print(datasets['today'])
     if not datasets['today']:
         datasets['today'] = []
     if not datasets['averageWeek']:
