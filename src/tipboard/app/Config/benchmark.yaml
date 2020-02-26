@@ -2,26 +2,38 @@ details:
     page_title: Kiosk DataBoard
 layout:
     - row_1_of_2:
-        - col_1_of_2:
+        - col_1_of_3:
             - tile_template: just_value
               tile_id: list_connected_users
               title: Users Connected
               classes:
 
-        - col_1_of_2:
+        - col_1_of_3:
             - tile_template: listing
               tile_id: list_loaded_profiles
-              title: Profils chargés
+              title: Loaded Profiles
+              classes:
+
+        - col_1_of_3:
+            - tile_template: line_chart
+              tile_id: average_use
+              title: Average Use
               classes:
 
     - row_1_of_2:
-        - col_1_of_2:
+        - col_1_of_3:
+            - tile_template: just_value
+              tile_id: nb_of_Devices
+              title: Deployed Devices
+              classes:
+
+        - col_1_of_3:
             - tile_template: just_value
               tile_id: SSL_errors
               title: SSL Errors
               classes:
 
-        - col_1_of_2:
+        - col_1_of_3:
             - tile_template: just_value
               tile_id: Crashes
               title: Crash

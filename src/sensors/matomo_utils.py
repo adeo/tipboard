@@ -74,6 +74,51 @@ def getProfiles():
             # print(profile["label"])
             if "LOADED" in profile["label"]:
                 # print(f'🍔 full data object : {profile}')
+                # TODO : Faire un formatage du nom du profil => Nom - nbPages
+
                 list_of_profiles.append(profile["label"])
         return list_of_profiles
+    raise
+
+
+def getNbOfDevices():
+    params = dict()
+    response = basicMatomoRequest(method="UserId.getUsers", query=params)
+    if response.status_code == 200:
+        data = len(response.json())
+        return data
+    raise
+
+
+def getWeeklyDatas():
+    params = dict()
+    params['token_auth'] = token
+    params['module'] = "API"
+    params['method'] = "VisitTime.getByDayOfWeek"
+    params["period"] = "day"
+    params["date"] = "today"
+    params["format"] = "JSON"
+    params["idSite"] = "2"
+    response = requests.get(base_url, params=params, verify=False)
+    # print(response.json())
+    average_day = {
+        'title': {},
+        'legend': {'display': True},
+        'labels': [],
+        'datasets': [{
+            'label': "Utilisation du Kiosk",
+            'data': [],
+            'backgroundColor': 'rgba(66, 165, 245, 0.8)',
+            'borderColor': 'rgba(66, 165, 245, 0.8)'
+        }]
+    }
+    if response.status_code == 200:
+        for day in response.json():
+            print(day)
+            average_day['labels'].append(day["label"])
+            if (day["nb_visits"] > 0) and (day["day_of_week"] is not 6 or day["day_of_week"] is not 7):
+                average_day["datasets"][0]["data"].append(int(day["nb_users"]))
+            elif (day["nb_visits"] == 0) and (day["day_of_week"] is not 6 or day["day_of_week"] is not 7):
+                average_day["datasets"][0]["data"].append(0)
+        return average_day
     raise

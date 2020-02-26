@@ -1,7 +1,8 @@
 import random
 import time
 
-from src.sensors.matomo_utils import getUsersConnected, getMatomoActions, getProfiles, getNbUsersConnected
+from src.sensors.matomo_utils import getUsersConnected, getMatomoActions, getProfiles, getNbUsersConnected, \
+    getNbOfDevices, getWeeklyDatas
 from src.sensors.utils import end, sendDataToTipboard
 from src.tipboard.app.properties import COLOR_TAB, BACKGROUND_TAB
 
@@ -43,6 +44,13 @@ def updateListingTipBoard(param_list, tile, isTest=False):
     end(title=f'{tile} -> {tile}', start_time=time.time(), tipboardAnswer=tipboardAnswer, TILE_ID=tile)
 
 
+def updateLineChartTipBoard(param_list, tile, isTest=False):
+    # data = buildChartUpdateRandomly(nbrLabel=5, data=None)
+    data = param_list
+    tipboardAnswer = sendDataToTipboard(data=data, tile_template='line_chart', tile_id=tile, isTest=isTest)
+    end(title=f'{tile} -> {tile}', start_time=time.time(), tipboardAnswer=tipboardAnswer, TILE_ID=tile)
+
+
 def updateNbConnectedUsers(isTest=False):
     list_of_users = getNbUsersConnected()
     # print(list_of_users)
@@ -78,8 +86,31 @@ def updateLoadedProfiles(isTest=False):
     updateListingTipBoard(list_of_profiles, 'list_loaded_profiles', isTest)
 
 
+def updateNbOfDevices(isTest=False):
+    nb_of_devices = getNbOfDevices()
+    # print(f'Nombre de devices déployés en mode Kiosk : {nb_of_devices}')
+    data = {
+        'title': "",
+        'description': "",
+        'just-value': nb_of_devices
+    }
+    tile = "nb_of_Devices"
+    meta = dict(big_value_color=BACKGROUND_TAB[1],
+                fading_background=False)
+    tipboardAnswer = sendDataToTipboard(tile_id=tile, data=data, tile_template='just_value', meta=meta, isTest=isTest)
+    end(title=f'{tile} -> {tile}', start_time=time.time(), tipboardAnswer=tipboardAnswer, TILE_ID=tile)
+
+
+def updateWeeklyDatas(isTest=False):
+    datas = getWeeklyDatas()
+    print(datas)
+    updateLineChartTipBoard(datas, 'average_use', isTest)
+
+
 def sonde_kiosk():
     updateNbConnectedUsers()
     updateSSLError()
     updateNbCrash()
     updateLoadedProfiles()
+    updateNbOfDevices()
+    updateWeeklyDatas()
