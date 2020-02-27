@@ -9,7 +9,6 @@ from src.tipboard.app.properties import COLOR_TAB, BACKGROUND_TAB
 
 
 def updateNormChartTipBoard(bench, tile, isTest=False):
-    print(bench)
     if not "label" in bench[0]:
         return
     datasetLength = len(bench)
@@ -22,7 +21,6 @@ def updateNormChartTipBoard(bench, tile, isTest=False):
                  data=bench[index]["nb_visits"],
                  borderBackgroundColor=COLOR_TAB[index],
                  borderColor=COLOR_TAB[index]))
-    print(f'🧐 data sent to Tipboard : {data}')
     tipboardAnswer = sendDataToTipboard(data=data, tile_template='norm_chart', tile_id=tile, isTest=isTest)
     end(title=f'{tile} -> {tile}', start_time=time.time(), tipboardAnswer=tipboardAnswer, TILE_ID=tile)
 
@@ -41,7 +39,6 @@ def updateJustValueTipBoard(bench, tile, isTest=False):
 
 def updateListingTipBoard(param_list, tile, isTest=False):
     data = {"items": param_list}
-    # print(f'Liste des users : {data}')
     tipboardAnswer = sendDataToTipboard(data=data, tile_template='listing', tile_id=tile, isTest=isTest)
     end(title=f'{tile} -> {tile}', start_time=time.time(), tipboardAnswer=tipboardAnswer, TILE_ID=tile)
 
@@ -55,8 +52,6 @@ def updateLineChartTipBoard(param_list, tile, isTest=False):
 
 def updateNbConnectedUsers(isTest=False):
     list_of_users = getNbUsersConnected()
-    # print(list_of_users)
-    # updateJustValueTipBoard(list_of_users, 'list_connected_users', isTest)
     # Pour l'instant on part sur un mode dégradé
     data = {
         'title': "",
@@ -72,25 +67,21 @@ def updateNbConnectedUsers(isTest=False):
 
 def updateSSLError(isTest=False):
     list_of_SSL_errors = getMatomoActions("ERROR SSL")
-    # print(list_of_SSL_errors)
     updateJustValueTipBoard(list_of_SSL_errors, 'SSL_errors', isTest)
 
 
 def updateNbCrash(isTest=False):
     list_of_crashes = getMatomoActions("CRASH")
-    # print(list_of_crashes)
     updateJustValueTipBoard(list_of_crashes, 'Crashes', isTest)
 
 
 def updateLoadedProfiles(isTest=False):
     list_of_profiles = getProfiles()
-    # print(f'Liste des profils : {list_of_profiles}')
     updateListingTipBoard(list_of_profiles, 'list_loaded_profiles', isTest)
 
 
 def updateNbOfDevices(isTest=False):
     nb_of_devices = getNbOfDevices()
-    # print(f'Nombre de devices déployés en mode Kiosk : {nb_of_devices}')
     data = {
         'title': "",
         'description': "",
@@ -105,7 +96,6 @@ def updateNbOfDevices(isTest=False):
 
 def updateWeeklyDatas(isTest=False):
     datas = getWeeklyDatas()
-    print(datas)
     updateLineChartTipBoard(datas, 'average_use', isTest)
 
 

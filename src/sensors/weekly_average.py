@@ -29,13 +29,12 @@ def getAverageWeek(week):
             averageActions = averageActions + hour[1]
             timeHour = hour[0]
             indexDay = indexDay + 1
-        # Divide nb of actions by nb of days print(datetime.datetime.now().strftime("[%H:%M]:") + "(+) Average action
+        # Divide nb of actions by nb of days
         # for hour " + str(indexHour) + " is: " + str(averageActions) + " / " + str(len(week)) + " = " + str(
         # averageActions / len(week)))
         averageActions = averageActions / len(week)
         averageWeek.append(averageActions)
         indexHour = indexHour + 1
-    print(datetime.datetime.now().strftime("[%H:%M]:") + "(+) Average week: " + str(averageWeek))
     return averageWeek
 
 
@@ -67,7 +66,7 @@ def getInfosForWeek():
             if resme is not None:
                 index = 0
                 actions = 0
-                while index < NB_HOURS and resme:
+                while index < NB_HOURS:
                     # We want infos between 4h00 and 21h00
                     try:
                         hour = resme[index]
@@ -76,7 +75,6 @@ def getInfosForWeek():
                     if START_HOUR <= index <= END_HOUR and hour is not None:
                         res[indexRes].append([index, hour.get('nb_actions')])
                         actions = actions + hour.get('nb_actions')
-                        # print(datetime.datetime.now().strftime("[%H:%M]:") + "(+) " + str(hour.get('nb_actions')) +
                         # " actions for day " + day + " at hour " + str(index) + "h")
                     index = index + 1
                 indexRes = indexRes + 1
@@ -125,7 +123,6 @@ def getInfosForToday():
                 # We want infos between 6h00 and 21h00
                 if START_HOUR <= rcx <= END_HOUR and now.hour is not rcx:
                     today.append(hour.get('nb_actions'))
-                    # print(datetime.datetime.now().strftime("[%H:%M]:") + "(+) " + str(hour.get('nb_actions')) + "
                     # actions for today at hour " + str(rcx) + "h")
             except:
                 today.append(0)
@@ -149,7 +146,6 @@ def executeScript():
     labels = list()
     for x in range(START_HOUR, END_HOUR + 1):
         labels.append(x)
-    print(f'labels {labels}')
     data = {
         'title': {'text': f'Numbers of Actions: {START_HOUR}h <-> {END_HOUR}h', 'color': '#FFFFFF', 'display': True},
         'legend': {'display': False},
@@ -173,7 +169,6 @@ def executeScript():
 
 
 def sonde_matomoDayActivity(isTest=False):
-    print(MATOMO_URL)
     start_time = time.time()
     TILE_ID = 'average_use'
     data = executeScript()
