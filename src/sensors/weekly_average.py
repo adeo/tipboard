@@ -116,7 +116,7 @@ def getInfosForToday():
     today = list()
     now = datetime.datetime.now()
     if resme is not None:
-        while rcx < len(resme):
+        while rcx <= len(resme):
             try:
                 hour = resme[rcx]
                 visitors = visitors + hour.get('nb_uniq_visitors')
@@ -150,7 +150,7 @@ def executeScript():
         labels.append(x)
     data = {
         'title': {'text': f'Numbers of Actions: {START_HOUR}h <-> {END_HOUR}h', 'color': '#FFFFFF', 'display': True},
-        'legend': {'display': False},
+        'legend': {'display': True},
         'labels': labels,
         # X-axis
         'datasets': [
@@ -174,5 +174,5 @@ def sonde_matomoDayActivity(isTest=False):
     start_time = time.time()
     TILE_ID = 'average_use'
     data = executeScript()
-    tipboardAnswer = sendDataToTipboard(tile_id=TILE_ID, tile_template='line_chart', isTest=isTest, data=data)
+    tipboardAnswer = sendDataToTipboard(tile_id=TILE_ID, tile_template='norm_chart', isTest=isTest, data=data)
     end(title=f'{TILE_ID} -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer, TILE_ID=TILE_ID)

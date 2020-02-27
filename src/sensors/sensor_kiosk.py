@@ -40,7 +40,7 @@ def updateJustValueTipBoard(bench, tile, isTest=False):
 def updateBigValueTipBoard(big_value=None, value_of_the_day=None, tile="", isTest=False):
     data = {
         "title": "",
-        "description": "Sur le mois en cours",
+        "description": "Current Month",
         "big-value": big_value,
         "upper-left-label": "Today",
         "upper-left-value": value_of_the_day,
