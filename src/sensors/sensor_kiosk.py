@@ -102,7 +102,13 @@ def updateSSLError(isTest=False):
 
 def updateNbCrash(isTest=False):
     list_of_crashes = getMatomoActions("CRASH")
-    updateJustValueTipBoard(list_of_crashes, 'Crashes', isTest)
+    list_of_crashes_today = getMatomoActionOfTheDay("CRASH")
+    # Faire un updateBigValueTipBoard et envoyer les 2 datas + action
+    updateBigValueTipBoard(list_of_crashes[0]["nb_visits"],
+                           list_of_crashes_today[0]["nb_visits"],
+                           "Crashes",
+                           isTest)
+    # updateJustValueTipBoard(list_of_crashes, 'Crashes', isTest)
 
 
 def updateLoadedProfiles(isTest=False):

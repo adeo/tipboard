@@ -1064,3 +1064,15 @@
 93475:C 27 Feb 2020 14:18:37.856 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=93475, just started
 93475:C 27 Feb 2020 14:18:37.856 # Configuration loaded
 93475:M 27 Feb 2020 14:18:37.858 # Could not create server TCP listening socket *:6379: bind: Address already in use
+93687:C 27 Feb 2020 14:29:15.510 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+93687:C 27 Feb 2020 14:29:15.510 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=93687, just started
+93687:C 27 Feb 2020 14:29:15.510 # Configuration loaded
+93687:M 27 Feb 2020 14:29:15.512 # Could not create server TCP listening socket *:6379: bind: Address already in use
+94265:C 27 Feb 2020 14:51:32.460 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+94265:C 27 Feb 2020 14:51:32.460 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=94265, just started
+94265:C 27 Feb 2020 14:51:32.460 # Configuration loaded
+94265:M 27 Feb 2020 14:51:32.462 # Could not create server TCP listening socket *:6379: bind: Address already in use
+94310:C 27 Feb 2020 14:51:58.979 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+94310:C 27 Feb 2020 14:51:58.979 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=94310, just started
+94310:C 27 Feb 2020 14:51:58.979 # Configuration loaded
+94310:M 27 Feb 2020 14:51:58.981 # Could not create server TCP listening socket *:6379: bind: Address already in use
