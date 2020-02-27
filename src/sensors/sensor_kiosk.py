@@ -2,7 +2,7 @@ import random
 import time
 
 from src.sensors.matomo_utils import getUsersConnected, getMatomoActions, getProfiles, getNbUsersConnected, \
-    getNbOfDevices
+    getNbOfDevices, getMatomoActionOfTheDay
 from src.sensors.utils import end, sendDataToTipboard
 from src.sensors.weekly_average import sonde_matomoDayActivity
 from src.tipboard.app.properties import COLOR_TAB, BACKGROUND_TAB
@@ -37,6 +37,30 @@ def updateJustValueTipBoard(bench, tile, isTest=False):
     end(title=f'{tile} -> {tile}', start_time=time.time(), tipboardAnswer=tipboardAnswer, TILE_ID=tile)
 
 
+def updateBigValueTipBoard(big_value=None, value_of_the_day=None, tile="", isTest=False):
+    data = {
+        "title": "",
+        "description": "Sur le mois en cours",
+        "big-value": big_value,
+        "upper-left-label": "Today",
+        "upper-left-value": value_of_the_day,
+        "lower-left-label": "",
+        "lower-left-value": "",
+        "upper-right-label": "",
+        "upper-right-value": "",
+        "lower-right-label": "",
+        "lower-right-value": ""
+    }
+    if big_value > 0:
+        meta = dict(big_value_color=BACKGROUND_TAB[2],
+                    fading_background=True)
+    else:
+        meta = dict(big_value_color=BACKGROUND_TAB[0],
+                    fading_background=False)
+    tipboardAnswer = sendDataToTipboard(tile_id=tile, data=data, tile_template='big_value', isTest=isTest, meta=meta)
+    end(title=f'{tile} -> {tile}', start_time=time.time(), tipboardAnswer=tipboardAnswer, TILE_ID=tile)
+
+
 def updateListingTipBoard(param_list, tile, isTest=False):
     data = {"items": param_list}
     tipboardAnswer = sendDataToTipboard(data=data, tile_template='listing', tile_id=tile, isTest=isTest)
@@ -67,7 +91,13 @@ def updateNbConnectedUsers(isTest=False):
 
 def updateSSLError(isTest=False):
     list_of_SSL_errors = getMatomoActions("ERROR SSL")
-    updateJustValueTipBoard(list_of_SSL_errors, 'SSL_errors', isTest)
+    list_of_SSL_errors_today = getMatomoActionOfTheDay("ERROR SSL")
+    # Faire un updateBigValueTipBoard et envoyer les 2 datas + action
+    updateBigValueTipBoard(list_of_SSL_errors[0]["nb_visits"],
+                           list_of_SSL_errors_today[0]["nb_visits"],
+                           "SSL_errors",
+                           isTest)
+    # updateJustValueTipBoard(list_of_SSL_errors, 'SSL_errors', isTest)
 
 
 def updateNbCrash(isTest=False):
@@ -92,11 +122,6 @@ def updateNbOfDevices(isTest=False):
                 fading_background=False)
     tipboardAnswer = sendDataToTipboard(tile_id=tile, data=data, tile_template='just_value', meta=meta, isTest=isTest)
     end(title=f'{tile} -> {tile}', start_time=time.time(), tipboardAnswer=tipboardAnswer, TILE_ID=tile)
-
-
-def updateWeeklyDatas(isTest=False):
-    datas = getWeeklyDatas()
-    updateLineChartTipBoard(datas, 'average_use', isTest)
 
 
 def sonde_kiosk():

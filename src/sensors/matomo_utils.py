@@ -18,7 +18,7 @@ def basicMatomoRequest(method="", query=None):
     params['module'] = "API"
     params['method'] = method
     params["period"] = "month"
-    params["date"] = "2020-02-25"
+    params["date"] = "today"
     params["format"] = "JSON"
     params["idSite"] = "1"
     params.update(query)
@@ -51,7 +51,28 @@ def getNbUsersConnected():
     raise
 
 
-# Récupère les actions de type SSLError ou Crash
+# Récupère les actions de type SSLError ou Crash passées en param
+def getMatomoActionOfTheDay(type_of_data=""):
+    params = dict()
+    params['token_auth'] = token
+    params['module'] = "API"
+    params['method'] = "Events.getAction"
+    params["period"] = "day"
+    params["date"] = "today"
+    params["format"] = "JSON"
+    params["idSite"] = "1"
+    response = requests.get(base_url, params=params, verify=False)
+    if response.status_code == 200:
+        list_of_data_to_display = []
+        for data in response.json():
+            if data["label"] == type_of_data:
+                list_of_data_to_display.append({k: data[k] for k in ('label', 'nb_visits')})
+        if len(response.json()) == 0:
+            list_of_data_to_display.append({'label': type_of_data, 'nb_visits': 0})
+        return list_of_data_to_display
+    raise
+
+
 def getMatomoActions(type_of_data=""):
     params = dict()
     response = basicMatomoRequest(method="Events.getAction", query=params)

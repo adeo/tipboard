@@ -40,7 +40,7 @@ def launch_sensors(isTest=False, checker=None, fakeClient=None):
 
 
 def addSchedule(scheduler, sonde, timeToRun=datetime.now(), second=8):
-    second = 3
+    second = 5
     scheduler.add_job(sonde, 'interval', seconds=second, next_run_time=timeToRun)
 
 
