@@ -2,7 +2,7 @@ import random
 import time
 
 from src.sensors.matomo_utils import getUsersConnected, getMatomoActions, getProfiles, getNbUsersConnected, \
-    getNbOfDevices, getWeeklyDatas
+    getNbOfDevices
 from src.sensors.utils import end, sendDataToTipboard
 from src.sensors.weekly_average import sonde_matomoDayActivity
 from src.tipboard.app.properties import COLOR_TAB, BACKGROUND_TAB
@@ -105,5 +105,4 @@ def sonde_kiosk():
     updateNbCrash()
     updateLoadedProfiles()
     updateNbOfDevices()
-    # updateWeeklyDatas()
     sonde_matomoDayActivity()
