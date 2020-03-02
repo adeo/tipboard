@@ -88,7 +88,7 @@ def getMatomoActions(type_of_data=""):
 # Récupère les profils déployés sur les Tablettes
 def getProfiles():
     params = dict()
-    params["idSubtable"] = 3
+    params["idSubtable"] = 1
     response = basicMatomoRequest(method="Events.getNameFromActionId", query=params)
     if response.status_code == 200:
         list_of_profiles = []

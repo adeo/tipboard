@@ -104,11 +104,19 @@ def updateNbCrash(isTest=False):
     list_of_crashes = getMatomoActions("CRASH")
     list_of_crashes_today = getMatomoActionOfTheDay("CRASH")
     # Faire un updateBigValueTipBoard et envoyer les 2 datas + action
-    updateBigValueTipBoard(list_of_crashes[0]["nb_visits"],
-                           list_of_crashes_today[0]["nb_visits"],
+    try:
+        nb_of_crash_monthly = list_of_crashes[0]["nb_visits"]
+    except:
+        nb_of_crash_monthly = 0
+    try:
+        nb_of_crash_today = list_of_crashes_today[0]["nb_visits"]
+    except:
+        nb_of_crash_today = 0
+
+    updateBigValueTipBoard(nb_of_crash_monthly,
+                           nb_of_crash_today,
                            "Crashes",
                            isTest)
-    # updateJustValueTipBoard(list_of_crashes, 'Crashes', isTest)
 
 
 def updateLoadedProfiles(isTest=False):

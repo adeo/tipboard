@@ -97,9 +97,9 @@ def getInfosForDay(day):
     params["period"] = "day"
     params["date"] = day
     params["format"] = "JSON"
-    params["idSite"] = "2"
+    # params["idSite"] = "2"
     # 📆 pour la prod :
-    # params["idSite"] = MATOMO_SITE_ID
+    params["idSite"] = MATOMO_SITE_ID
     try:
         resme = requests.get(MATOMO_URL, params=params, verify=False).json()
     except IOError:
