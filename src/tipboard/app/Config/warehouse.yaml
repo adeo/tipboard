@@ -1,0 +1,29 @@
+details:
+    page_title: Warehouse N°XXX - Lezennes City
+layout:
+    - row_1_of_2:
+        - col_1_of_2:
+            - tile_template: pie_chart
+              tile_id: pie_chartjs_ex
+              title: pie chart
+              classes:
+
+        - col_1_of_2:
+            - tile_template: cumulative_flow
+              tile_id: cfjs_ex
+              title: cumulflow
+              classes:
+
+
+    - row_1_of_2:
+        - col_1_of_2:
+            - tile_template: line_chart
+              tile_id: line_chartjs_ex
+              title: line tile's
+              classes:
+
+        - col_1_of_2 :
+            - tile_template: just_value
+              tile_id: jv_ex
+              title: Just value
+              classes:
