@@ -1,0 +1,31 @@
+details:
+    page_title: Warehouse N°XXX - Lezennes City
+layout:
+    - row_1_of_2:
+        - col_1_of_2:
+            - tile_template: just_value
+              tile_id: bv_alldevices
+              title: Nombre de terminaux Total
+              classes:
+
+        - col_1_of_2:
+            - tile_template: doughnut_chart
+              tile_id: doughnut_ex
+              title: Nombre de terminaux par entrepot
+              classes:
+
+
+    - row_1_of_2:
+        - col_1_of_2:
+            - tile_template: half_doughnut_chart
+              tile_id: half_doughnut_online
+              title: Terminaux OnLine / Offline
+              classes:
+
+        - col_1_of_2 :
+            - tile_template: just_value
+              tile_id: jv_ex
+              title: Nombre de scans Total
+              classes:
+
+

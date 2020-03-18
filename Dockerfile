@@ -7,7 +7,7 @@ FROM bitnami/python:3.8
 #   - without SQL + without redis
 
 RUN apt-get update \
- && apt-get install redis-server sqlite3 -y --no-install-recommends \
+ && apt-get install vim redis-server sqlite3 -y --no-install-recommends \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 

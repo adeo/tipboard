@@ -37,6 +37,7 @@ ALLOWED_TILES = ['text', 'fancy_listing', 'simple_percentage', 'listing', 'big_v
                  'half_doughnut_chart', 'doughnut_chart', 'pie_chart', 'radar_chart', 'polararea_chart',  # ChartJS
                  'empty']  # chartjs lib
 
+
 COLOR_TAB = [  # material color
     'rgba(66, 165, 245, 0.8)',      # blue #42a5f5
     'rgba(114, 191, 68, 0.8)',      # green #72bf44
