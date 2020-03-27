@@ -1,11 +1,14 @@
 # coding: utf-8
 
 import re
-
 import requests
+from src.sensors.utils import getTimeStr
 
 # ici on enregistre les urls du matomo sur lesquelles on va taper pour les requêtes
 base_url = "http://api-preprod.mobile.leroymerlin.fr/soti/devices/?"
+devices = []
+models = []
+wareHouses = []
 
 
 def basicSotiRequest(query=None):
@@ -25,8 +28,7 @@ def getWareHouseDevices():
         list_of_devices = []
         json_response = response.json()
         for data in json_response['Result']:
-            if not p.match(data['path']):
-                print(data['path'])
+            if not p.match(data['path']) and 'Fake' not in data['path']:
                 q = re.compile('^.*/([0-9]{3})_-_(.*)$')
                 if q.match(data['path']):
                     m = q.search(data['path'])
@@ -38,11 +40,29 @@ def getWareHouseDevices():
                             'lastContact': data['lastContact'],
                             'lastContactUnix': data['lastContactUnix'],
                             'num': m.group(1),
-                            'nom': m.group(2)
+                            'nom': m.group(2).replace('_', ' ')
 
                         })
         return list_of_devices
     raise
+
+
+def getAllDevicesOnLine():
+    data = dict()
+    onLine = 0
+    offline = 0
+    for device in devices:
+        if device['online'] == True:
+            onLine += 1
+        else:
+            offline += 1
+    data['online'] = onLine
+    data['offline'] = offline
+    return data
+
+
+def getAllDevicesByModel():
+    return getCountFilter('model')
 
 
 def getDevicesAllWareHouse():
@@ -51,14 +71,29 @@ def getDevicesAllWareHouse():
 
 
 def getCountDevicesByWareHouse():
-    models = []
-    list_of_data_to_display = {}
+    return sortedDict(getCountFilter('nom'))
+
+
+def getCountFilter(colname):
+    data = dict()
     for device in devices:
-        # {'num': 000 , 'nom' : '' devices : [] , models : [{ 'TC8000' : 10 }]}
-        if device['model'] not in models:
-            models.append(device['model'])
-        list_of_data_to_display.setdefault(device['num'], []).append(device)
-    return list_of_data_to_display
+        col = device[colname]
+        if col in data:
+            data[col] = data[col] + 1
+        else:
+            data[col] = 1
+    return data
+
+
+def sortedDict(data):
+    result = dict()
+    for element in sorted(data.keys()):
+        result[element] = data[element]
+    return result
+
+
+def getListWareHouses():
+    return wareHouses
 
 
 def listeData(listDevices):
@@ -66,8 +101,22 @@ def listeData(listDevices):
         print(data)
 
 
-if __name__ == "__main__":
+def getDevices():
+    print(f'{getTimeStr()} (+) Generate list of Device')
+    global devices
     devices = getWareHouseDevices()
+
+
+# devices = getWareHouseDevices()
+# devicesByWareHouse = getWareHouseDevices()
+#getDevices()
+
+if __name__ == "__main__":
+    print("__main__")
+    #getDevices
+    print(devices)
     # listeData(devices)
-    print(getDevicesAllWareHouse())
-    print(getCountDevicesByWareHouse())
+    # print(getDevicesAllWareHouse())
+    # print(getCountDevicesByWareHouse())
+    # print(getAllDevicesByModel())
+    # print(getCountDevicesByWareHouse())

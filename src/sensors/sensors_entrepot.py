@@ -1,57 +1,153 @@
-import random
 import time
 
-from src.sensors.soti_utils import getDevicesAllWareHouse
-from src.sensors.utils import end, sendDataToTipboard, getTimeStr, buildChartUpdateRandomly
-from src.tipboard.app.properties import BACKGROUND_TAB
+from src.sensors.matomo_utils import getCountScans
+from src.sensors.soti_utils import getDevicesAllWareHouse, getAllDevicesOnLine, getAllDevicesByModel, \
+    getCountDevicesByWareHouse, getDevices
+from src.sensors.utils import end, sendDataToTipboard, getTimeStr
+from src.tipboard.app.properties import BACKGROUND_TAB, COLOR_TAB
+
+def sonde():
+    print(f'{getTimeStr()} (+) Starting sensors', flush=True)
+    getDevices()
+    print(f'{getTimeStr()} (+) Finish sensors', flush=True)
+    sonde1()
+    sonde2()
+    sonde3()
+    sonde4()
 
 def updateAllDeviceCount():
     """ Simulate some actions for text tile exemple """
     return {
-        'title': 'Nbre Terminal',
+        'title': '',
         'description': 'Nombre de terminaux sur tous les entrepots',
         'just-value': getDevicesAllWareHouse()
     }
 
-def updateDeviceAllOnline():
-    """ Simulate some actions for text tile exemple """
-    labelLenght = random.randrange(2, 8)
-    datasetLength = random.randrange(1, 3)
-    if labelLenght % 2 != 0:
-        datasetLength = 1
-    data = dict()
-    data['title'] = dict(text=f'{datasetLength} dataset', color='#FFFFFF', display=random.choice([True, False]))
-    data['legend'] = dict(display=False if labelLenght > 6 else random.choice([True, False]))
-    data['labels'] = [f'Serie {i + 1}' for i in range(labelLenght)]
-    data['datasets'] = list()
-    for _ in range(datasetLength):
-        data['datasets'].append(
-            dict(data=[random.randrange(100, 1000) for _ in range(labelLenght)], backgroundColor=COLOR_TAB))
-    print(f'{getTimeStr()} (+) Generated {datasetLength} datasets with labels [{data["labels"]}]', flush=True)
-    return data
 
 def sonde1(isTest=False):
-    TILE_ID = 'bv_alldevices'
+    TILE_ID = 'jv_alldevices'
     print(f'{getTimeStr()} (+) Starting sensors 1', flush=True)
     start_time = time.time()
-    data = 100
-    meta = dict(big_value_color=BACKGROUND_TAB[random.randrange(0, 3)],
-                fading_background=random.choice([False, True]))
-
-    tipboardAnswer = sendDataToTipboard(tile_id=TILE_ID, data=data, tile_template='just_value', meta=meta, isTest=isTest)
+    data = updateAllDeviceCount()
+    meta = dict(big_value_color=BACKGROUND_TAB[0],
+                fading_background=False)
+    tipboardAnswer = sendDataToTipboard(tile_id=TILE_ID, data=data, tile_template='just_value', meta=meta,
+                                        isTest=isTest)
     end(title=f'sensors1 -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer, TILE_ID=TILE_ID)
 
 
+def updateNetworkStatus():
+    data = getAllDevicesOnLine()
+
+    tileData = dict()
+    tileData['title'] = {'display': False, 'text': 'OnLine / OffLine'}
+    tileData['labels'] = list(data.keys())
+    tileData['borderColor'] = '#525252'
+    tileData['legend'] = dict(display=True)
+    tileData['plugins'] = dict(labels=True)
+    tileData['datasets'] = list()
+    tileData['datasets'].append(
+        dict(label=f'OnLine',
+             data=list(data.values()),
+             backgroundColor=[COLOR_TAB[1], COLOR_TAB[5]],
+             borderColor='#525252'))
+    tileData['option'] = dict()
+    return tileData
+
+
 def sonde2(isTest=False):
-    TILE_ID = 'half_doughnut_online'
-    print(f'{getTimeStr()} (+) Starting sensors 17', flush=True)
+    TILE_ID = 'pie_chart_online'
+    print(f'{getTimeStr()} (+) Starting sensors 2', flush=True)
     start_time = time.time()
-    data = buildChartUpdateRandomly(nbrDataset=random.randrange(1, 3), colorTabIndataset=True)
-    tipboardAnswer = sendDataToTipboard(data=data, tile_template='half_doughnut_chart', tile_id=TILE_ID, isTest=isTest)
-    end(title=f'sensors17 -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer, TILE_ID=TILE_ID)
+    data = updateNetworkStatus()
+    tipboardAnswer = sendDataToTipboard(data=data, tile_template='pie_chart', tile_id=TILE_ID, isTest=isTest)
+    end(title=f'sensors2 -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer, TILE_ID=TILE_ID)
 
 
+def updateCountDevicesByModels():
+    data = getAllDevicesByModel()
+    tileData = dict()
+    tileData['title'] = {'display': False, 'text': 'Terminaux par Entrepot'}
+    tileData['labels'] = list(data.keys())
+    tileData['borderColor'] = '#525252'
+    tileData['legend'] = dict(display=True)
+    tileData['datasets'] = list()
 
+    tileData['datasets'].append(
+        dict(label=f'Warehouses',
+             data=list(data.values()),
+             backgroundColor=COLOR_TAB,
+             borderColor='#525252'))
+    tileData['options'] = {
+        "plugins": {
+            "labels": {
+                "render": "value"
+            }
+        }
+    }
+    return tileData
+
+
+def sonde3(isTest=False):
+    TILE_ID = 'pie_model_warehouse'
+    print(f'{getTimeStr()} (+) Starting sensors 3', flush=True)
+    start_time = time.time()
+    data = updateCountDevicesByModels()
+    tipboardAnswer = sendDataToTipboard(data=data, tile_template='pie_chart', tile_id=TILE_ID, isTest=isTest)
+    end(title=f'sensors3 -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer, TILE_ID=TILE_ID)
+
+
+def updateDevicesByWarehouses():
+    data = getCountDevicesByWareHouse()
+    tileData = dict()
+    tileData['title'] = {'display': False, 'text': 'Terminaux par Entrepot'}
+    tileData['labels'] = list(data.keys())
+    tileData['borderColor'] = '#525252'
+    tileData['legend'] = dict(display=True)
+    tileData['datasets'] = list()
+
+    tileData['datasets'].append(
+        dict(label=f'Warehouses',
+             data=list(data.values()),
+             backgroundColor=COLOR_TAB,
+             borderColor='#525252'))
+    tileData['options'] = {
+        "plugins": {
+            "labels": {
+                "render": "value"
+            }
+        }
+    }
+    return tileData
+
+
+def sonde4(isTest=False):
+    TILE_ID = 'doug_devices_by_warehouse'
+    print(f'{getTimeStr()} (+) Starting sensors 4', flush=True)
+    start_time = time.time()
+    data = updateDevicesByWarehouses()
+    tipboardAnswer = sendDataToTipboard(data=data, tile_template='doughnut_chart', tile_id=TILE_ID, isTest=isTest)
+    end(title=f'sensors4 -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer, TILE_ID=TILE_ID)
+
+def updateAllScan():
+    """ Simulate some actions for text tile exemple """
+    return {
+        'title': '',
+        'description': 'Nombre de scans sur tous les entrepots',
+        'just-value': getCountScans()['onScan']['nb_events']
+    }
+
+
+def sonde5(isTest=False):
+    TILE_ID = 'jv_whs_scans'
+    print(f'{getTimeStr()} (+) Starting sensors 5', flush=True)
+    start_time = time.time()
+    data = updateAllScan()
+    meta = dict(big_value_color=BACKGROUND_TAB[0],
+                fading_background=False)
+    tipboardAnswer = sendDataToTipboard(tile_id=TILE_ID, data=data, tile_template='just_value', meta=meta,
+                                        isTest=isTest)
+    end(title=f'sensors5 -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer, TILE_ID=TILE_ID)
 # def updateNormChartTipBoard(bench, tile, isTest=False):
 #     if not "label" in bench[0]:
 #         return

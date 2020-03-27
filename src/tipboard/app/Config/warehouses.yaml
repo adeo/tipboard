@@ -4,27 +4,32 @@ layout:
     - row_1_of_2:
         - col_1_of_2:
             - tile_template: just_value
-              tile_id: bv_alldevices
-              title: Nombre de terminaux Total
+              tile_id: jv_alldevices
+              title: Nombre de terminaux
               classes:
 
         - col_1_of_2:
-            - tile_template: doughnut_chart
-              tile_id: doughnut_ex
-              title: Nombre de terminaux par entrepot
+            - tile_template: pie_chart
+              tile_id: pie_chart_online
+              title: Terminaux OnLine / Offline
               classes:
 
-
+        - col_1_of_2:
+            - tile_template: pie_chart
+              tile_id: pie_model_warehouse
+              title: Répartition des Models de Terminaux
+              classes:
+                -
     - row_1_of_2:
         - col_1_of_2:
-            - tile_template: half_doughnut_chart
-              tile_id: half_doughnut_online
-              title: Terminaux OnLine / Offline
+            - tile_template: doughnut_chart
+              tile_id: doug_devices_by_warehouse
+              title: Nombre de terminaux par entrepot
               classes:
 
         - col_1_of_2 :
             - tile_template: just_value
-              tile_id: jv_ex
+              tile_id: jv_whs_scans
               title: Nombre de scans Total
               classes:
 
