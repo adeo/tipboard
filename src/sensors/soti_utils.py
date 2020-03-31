@@ -8,6 +8,7 @@ from src.sensors.utils import getTimeStr
 
 # ici on enregistre les urls du matomo sur lesquelles on va taper pour les requêtes
 base_url = "http://api-preprod.mobile.leroymerlin.fr/soti/devices/?"
+stores = dict()
 devices = []
 storedevices = []
 storemodels = []
@@ -37,6 +38,7 @@ def basicSotiRequestStore(query=None):
 
 def getStoreDevices():
     params = dict()
+    _stores= dict()
     response = basicSotiRequestStore(query=params)
     p = re.compile('^.*/[0,4]00_.*$')
     if response.status_code == 200:
@@ -53,6 +55,8 @@ def getStoreDevices():
                         storemodels.append(data['model'])
                     if not m.group(1) in storepaths:
                         storepaths.append(m.group(1))
+                    if not m.group(2) in _stores.keys():
+                        _stores[m.group(2)] = m.group(3).replace('_', ' ')
 
                     list_of_devices.append(
                         {
@@ -67,6 +71,8 @@ def getStoreDevices():
                             'path': m.group(1),
 
                         })
+        global stores
+        stores = sortedDict(_stores)
         return list_of_devices
     raise
 
@@ -208,10 +214,12 @@ def getDevices():
     global devices
     devices = getWareHouseDevices()
 
+
 def getStoresDevices():
     print(f'{getTimeStr()} (+) Generate list Devices of Stores')
     global storedevices
     storedevices = getDevicesStore()
+
 
 def getDevicesStore():
     print(f'{getTimeStr()} (+) Generate list Devices of Store')
@@ -234,8 +242,8 @@ if __name__ == "__main__":
     # getDevices
     getDevicesStore()
     # print(getAllInfoDevices(storedevices , 'path' ,['EF500', 'EF500R', 'TC52BACK', 'TC52FRONT']))
-    result=getStoreDeviceUsedByPath(['EF500', 'EF500R', 'TC52BACK', 'TC52FRONT'])
-    print(result)
+    result = getStoreDeviceUsedByPath(['EF500', 'EF500R', 'TC52BACK', 'TC52FRONT'])
+    print(stores)
     # listeData(devices)
     # print(getDevicesAllWareHouse())
     # print(getCountDevicesByWareHouse())

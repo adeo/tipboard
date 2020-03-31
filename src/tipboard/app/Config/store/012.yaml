@@ -1,5 +1,5 @@
 details:
-    page_title: Warehouse N°XXX - Lezennes City
+    page_title: Magasin N°XXX - Lezennes City
 layout:
     - row_1_of_2:
         - col_1_of_2:
@@ -23,34 +23,34 @@ layout:
     - row_1_of_2 :
         - col_1_of_2 flip-time-6:
             - tile_template: big_value
-              tile_id: bv_shops_bydevices
-              title: Magasin - Nombre de Terminaux
+              tile_id: bv_shops_bydevices_XXX
+              title: Magasin XXX - Nombre de Terminaux
               classes:
 
             - tile_template: big_value
-              tile_id: bv_shops
-              title: Terminaux Magasins
+              tile_id: bv_shops_XXX
+              title: Terminaux Magasin XXX
               classes:
 
         - col_1_of_2 flip-time-6:
             - tile_template: pie_chart
-              tile_id: pie_chart_online_shop
-              title: Magasins - Terminaux OnLine / Offline
+              tile_id: pie_chart_online_shop_XXX
+              title: Magasin XXX - Terminaux OnLine / Offline
               classes:
 
             - tile_template: big_value
-              tile_id: bv_shops_network
-              title: Terminaux Magasins
+              tile_id: bv_shops_network_XXX
+              title: Terminaux Magasin XXX
               classes:
                 -
         - col_1_of_2 flip-time-6:
             - tile_template: pie_chart
-              tile_id: pie_chart_devise_used
-              title: Magasins - Nombre de Terminal Utilisé
+              tile_id: pie_chart_devise_used_XXX
+              title: Magasins XXX - Nombre de Terminal Utilisé
               classes:
 
             - tile_template: big_value
-              tile_id: bv_shops_used
-              title: Terminaux Magasins
+              tile_id: bv_shops_used_XXX
+              title: Terminaux Magasin XXX
               classes:
 
