@@ -225,11 +225,14 @@ def sondeStore7(isTest=False):
 def sondeStoreGenerate():
     print(f'{getTimeStr()} (+) Starting generate store', flush=True)
     stores = getListStores()
+    for root, dirs, files in os.walk(user_config_dir + "store/."):
+        for filename in files:
+            if user_config_dir + "store/"+filename not in stores.keys():
+                print(f'{getTimeStr()} (+) Delete file : ' + user_config_dir + "store/"+filename, flush=True)
+                os.remove(user_config_dir + "store/"+filename)
+
     for k, v in stores.items():
-        num = k
-        nom = v
-        print(num + " => " + nom)
-        createStore(num,nom)
+        createStore(k, v)
 
     print(f'{getTimeStr()} (+) Finish generate store', flush=True)
 
@@ -242,7 +245,7 @@ def createStore(num, name):
         os.remove(path)
 
     copyfile(template, path)
-    with fileinput.FileInput(path,inplace=True,backup=False) as file:
+    with fileinput.FileInput(path, inplace=True, backup=False) as file:
         for line in file:
             print(line.replace('XXX', num).replace('NNNNNNNN', name), end='')
 
