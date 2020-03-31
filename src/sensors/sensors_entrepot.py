@@ -7,9 +7,9 @@ from src.sensors.utils import end, sendDataToTipboard, getTimeStr
 from src.tipboard.app.properties import BACKGROUND_TAB, COLOR_TAB
 
 def sonde():
-    print(f'{getTimeStr()} (+) Starting sensors', flush=True)
+    print(f'{getTimeStr()} (+) Starting Warehouses sensors', flush=True)
     getDevices()
-    print(f'{getTimeStr()} (+) Finish sensors', flush=True)
+    print(f'{getTimeStr()} (+) Finish Warehouses sensors', flush=True)
     sonde1()
     sonde2()
     sonde3()

@@ -33,3 +33,4 @@ RUN pip install --user -r requirements.txt
 EXPOSE 8080
 
 CMD ["bash", "entrypoint.sh"]
+#/developpement/tipboard/src:/home/app/src
