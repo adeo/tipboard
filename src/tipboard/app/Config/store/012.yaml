@@ -1,0 +1,56 @@
+details:
+    page_title: Warehouse N°XXX - Lezennes City
+layout:
+    - row_1_of_2:
+        - col_1_of_2:
+            - tile_template: just_value
+              tile_id: jv_alldevices
+              title: Entrepots - Nombre de terminaux
+              classes:
+
+        - col_1_of_2:
+            - tile_template: pie_chart
+              tile_id: pie_chart_online
+              title: Entrepots - Terminaux OnLine / Offline
+              classes:
+
+        - col_1_of_2 :
+            - tile_template: just_value
+              tile_id: jv_whs_scans
+              title: Entrepots - Nombre de scans Total
+              classes:
+                
+    - row_1_of_2 :
+        - col_1_of_2 flip-time-6:
+            - tile_template: big_value
+              tile_id: bv_shops_bydevices
+              title: Magasin - Nombre de Terminaux
+              classes:
+
+            - tile_template: big_value
+              tile_id: bv_shops
+              title: Terminaux Magasins
+              classes:
+
+        - col_1_of_2 flip-time-6:
+            - tile_template: pie_chart
+              tile_id: pie_chart_online_shop
+              title: Magasins - Terminaux OnLine / Offline
+              classes:
+
+            - tile_template: big_value
+              tile_id: bv_shops_network
+              title: Terminaux Magasins
+              classes:
+                -
+        - col_1_of_2 flip-time-6:
+            - tile_template: pie_chart
+              tile_id: pie_chart_devise_used
+              title: Magasins - Nombre de Terminal Utilisé
+              classes:
+
+            - tile_template: big_value
+              tile_id: bv_shops_used
+              title: Terminaux Magasins
+              classes:
+

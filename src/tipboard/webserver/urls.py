@@ -23,6 +23,8 @@ urlpatterns = [
 
     url(r'^$', renderFlipboardHtml),
     url(r'^([a-zA-Z0-9_-]*)$', renderHtmlForTiles),
+    url(r'^(store/[0-9]{3})$', renderHtmlForTiles),
+    url(r'^(warehouse/[0-9]{3})$', renderHtmlForTiles),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += static('/docs/', document_root='docs')
