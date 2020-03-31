@@ -232,7 +232,8 @@ def getDevicesAllStores():
     return storedevices.__len__()
     raise
 
-
+def getListStores():
+    return stores
 # devices = getWareHouseDevices()
 # devicesByWareHouse = getWareHouseDevices()
 # getDevices()

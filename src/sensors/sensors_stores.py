@@ -1,8 +1,11 @@
+import fileinput
+import os
 import time
+from shutil import copyfile
 
-from src.sensors.soti_utils import getStoreDeviceUsedByPath, getDevicesStore
+from src.sensors.soti_utils import getStoreDeviceUsedByPath, getDevicesStore, getListStores
 from src.sensors.utils import getTimeStr, sendDataToTipboard, end
-from src.tipboard.app.properties import BACKGROUND_TAB, COLOR_TAB
+from src.tipboard.app.properties import BACKGROUND_TAB, COLOR_TAB, user_config_dir
 
 data = dict()
 
@@ -12,14 +15,15 @@ def sondeStore():
     getDevicesStore()
     global data
     data = getStoreDeviceUsedByPath(['EF500', 'EF500R', 'TC52BACK', 'TC52FRONT'])
+    sondeStoreGenerate()
+    # sondeStore1()
+    # sondeStore2()
+    # sondeStore3()
+    # sondeStore4()
+    # sondeStore5()
+    # sondeStore6()
+    # sondeStore7()
     print(f'{getTimeStr()} (+) Finish stores sensors', flush=True)
-    sondeStore1()
-    sondeStore2()
-    sondeStore3()
-    sondeStore4()
-    sondeStore5()
-    sondeStore6()
-    sondeStore7()
 
 
 def updateAllDeviceCount():
@@ -157,9 +161,9 @@ def sondeStore5(isTest=False):
 
 
 def updateStoresByDeviceNetworkBv():
-    ulv = "🔼 " + str(data['EF500']['online']) + " / " + str(data['EF500']['offline'])+ " 🔽"
-    llv = "🔼 " + str(data['EF500R']['online']) + " / " + str(data['EF500R']['offline'])+ " 🔽"
-    urv = "🔼 " + str(data['TC52FRONT']['online']) + " / " + str(data['TC52FRONT']['offline'])+ " 🔽"
+    ulv = "🔼 " + str(data['EF500']['online']) + " / " + str(data['EF500']['offline']) + " 🔽"
+    llv = "🔼 " + str(data['EF500R']['online']) + " / " + str(data['EF500R']['offline']) + " 🔽"
+    urv = "🔼 " + str(data['TC52FRONT']['online']) + " / " + str(data['TC52FRONT']['offline']) + " 🔽"
     lrv = "🔼 " + str(data['TC52BACK']['online']) + " / " + str(data['TC52BACK']['offline']) + " 🔽"
     return {
         'title': '',
@@ -216,3 +220,32 @@ def sondeStore7(isTest=False):
     data = updateStoresByDeviceUsedBv()
     tipboardAnswer = sendDataToTipboard(data=data, tile_template='big_value', tile_id=TILE_ID, meta=meta, isTest=isTest)
     end(title=f'store sonde 7 -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer, TILE_ID=TILE_ID)
+
+
+def sondeStoreGenerate():
+    print(f'{getTimeStr()} (+) Starting generate store', flush=True)
+    stores = getListStores()
+    for k, v in stores.items():
+        num = k
+        nom = v
+        print(num + " => " + nom)
+        createStore(num,nom)
+
+    print(f'{getTimeStr()} (+) Finish generate store', flush=True)
+
+
+def createStore(num, name):
+    path = user_config_dir + "store/" + num + ".yaml"
+    template = user_config_dir + "/template/store.yaml"
+    if os.path.exists(path):
+        print(f'{getTimeStr()} (+) Delete file : ' + path, flush=True)
+        os.remove(path)
+
+    copyfile(template, path)
+    with fileinput.FileInput(path,inplace=True,backup=False) as file:
+        for line in file:
+            print(line.replace('XXX', num).replace('NNNNNNNN', name), end='')
+
+if __name__ == "__main__":
+    print("__main__")
+    sondeStore()
