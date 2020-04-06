@@ -9,11 +9,11 @@ from src.tipboard.app.properties import BACKGROUND_TAB, COLOR_TAB
 def sonde():
     print(f'{getTimeStr()} (+) Starting Warehouses sensors', flush=True)
     getDevices()
-    print(f'{getTimeStr()} (+) Finish Warehouses sensors', flush=True)
     sonde1()
     sonde2()
     sonde3()
     sonde4()
+    print(f'{getTimeStr()} (+) Finish Warehouses sensors', flush=True)
 
 def updateAllDeviceCount():
     """ Simulate some actions for text tile exemple """
@@ -148,6 +148,11 @@ def sonde5(isTest=False):
     tipboardAnswer = sendDataToTipboard(tile_id=TILE_ID, data=data, tile_template='just_value', meta=meta,
                                         isTest=isTest)
     end(title=f'sensors5 -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer, TILE_ID=TILE_ID)
+
+if __name__ == "__main__":
+    print("__main__")
+    sonde()
+    sonde5()
 # def updateNormChartTipBoard(bench, tile, isTest=False):
 #     if not "label" in bench[0]:
 #         return

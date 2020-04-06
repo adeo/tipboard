@@ -22,6 +22,7 @@ def renderFlipboardHtml(request):  # pragma: no cover
 def getDashboardsPaths(request):  # pragma: no cover
     """ Return the path of layout prensent in the ./tipboard/app/Config """
     paths = ['/' + config_name for config_name in getConfigNames()]
+    print(paths)
     names = getFlipboardTitles()
     return JsonResponse(dict(paths=paths, names=names), safe=False)
 

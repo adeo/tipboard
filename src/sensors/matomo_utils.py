@@ -124,4 +124,4 @@ def getScanFor7Days():
     return list_of_data_to_display
 
 
-print(getScanFor7Days())
+#print(getScanFor7Days())

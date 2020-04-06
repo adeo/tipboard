@@ -48,7 +48,13 @@ def sendDataToTipboard(tile_id=None, data=None, tile_template=None, isTest=False
         configTile['meta'] = json.dumps(meta)
     print(f"{configTile}")
     if not isTest:
-        return requests.post(TIPBOARD_URL + '/push', data=configTile)
+        response = requests.post(TIPBOARD_URL + '/push', data=configTile)
+        if response.status_code != 200:
+            tmpConfig = configTile.copy()
+            tmpConfig['meta'] = None
+            response = requests.post(TIPBOARD_URL + '/push', data=tmpConfig)
+            response = requests.post(TIPBOARD_URL + '/push', data=configTile)
+        return response
 
 
 def buildChartUpdateRandomly(nbrDataset=None, nbrLabel=None, colorTabIndataset=False, data=None):
