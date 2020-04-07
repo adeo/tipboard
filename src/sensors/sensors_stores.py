@@ -280,7 +280,6 @@ def sondeStoreUsedByUsage(num=None, name=None, isTest=False, meta=None):
     end(title=f'store sonde 7 -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer, TILE_ID=TILE_ID)
 
 
-
 def getStoresNetworkByUsage(num=None, name=None):
     dataset = getStoreDeviceUsedByPath(num=num, path=['EF500', 'EF500R', 'TC52BACK', 'TC52FRONT'])
     ulv = "🔼 " + str(dataset['EF500']['online']) + " / " + str(dataset['EF500']['offline']) + " 🔽"
@@ -347,8 +346,6 @@ def sondeStoreByNetWorkUsedByDevice(num=None, name=None, isTest=False, meta=None
     end(title=f'store sonde -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer, TILE_ID=TILE_ID)
 
 
-
-
 def getStoresByDeviceBv(num=None, name=None):
     dataset = getStoreDeviceUsedByPath(num=num, path=['EF500', 'EF500R', 'TC52BACK', 'TC52FRONT'])
     title = f'{name} - {num}'
@@ -406,15 +403,16 @@ def getShopUsedStatus(num=None, name=None):
 
 def sondeShopUsedStatus(num=None, name=None, isTest=False, meta=None):
     if num is None:
-        TILE_ID = 'pie_chart_devise_used'
+        TILE_ID = 'hd_devise_used'
     else:
-        TILE_ID = 'pie_chart_devise_used_' + str(num)
+        TILE_ID = 'hd_devise_used_' + str(num)
 
-    print(f'{getTimeStr()} (+) Starting store sonde 2', flush=True)
+    print(f'{getTimeStr()} (+) Starting store for sonde {TILE_ID} by device for {num}', flush=True)
     start_time = time.time()
-    data = getShopUsedStatus()
-    tipboardAnswer = sendDataToTipboard(data=data, tile_template='pie_chart', tile_id=TILE_ID, isTest=isTest)
-    end(title=f'store sonde 2 -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer, TILE_ID=TILE_ID)
+    data = getShopUsedStatus(num,name)
+    tipboardAnswer = sendDataToTipboard(data=data, tile_template='half_doughnut_chart', tile_id=TILE_ID, isTest=isTest)
+    end(title=f'store  sonde by device {num} -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer,
+        TILE_ID=TILE_ID)
 
 def getShopNetworkStatus(num=None, name=None):
     dataset = getStoreDeviceUsedByPath(num=num, path=['EF500', 'EF500R', 'TC52BACK', 'TC52FRONT'])
@@ -435,15 +433,16 @@ def getShopNetworkStatus(num=None, name=None):
 
 def sondeShopNetworkStatus(num=None, name=None, isTest=False, meta=None):
     if num is None:
-        TILE_ID = 'pie_chart_online_shop'
+        TILE_ID = 'hd_online_shop'
     else:
-        TILE_ID = 'pie_chart_online_shop_' + str(num)
+        TILE_ID = 'hd_online_shop_' + str(num)
 
-    print(f'{getTimeStr()} (+) Starting store sonde 2', flush=True)
+    print(f'{getTimeStr()} (+) Starting store for sonde {TILE_ID} by device for {num}', flush=True)
     start_time = time.time()
-    data = getShopNetworkStatus()
-    tipboardAnswer = sendDataToTipboard(data=data, tile_template='pie_chart', tile_id=TILE_ID, isTest=isTest)
-    end(title=f'store sonde 2 -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer, TILE_ID=TILE_ID)
+    data = getShopNetworkStatus(num, name)
+    tipboardAnswer = sendDataToTipboard(data=data, tile_template='half_doughnut_chart', tile_id=TILE_ID, isTest=isTest)
+    end(title=f'store  sonde by device {num} -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer,
+        TILE_ID=TILE_ID)
 
 def sondeStoreGenerate():
     print(f'{getTimeStr()} (+) Starting generate store', flush=True)

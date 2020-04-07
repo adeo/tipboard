@@ -1,0 +1,43 @@
+details:
+  page_title: Magasin N°020 - Orleans
+layout:
+  - row_1_of_2:
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_bydevices_020
+            title: Nombre de Terminaux
+            classes:
+
+
+      - col_1_of_2:
+          - tile_template: half_doughnut_chart
+            tile_id: hd_online_shop_020
+            title: Orleans 020 - Terminaux OnLine / Offline
+            classes:
+
+      - col_1_of_2 :
+          - tile_template: half_doughnut_chart
+            tile_id: hd_devise_used_020
+            title: Orleans 020 - Nombre de Terminal Utilisé
+            classes:
+
+
+  - row_1_of_2 :
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_020
+            title: Terminaux Orleans 020
+            classes:
+
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_network_020
+            title: Orleans 020 - Répartition des terminaux
+            classes:
+              -
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_used_020
+            title: Orleans 020 - Répartition des Terminaux
+            classes:
+

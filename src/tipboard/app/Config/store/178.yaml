@@ -1,0 +1,43 @@
+details:
+  page_title: Magasin N°178 - Dinard
+layout:
+  - row_1_of_2:
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_bydevices_178
+            title: Nombre de Terminaux
+            classes:
+
+
+      - col_1_of_2:
+          - tile_template: half_doughnut_chart
+            tile_id: hd_online_shop_178
+            title: Dinard 178 - Terminaux OnLine / Offline
+            classes:
+
+      - col_1_of_2 :
+          - tile_template: half_doughnut_chart
+            tile_id: hd_devise_used_178
+            title: Dinard 178 - Nombre de Terminal Utilisé
+            classes:
+
+
+  - row_1_of_2 :
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_178
+            title: Terminaux Dinard 178
+            classes:
+
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_network_178
+            title: Dinard 178 - Répartition des terminaux
+            classes:
+              -
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_used_178
+            title: Dinard 178 - Répartition des Terminaux
+            classes:
+

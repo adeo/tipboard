@@ -34,7 +34,7 @@ layout:
 
         - col_1_of_2 flip-time-6:
             - tile_template: pie_chart
-              tile_id: pie_chart_online_shop
+              tile_id: hd_online_shop
               title: Magasins - Terminaux OnLine / Offline
               classes:
 
@@ -45,7 +45,7 @@ layout:
                 -
         - col_1_of_2 flip-time-6:
             - tile_template: pie_chart
-              tile_id: pie_chart_devise_used
+              tile_id: hd_devise_used
               title: Magasins - Nombre de Terminal Utilisé
               classes:
 

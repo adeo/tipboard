@@ -1,0 +1,43 @@
+details:
+  page_title: Magasin N°172 - Gonesse
+layout:
+  - row_1_of_2:
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_bydevices_172
+            title: Nombre de Terminaux
+            classes:
+
+
+      - col_1_of_2:
+          - tile_template: half_doughnut_chart
+            tile_id: hd_online_shop_172
+            title: Gonesse 172 - Terminaux OnLine / Offline
+            classes:
+
+      - col_1_of_2 :
+          - tile_template: half_doughnut_chart
+            tile_id: hd_devise_used_172
+            title: Gonesse 172 - Nombre de Terminal Utilisé
+            classes:
+
+
+  - row_1_of_2 :
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_172
+            title: Terminaux Gonesse 172
+            classes:
+
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_network_172
+            title: Gonesse 172 - Répartition des terminaux
+            classes:
+              -
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_used_172
+            title: Gonesse 172 - Répartition des Terminaux
+            classes:
+

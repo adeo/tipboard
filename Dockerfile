@@ -17,9 +17,9 @@ WORKDIR /home/app
 
 #COPY src/tipboard src/tipboard
 #COPY src/manage.py src/manage.py
-COPY src/ src/
+#COPY src/ src/
 
-#VOLUME /home/app/src
+VOLUME /home/app/src
 
 COPY requirements.txt .
 COPY entrypoint.sh entrypoint.sh
@@ -34,3 +34,5 @@ EXPOSE 8080
 
 CMD ["bash", "entrypoint.sh"]
 #/developpement/tipboard/src:/home/app/src
+
+#http://pfrlmiserefb03.fr.corp.leroymerlin.com:8090/mcocovid

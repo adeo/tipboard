@@ -1,0 +1,43 @@
+details:
+  page_title: Magasin N°023 - Osny
+layout:
+  - row_1_of_2:
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_bydevices_023
+            title: Nombre de Terminaux
+            classes:
+
+
+      - col_1_of_2:
+          - tile_template: half_doughnut_chart
+            tile_id: hd_online_shop_023
+            title: Osny 023 - Terminaux OnLine / Offline
+            classes:
+
+      - col_1_of_2 :
+          - tile_template: half_doughnut_chart
+            tile_id: hd_devise_used_023
+            title: Osny 023 - Nombre de Terminal Utilisé
+            classes:
+
+
+  - row_1_of_2 :
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_023
+            title: Terminaux Osny 023
+            classes:
+
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_network_023
+            title: Osny 023 - Répartition des terminaux
+            classes:
+              -
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_used_023
+            title: Osny 023 - Répartition des Terminaux
+            classes:
+

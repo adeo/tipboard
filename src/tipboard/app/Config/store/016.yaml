@@ -1,0 +1,43 @@
+details:
+  page_title: Magasin N°016 - Marne la vallee
+layout:
+  - row_1_of_2:
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_bydevices_016
+            title: Nombre de Terminaux
+            classes:
+
+
+      - col_1_of_2:
+          - tile_template: half_doughnut_chart
+            tile_id: hd_online_shop_016
+            title: Marne la vallee 016 - Terminaux OnLine / Offline
+            classes:
+
+      - col_1_of_2 :
+          - tile_template: half_doughnut_chart
+            tile_id: hd_devise_used_016
+            title: Marne la vallee 016 - Nombre de Terminal Utilisé
+            classes:
+
+
+  - row_1_of_2 :
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_016
+            title: Terminaux Marne la vallee 016
+            classes:
+
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_network_016
+            title: Marne la vallee 016 - Répartition des terminaux
+            classes:
+              -
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_used_016
+            title: Marne la vallee 016 - Répartition des Terminaux
+            classes:
+

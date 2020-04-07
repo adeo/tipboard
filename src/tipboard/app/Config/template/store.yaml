@@ -10,14 +10,14 @@ layout:
 
 
       - col_1_of_2:
-          - tile_template: pie_chart
-            tile_id: pie_chart_online_shop_XXX
+          - tile_template: half_doughnut_chart
+            tile_id: hd_online_shop_XXX
             title: NNNNNNNN XXX - Terminaux OnLine / Offline
             classes:
 
       - col_1_of_2 :
-          - tile_template: pie_chart
-            tile_id: pie_chart_devise_used_XXX
+          - tile_template: half_doughnut_chart
+            tile_id: hd_devise_used_XXX
             title: NNNNNNNN XXX - Nombre de Terminal Utilisé
             classes:
 

@@ -1,0 +1,45 @@
+details:
+  page_title: Entrepôt N°447 - Reau
+layout:
+  - row_1_of_2:
+      - col_1_of_2 flip-time-6:
+          - tile_template: big_value
+            tile_id: bv_wh_bydevices_447
+            title: Nombre de terminaux
+            classes:
+
+          - tile_template: just_value
+            tile_id: jv_whs_scans_447
+            title: Nombre de scans Total
+            classes:
+
+      - col_1_of_2:
+          - tile_template: half_doughnut_chart
+            tile_id: hd_online_wh_447
+            title: Reau 447 - Terminaux OnLine / Offline
+            classes:
+
+      - col_1_of_2:
+          - tile_template: half_doughnut_chart
+            tile_id: hd_wh_device_used_447
+            title: Reau 447 - Nombre de Terminal Utilisé
+            classes:
+
+  - row_1_of_2:
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_wh_447
+            title: Terminaux Reau 447
+            classes:
+
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_wh_network_447
+            title: Reau 447 - Répartition des terminaux
+            classes:
+              -
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_wh_used_447
+            title: Reau 447 - Répartition des Terminaux
+            classes:

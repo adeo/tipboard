@@ -2,13 +2,21 @@
 from datetime import datetime, timedelta
 
 import requests
-
+import unidecode
 # ici on enregistre les urls du matomo sur lesquelles on va taper pour les requêtes
+
+
+from src.sensors.soti_utils import getWareHouseDevices, getListWareHouses
+
 base_url = "http://velocity-analytics-open.apps.op.acp.adeo.com/index.php?"
 token = "8b44ade2c46279b0b4678356b7241803"
+warehouses = []
 
 
-# http://velocity-analytics-open.apps.op.acp.adeo.com/index.php?date=today&expanded=1&filter_limit=-1&format=JSON&idSite=1&method=Events.getAction&module=API&period=day&token_auth=anonymous
+# http://velocity-analytics-open.apps.op.acp.adeo.com/index.php?date=today&expanded=1&filter_limit=-1&format=JSON&idSite=1&method=Events.getAction&module=API&period=day&token_auth=anonymous&segment=city==Evry
+# http://velocity-analytics-open.apps.op.acp.adeo.com/index.php?date=today&expanded=1&filter_limit=-1&format=JSON&idSite=1&method=UserCountry.getCity&module=API&period=day&token_auth=anonymous
+# http://velocity-analytics-open.apps.op.acp.adeo.com/index.php?date=today&expanded=1&filter_limit=-1&format=JSON&idSite=1&method=Events.getAction&module=API&period=day&token_auth=anonymous&segment=city==Evry
+
 
 # Paramètres de base d'une requête Matomo
 def basicMatomoRequest(method="", query=None):
@@ -60,8 +68,9 @@ def getMatomoActions(type_of_data=""):
     raise
 
 
-def getCountScans():
+def getActionsByWarehouse(site):
     params = dict()
+    params['segment'] = 'city==' + site
     response = basicMatomoRequest(method="Events.getAction", query=params)
     if response.status_code == 200:
         list_of_data_to_display = dict()
@@ -71,6 +80,30 @@ def getCountScans():
                 value[k] = data[k]
             list_of_data_to_display[data['label']] = value
 
+        return list_of_data_to_display
+    raise
+
+
+def geCountScansByWarehouse(numsite=None):
+    # ['actions]['onScan']['nb_events']
+    if numsite is None:
+        return getCountScans()['onScan']['nb_events']
+    else:
+        if numsite not in list(warehouses.keys()):
+            return 0
+        return warehouses[str(numsite)]['actions']['onScan']['nb_events']
+
+
+def getCountScans(params=None):
+    params = dict()
+    response = basicMatomoRequest(method="Events.getAction", query=params)
+    if response.status_code == 200:
+        list_of_data_to_display = dict()
+        for data in response.json():
+            value = dict()
+            for k in ('nb_uniq_visitors', 'nb_events'):
+                value[k] = data[k]
+            list_of_data_to_display[data['label']] = value
         return list_of_data_to_display
     raise
 
@@ -89,7 +122,6 @@ def getCountEventForDays(dateValue=None):
             for k in ('nb_uniq_visitors', 'nb_events'):
                 value[k] = data[k]
             list_of_data_to_display[data['label']] = value
-
         return list_of_data_to_display
     raise
 
@@ -124,4 +156,32 @@ def getScanFor7Days():
     return list_of_data_to_display
 
 
-#print(getScanFor7Days())
+def getListCity():
+    whs = dict(zip(getListWareHouses().values(), getListWareHouses().keys()))
+    params = dict()
+    response = basicMatomoRequest(method=" UserCountry.getCity", query=params)
+    if response.status_code == 200:
+        list_of_data_to_display = dict()
+        for data in response.json():
+            value = dict()
+            for k in ('city_name', 'nb_actions'):
+                value[k] = data[k]
+            ville = unidecode.unidecode(value['city_name'])
+            value['actions'] = getActionsByWarehouse(value['city_name'])
+            if 'segment' in list(data.keys()):
+                value['segment'] = data['segment'].split(';')[0]
+                list_of_data_to_display[whs[ville]] = value
+            else:
+                value['segment'] = data['label']
+        global warehouses
+        warehouses = list_of_data_to_display
+        return list_of_data_to_display
+        raise
+
+
+if __name__ == "__main__":
+    getWareHouseDevices()
+    getListCity()
+    for site in list(warehouses):
+        print(f"Site Numero {site}\t- Nombre de Scans : {str(geCountScansByWarehouse(site))}")
+    print(f"Tous \t\t\t- Nombre de Scans : {str(getCountScans()['onScan']['nb_events'])}")

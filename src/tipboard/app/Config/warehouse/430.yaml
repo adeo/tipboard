@@ -1,0 +1,40 @@
+details:
+  page_title: Entrepôt N°430 - Mazere
+layout:
+  - row_1_of_2:
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_wh_bydevices_430
+            title: Nombre de terminaux
+            classes:
+
+      - col_1_of_2:
+          - tile_template: half_doughnut_chart
+            tile_id: hd_online_wh_430
+            title: Mazere 430 - Terminaux OnLine / Offline
+            classes:
+
+      - col_1_of_2:
+          - tile_template: half_doughnut_chart
+            tile_id: hd_wh_device_used_430
+            title: Mazere 430 - Nombre de Terminal Utilisé
+            classes:
+
+  - row_1_of_2:
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_wh_430
+            title: Terminaux Mazere 430
+            classes:
+
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_wh_network_430
+            title: Mazere 430 - Répartition des terminaux
+            classes:
+              -
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_wh_used_430
+            title: Mazere 430 - Répartition des Terminaux
+            classes:

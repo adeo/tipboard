@@ -1,0 +1,43 @@
+details:
+  page_title: Magasin N°653 - LMessentiel Molsheim
+layout:
+  - row_1_of_2:
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_bydevices_653
+            title: Nombre de Terminaux
+            classes:
+
+
+      - col_1_of_2:
+          - tile_template: half_doughnut_chart
+            tile_id: hd_online_shop_653
+            title: LMessentiel Molsheim 653 - Terminaux OnLine / Offline
+            classes:
+
+      - col_1_of_2 :
+          - tile_template: half_doughnut_chart
+            tile_id: hd_devise_used_653
+            title: LMessentiel Molsheim 653 - Nombre de Terminal Utilisé
+            classes:
+
+
+  - row_1_of_2 :
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_653
+            title: Terminaux LMessentiel Molsheim 653
+            classes:
+
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_network_653
+            title: LMessentiel Molsheim 653 - Répartition des terminaux
+            classes:
+              -
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_shops_used_653
+            title: LMessentiel Molsheim 653 - Répartition des Terminaux
+            classes:
+

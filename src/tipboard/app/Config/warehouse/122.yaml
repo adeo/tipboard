@@ -1,36 +1,45 @@
 details:
-    page_title: Warehouse N°XXX - Lezennes City
+  page_title: Entrepôt N°122 - Dourges
 layout:
-    - row_1_of_2:
-        - col_1_of_2:
-            - tile_template: just_value
-              tile_id: jv_alldevices
-              title: Nombre de terminaux
-              classes:
+  - row_1_of_2:
+      - col_1_of_2 flip-time-6:
+          - tile_template: big_value
+            tile_id: bv_wh_bydevices_122
+            title: Nombre de terminaux
+            classes:
 
-        - col_1_of_2:
-            - tile_template: pie_chart
-              tile_id: pie_chart_online
-              title: Terminaux OnLine / Offline
-              classes:
+          - tile_template: just_value
+            tile_id: jv_whs_scans_122
+            title: Nombre de scans Total
+            classes:
 
-        - col_1_of_2:
-            - tile_template: pie_chart
-              tile_id: pie_model_warehouse
-              title: Répartition des Models de Terminaux
-              classes:
+      - col_1_of_2:
+          - tile_template: half_doughnut_chart
+            tile_id: hd_online_wh_122
+            title: Dourges 122 - Terminaux OnLine / Offline
+            classes:
 
-    - row_1_of_2:
-        - col_1_of_2:
-            - tile_template: doughnut_chart
-              tile_id: doug_devices_by_warehouse
-              title: Nombre de terminaux par entrepot
-              classes:
+      - col_1_of_2:
+          - tile_template: half_doughnut_chart
+            tile_id: hd_wh_device_used_122
+            title: Dourges 122 - Nombre de Terminal Utilisé
+            classes:
 
-        - col_1_of_2 :
-            - tile_template: just_value
-              tile_id: jv_whs_scans
-              title: Nombre de scans Total
-              classes:
+  - row_1_of_2:
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_wh_122
+            title: Terminaux Dourges 122
+            classes:
 
-
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_wh_network_122
+            title: Dourges 122 - Répartition des terminaux
+            classes:
+              -
+      - col_1_of_2:
+          - tile_template: big_value
+            tile_id: bv_wh_used_122
+            title: Dourges 122 - Répartition des Terminaux
+            classes:
