@@ -22,3 +22,5 @@ tipboard2.0.egg-info/
 /.coverage
 venv/
 tipboar37/
+/src/tipboard/app/Config/warehouse/
+/src/tipboard/app/Config/store/
