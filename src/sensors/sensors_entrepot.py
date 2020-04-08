@@ -1,5 +1,6 @@
 import fileinput
 import time
+import yaml
 from shutil import copyfile
 
 from src.sensors.matomo_utils import getCountScans, geCountScansByWarehouse, getListCity
@@ -8,6 +9,7 @@ from src.sensors.soti_utils import getDevicesAllWareHouse, getAllDevicesOnLine, 
 from src.sensors.utils import end, sendDataToTipboard, getTimeStr
 from src.tipboard.app.properties import BACKGROUND_TAB, COLOR_TAB, user_config_dir
 
+models = ['TC8000', 'WT6000', 'TC52']
 
 def sonde():
     print(f'{getTimeStr()} (+) Starting Warehouses sensors', flush=True)
@@ -372,19 +374,22 @@ def push_big_value(num, TILE_ID , data, meta, tile_template ,isTest):
 #####################################################################################################################
 def createWareHouse(num, name, matomolist):
     path = user_config_dir + "warehouse/" + num + ".yaml"
-    template = user_config_dir + "/template/warehouse.yaml"
-    if num not in matomolist:
-        template = user_config_dir + "/template/warehouse2.yaml"
+    template = user_config_dir + "/template/warehouse.tplyaml"
 
-    copyfile(template, path)
-    with fileinput.FileInput(path, inplace=True, backup=False) as file:
-        for line in file:
-            print(line.replace('XXX', num).replace('NNNNNNNN', name), end='')
+    fileset = open(template, 'rt', encoding="utf-8").read()
+    stream = fileset.replace('XXX', num).replace('NNNNNNNN', name)
+
+    yamldata = yaml.load(stream, Loader=yaml.FullLoader)
+    if num not in matomolist:
+        del yamldata['layout'][0]['row_1_of_2'][0]['col_1_of_2 flip-time-6'][1]
+        yamldata['layout'][0]['row_1_of_2'][0]['col_1_of_2'] = yamldata['layout'][0]['row_1_of_2'][0].pop('col_1_of_2 flip-time-6')
+
+    with open(path, 'w', encoding="utf-8") as file:
+        yaml.dump(yamldata, file, allow_unicode=True)
 
 
 #####################################################################################################################
 def sondeWarehouse():
-    models = ['TC8000', 'WT6000', 'TC52']
     meta = dict(big_value_color=BACKGROUND_TAB[0],
                 fading_background=False)
     print(f'{getTimeStr()} (+) Starting WareHouses sensors', flush=True)
