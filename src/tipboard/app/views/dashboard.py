@@ -1,3 +1,5 @@
+import re
+
 from django.http import JsonResponse, HttpResponse, Http404, HttpResponseRedirect
 from django.contrib.staticfiles import finders
 from django.shortcuts import render
@@ -88,3 +90,5 @@ def demo_controller(request, flagSensors):
             stopTheSensors(scheduler)
         return HttpResponseRedirect('/')
     raise Http404
+if __name__ == "__main__":
+    getDashboardsPaths("/")

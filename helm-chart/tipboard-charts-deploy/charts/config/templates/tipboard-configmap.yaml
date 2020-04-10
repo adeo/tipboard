@@ -6,6 +6,6 @@ metadata:
     app: tipboard
 data:
   layout_config.yaml: |
-{{ .Files.Get "tipboard/layout_config.yaml" | indent 4 }}
+{{ .Files.Get "tipboard/layout_config.yaml.bak" | indent 4 }}
   settings-local.py: |
 {{ .Files.Get "tipboard/settings-local.py" | indent 4 }}

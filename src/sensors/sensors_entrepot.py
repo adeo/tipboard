@@ -1,4 +1,5 @@
 import fileinput
+import os
 import time
 import yaml
 from shutil import copyfile
@@ -373,8 +374,11 @@ def push_big_value(num, TILE_ID , data, meta, tile_template ,isTest):
 
 #####################################################################################################################
 def createWareHouse(num, name, matomolist):
-    path = user_config_dir + "warehouse/" + num + ".yaml"
-    template = user_config_dir + "/template/warehouse.tplyaml"
+    sitefile = user_config_dir + "warehouse/" + num + ".yaml"
+    if os.path.exists(sitefile):
+        print(f'Site {num} - {name} already exists => {sitefile}')
+        return
+    template = user_config_dir + "/template/warehouse.yaml"
 
     fileset = open(template, 'rt', encoding="utf-8").read()
     stream = fileset.replace('XXX', num).replace('NNNNNNNN', name)
@@ -384,7 +388,7 @@ def createWareHouse(num, name, matomolist):
         del yamldata['layout'][0]['row_1_of_2'][0]['col_1_of_2 flip-time-6'][1]
         yamldata['layout'][0]['row_1_of_2'][0]['col_1_of_2'] = yamldata['layout'][0]['row_1_of_2'][0].pop('col_1_of_2 flip-time-6')
 
-    with open(path, 'w', encoding="utf-8") as file:
+    with open(sitefile, 'w', encoding="utf-8") as file:
         yaml.dump(yamldata, file, allow_unicode=True)
 
 

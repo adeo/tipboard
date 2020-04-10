@@ -1,4 +1,6 @@
 import glob, os, yaml
+import re
+
 from src.tipboard.app.properties import DEBUG, user_config_dir
 from src.tipboard.app.utils import getTimeStr
 
@@ -82,9 +84,13 @@ def parseXmlLayout(layout_name='layout_config'):
 def getConfigNames():
     """ Return all configs files' names (without '.yaml' ext.) from user space (.tipboard/) """
     configs_names = list()
-    configs_dir = os.path.join(user_config_dir, '*.yaml')
-    for config_path in glob.glob(configs_dir):  # Get all name of different *.yml present in Config/ directory
-        configs_names.append(config_path.split('/')[-1].replace('.yaml', ''))
+    configs_dir = os.path.join(user_config_dir, '**/*.yaml')
+    r = re.compile(r".*/Config/(.*)\.yaml")
+    for config_path in glob.glob(configs_dir, recursive=True):  # Get all name of different *.yml present in Config/ directory
+        config = r.sub("\\1", str(config_path).replace("\\", "/"))
+        matches = re.search(r"template/[A-z0-9]+$", config)
+        if not matches:
+            configs_names.append(config)
         if not configs_names:
             raise Exception(f'No config (.yaml) file found in {os.path.join(user_config_dir, "*.yaml")}')
     return configs_names
@@ -115,6 +121,7 @@ def getFlipboardTitles():
     listNameDashboard = list()
     rcx = 1
     for config in config_names:
+        print(f'Config : {config}')
         config = parseXmlLayout(config)
         if 'details' in config and 'page_title' in config['details']:
             listNameDashboard.append(config['details']['page_title'])
