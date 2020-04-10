@@ -1,51 +1,23 @@
-import fileinput
 import os
 import time
-from shutil import copyfile
+from threading import Thread
 
-import requests
+import yaml
 
-from src.sensors.soti_utils import getStoreDeviceUsedByPath, getDevicesStore, getListStores
+from src.sensors.soti_utils import getStoreDeviceUsedByPath, getListStores, getStoreDevices
 from src.sensors.utils import getTimeStr, sendDataToTipboard, end
-from src.tipboard.app.properties import BACKGROUND_TAB, COLOR_TAB, user_config_dir, TIPBOARD_URL
+from src.tipboard.app.properties import BACKGROUND_TAB, COLOR_TAB, user_config_dir
 
 data = dict()
 
 
-def sondeStore(first=False):
-    if first:
-        meta=None
-        print(f'{getTimeStr()} (+) Starting first execution stores sensors', flush=True)
-    else:
-        meta = dict(big_value_color=BACKGROUND_TAB[0],
-                    fading_background=False)
-        print(f'{getTimeStr()} (+) Starting stores sensors', flush=True)
-
-    getDevicesStore()
-    global data
-    data = getStoreDeviceUsedByPath(path=['EF500', 'EF500R', 'TC52BACK', 'TC52FRONT'])
-    sondeStoresAllDevice()
-
-    #sondeStore5()
-    #sondeStore2()
-    #sondeStore3()
-    #sondeStore4()
-    #sondeStore6()
-    #sondeStore7()
-
-    LaunchStore(meta=meta)
-
-    sondeStoreGenerate()
-    print(f'{getTimeStr()} (+) Finish stores sensors', flush=True)
-
-
-def LaunchStore(meta=None):
-    sondeShopByDevices(meta=meta)
-    sondeShopNetworkStatus(meta=meta)
-    sondeShopUsedStatus(meta=meta)
-    sondeStoreByNetWorkUsedByDevice(meta=meta)
-    sondeStoreNetWorkByUsage(meta=meta)
-    sondeStoreUsedByUsage(meta=meta)
+# def LaunchStore(meta=None):
+#     sondeShopByDevices(meta=meta)
+#     sondeShopNetworkStatus(meta=meta)
+#     sondeShopUsedStatus(meta=meta)
+#     sondeStoreByNetWorkUsedByDevice(meta=meta)
+#     sondeStoreNetWorkByUsage(meta=meta)
+#     sondeStoreUsedByUsage(meta=meta)
 
 def getStoresAllDevice():
     return {
@@ -243,114 +215,12 @@ def sondeStore7(isTest=False):
     end(title=f'store sonde 7 -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer, TILE_ID=TILE_ID)
 
 
+####################################################################################################################
 
-#######################################################################
-
-def getStoreUsedByUsage(num=None, name=None):
-    dataset = getStoreDeviceUsedByPath(num=num, path=['EF500', 'EF500R', 'TC52BACK', 'TC52FRONT'])
-    ulv = "💼 " + str(dataset['EF500']['used']) + "\t/ " + str(dataset['EF500']['unUsed']) + " 💤"
-    llv = "💼 " + str(dataset['EF500R']['used']) + "\t/ " + str(dataset['EF500R']['unUsed']) + " 💤"
-    urv = "💼 " + str(dataset['TC52FRONT']['used']) + "\t/" + str(dataset['TC52FRONT']['unUsed']) + " 💤"
-    lrv = "💼 " + str(dataset['TC52BACK']['used']) + "\t/ " + str(dataset['TC52BACK']['unUsed']) + " 💤"
-    return {
-        'title': '',
-        'description': 'Répartition des terminaux Utilisés / Libres',
-        'big-value': "💼 " + str(dataset['result']['used']) + " / " + str(dataset['result']['unUsed']) + " 💤",
-        'upper-left-label': 'EF500 Vente:',
-        'upper-left-value': ulv,
-        'lower-left-label': 'EF500R Log:',
-        'lower-left-value': llv,
-        'upper-right-label': 'TC52 Vente:',
-        'upper-right-value': urv,
-        'lower-right-label': 'TC52 Log:',
-        'lower-right-value': lrv
-    }
-
-
-def sondeStoreUsedByUsage(num=None, name=None, isTest=False, meta=None):
-    if num is None:
-        TILE_ID = 'bv_shops_used'
-    else:
-        TILE_ID = 'bv_shops_used_' + str(num)
-
-    print(f'{getTimeStr()} (+) Starting store for sonde {TILE_ID} by device for {num}', flush=True)
-    start_time = time.time()
-    data = getStoreUsedByUsage(num,name)
-    tipboardAnswer = sendDataToTipboard(data=data, tile_template='big_value', tile_id=TILE_ID, meta=meta, isTest=isTest)
-    end(title=f'store sonde 7 -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer, TILE_ID=TILE_ID)
-
-
-def getStoresNetworkByUsage(num=None, name=None):
-    dataset = getStoreDeviceUsedByPath(num=num, path=['EF500', 'EF500R', 'TC52BACK', 'TC52FRONT'])
-    ulv = "🔼 " + str(dataset['EF500']['online']) + " / " + str(dataset['EF500']['offline']) + " 🔽"
-    llv = "🔼 " + str(dataset['EF500R']['online']) + " / " + str(dataset['EF500R']['offline']) + " 🔽"
-    urv = "🔼 " + str(dataset['TC52FRONT']['online']) + " / " + str(dataset['TC52FRONT']['offline']) + " 🔽"
-    lrv = "🔼 " + str(dataset['TC52BACK']['online']) + " / " + str(dataset['TC52BACK']['offline']) + " 🔽"
-    return {
-        'title': '',
-        'description': 'Répartition des terminaux En Ligne / Hors Ligne',
-        'big-value': "🔼 " + str(dataset['result']['online']) + " / " + str(dataset['result']['offline']) + " 🔽",
-        'upper-left-label': 'EF500 Vente:',
-        'upper-left-value': ulv,
-        'lower-left-label': 'EF500R Log:',
-        'lower-left-value': llv,
-        'upper-right-label': 'TC52 Vente:',
-        'upper-right-value': urv,
-        'lower-right-label': 'TC52 Log:',
-        'lower-right-value': lrv
-    }
-
-def sondeStoreNetWorkByUsage(num=None, name=None, isTest=False, meta=None):
-    if num is None:
-        TILE_ID = 'bv_shops_network'
-    else:
-        TILE_ID = 'bv_shops_network_' + str(num)
-    print(f'{getTimeStr()} (+) Starting store for sonde {TILE_ID} by device for {num}', flush=True)
-    start_time = time.time()
-    data = getStoresNetworkByUsage(num,name)
-    tipboardAnswer = sendDataToTipboard(data=data, tile_template='big_value', tile_id=TILE_ID, meta=meta, isTest=isTest)
-    end(title=f'store sonde for {num}-> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer, TILE_ID=TILE_ID)
-
-
-def getStoresDeviceNetWorkUsed(num=None, name=None):
-    dataset = getStoreDeviceUsedByPath(num=num, path=['EF500', 'EF500R', 'TC52BACK', 'TC52FRONT'])
-    ulv = dataset['result']['online']
-    llv = dataset['result']['offline']
-    urv = dataset['result']['used']
-    lrv = dataset['result']['unUsed']
-    return {
-        'title': '',
-        'description': 'Information sur les EF500(R) et TC52',
-        'big-value': dataset['result']['total'],
-        'upper-left-label': 'Connectés:',
-        'upper-left-value': ulv,
-        'lower-left-label': 'Non Connectés:',
-        'lower-left-value': llv,
-        'upper-right-label': 'Utilisés:',
-        'upper-right-value': urv,
-        'lower-right-label': 'Non Utilisés:',
-        'lower-right-value': lrv
-    }
-
-
-def sondeStoreByNetWorkUsedByDevice(num=None, name=None, isTest=False, meta=None):
-    if num is None:
-        TILE_ID = 'bv_shops'
-    else:
-        TILE_ID = 'bv_shops_' + str(num)
-
-    print(f'{getTimeStr()} (+) Starting store for sonde {TILE_ID} by device for {num}', flush=True)
-    start_time = time.time()
-    data = getStoresDeviceNetWorkUsed(num, name)
-    tipboardAnswer = sendDataToTipboard(data=data, tile_template='big_value', tile_id=TILE_ID, meta=meta, isTest=isTest)
-    end(title=f'store sonde -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer, TILE_ID=TILE_ID)
-
-
-def getStoresByDeviceBv(num=None, name=None):
-    dataset = getStoreDeviceUsedByPath(num=num, path=['EF500', 'EF500R', 'TC52BACK', 'TC52FRONT'])
+def getStoresByDeviceBv(dataset, num=None, name=None):
     title = f'{name} - {num}'
     if num is None:
-        title='Tous les Magasins'
+        title = 'Tous les Magasins'
     bv = dataset['result']['total']
     ulv = dataset['EF500']['total']
     llv = dataset['EF500R']['total']
@@ -371,51 +241,18 @@ def getStoresByDeviceBv(num=None, name=None):
         'lower-right-value': str(lrv)
     }
 
-def sondeShopByDevices(num=None, name=None, isTest=False, meta=None):
-    if num is None:
-        TILE_ID = 'bv_shops_bydevices'
-    else:
-        TILE_ID = 'bv_shops_bydevices_' + str(num)
 
-    print(f'{getTimeStr()} (+) Starting store for sonde {TILE_ID} by device for {num}', flush=True)
-    start_time = time.time()
-    data = getStoresByDeviceBv(num, name)
-    tipboardAnswer = sendDataToTipboard(data=data, tile_template='big_value', tile_id=TILE_ID, meta=meta, isTest=isTest)
-    end(title=f'store  sonde by device {num} -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer,
-        TILE_ID=TILE_ID)
+def sondeShopByDevices(num=None, name=None, isTest=False, meta=None, dataset=None):
+    TILE_ID = 'bv_shops_bydevices'
+    if num is not None:
+        TILE_ID = f'{TILE_ID}_{str(num)}'
+    data = getStoresByDeviceBv(dataset=dataset, num=num, name=name)
+    push_values(num, TILE_ID, data, meta, 'big_value', isTest)
 
-def getShopUsedStatus(num=None, name=None):
-    dataset = getStoreDeviceUsedByPath(num=num, path=['EF500', 'EF500R', 'TC52BACK', 'TC52FRONT'])
-    tileData = dict()
-    tileData['title'] = {'display': False, 'text': 'Utilisé / Non Utilisé'}
-    tileData['labels'] = ['Utilisé', 'Libre']
-    tileData['borderColor'] = '#525252'
-    tileData['legend'] = dict(display=True)
-    tileData['plugins'] = dict(labels=True)
-    tileData['datasets'] = list()
-    tileData['datasets'].append(
-        dict(label=f'OnLine',
-             data=[dataset['result']['used'], dataset['result']['unUsed']],
-             backgroundColor=[COLOR_TAB[1], COLOR_TAB[5]],
-             borderColor='#525252'))
-    tileData['option'] = {'label': 'false'}
-    return tileData
 
-def sondeShopUsedStatus(num=None, name=None, isTest=False, meta=None):
-    if num is None:
-        TILE_ID = 'hd_devise_used'
-    else:
-        TILE_ID = 'hd_devise_used_' + str(num)
+####################################################################################################################
 
-    print(f'{getTimeStr()} (+) Starting store for sonde {TILE_ID} by device for {num}', flush=True)
-    start_time = time.time()
-    data = getShopUsedStatus(num,name)
-    tipboardAnswer = sendDataToTipboard(data=data, tile_template='half_doughnut_chart', tile_id=TILE_ID, isTest=isTest)
-    end(title=f'store  sonde by device {num} -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer,
-        TILE_ID=TILE_ID)
-
-def getShopNetworkStatus(num=None, name=None):
-    dataset = getStoreDeviceUsedByPath(num=num, path=['EF500', 'EF500R', 'TC52BACK', 'TC52FRONT'])
+def getShopNetworkStatus(dataset, num=None, name=None):
     tileData = dict()
     tileData['title'] = {'display': False, 'text': 'OnLine / OffLine'}
     tileData['labels'] = ['En ligne', 'Hors ligne']
@@ -431,18 +268,134 @@ def getShopNetworkStatus(num=None, name=None):
     tileData['option'] = dict()
     return tileData
 
-def sondeShopNetworkStatus(num=None, name=None, isTest=False, meta=None):
-    if num is None:
-        TILE_ID = 'hd_online_shop'
-    else:
-        TILE_ID = 'hd_online_shop_' + str(num)
 
-    print(f'{getTimeStr()} (+) Starting store for sonde {TILE_ID} by device for {num}', flush=True)
-    start_time = time.time()
-    data = getShopNetworkStatus(num, name)
-    tipboardAnswer = sendDataToTipboard(data=data, tile_template='half_doughnut_chart', tile_id=TILE_ID, isTest=isTest)
-    end(title=f'store  sonde by device {num} -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer,
-        TILE_ID=TILE_ID)
+def sondeShopNetworkStatus(num=None, name=None, isTest=False, meta=None, dataset=None):
+    TILE_ID = 'hd_online_shop'
+    if num is not None:
+        TILE_ID = f'{TILE_ID}_{str(num)}'
+    data = getShopNetworkStatus(dataset=dataset, num=num, name=name)
+    push_values(num, TILE_ID, data, meta, 'half_doughnut_chart', isTest)
+
+
+####################################################################################################################
+def getShopUsedStatus(dataset, num=None, name=None):
+    tileData = dict()
+    tileData['title'] = {'display': False, 'text': 'Utilisé / Non Utilisé'}
+    tileData['labels'] = ['Utilisé', 'Libre']
+    tileData['borderColor'] = '#525252'
+    tileData['legend'] = dict(display=True)
+    tileData['plugins'] = dict(labels=True)
+    tileData['datasets'] = list()
+    tileData['datasets'].append(
+        dict(label=f'OnLine',
+             data=[dataset['result']['used'], dataset['result']['unUsed']],
+             backgroundColor=[COLOR_TAB[1], COLOR_TAB[5]],
+             borderColor='#525252'))
+    tileData['option'] = {'label': 'false'}
+    return tileData
+
+
+def sondeShopUsedStatus(num=None, name=None, isTest=False, meta=None, dataset=None):
+    TILE_ID = 'hd_devise_used'
+    if num is not None:
+        TILE_ID = f'{TILE_ID}_{str(num)}'
+    data = getShopUsedStatus(dataset=dataset, num=num, name=name)
+    push_values(num, TILE_ID, data, meta, 'half_doughnut_chart', isTest)
+
+
+####################################################################################################################
+
+def getStoresDeviceNetWorkUsed(dataset, num=None, name=None):
+    ulv = dataset['result']['online']
+    llv = dataset['result']['offline']
+    urv = dataset['result']['used']
+    lrv = dataset['result']['unUsed']
+    return {
+        'title': '',
+        'description': 'Information sur les EF500(R) et TC52',
+        'big-value': dataset['result']['total'],
+        'upper-left-label': 'Connectés:',
+        'upper-left-value': ulv,
+        'lower-left-label': 'Non Connectés:',
+        'lower-left-value': llv,
+        'upper-right-label': 'Utilisés:',
+        'upper-right-value': urv,
+        'lower-right-label': 'Non Utilisés:',
+        'lower-right-value': lrv
+    }
+
+
+def sondeStoreByNetWorkUsedByDevice(num=None, name=None, isTest=False, meta=None, dataset=None):
+    TILE_ID = 'bv_shops'
+    if num is not None:
+        TILE_ID = f'{TILE_ID}_{str(num)}'
+    data = getStoresDeviceNetWorkUsed(dataset=dataset, num=num, name=name)
+    push_values(num, TILE_ID, data, meta, 'big_value', isTest)
+
+
+####################################################################################################################
+
+def getStoresNetworkByUsage(dataset, num=None, name=None):
+    ulv = "🔼 " + str(dataset['EF500']['online']) + " / " + str(dataset['EF500']['offline']) + " 🔽"
+    llv = "🔼 " + str(dataset['EF500R']['online']) + " / " + str(dataset['EF500R']['offline']) + " 🔽"
+    urv = "🔼 " + str(dataset['TC52FRONT']['online']) + " / " + str(dataset['TC52FRONT']['offline']) + " 🔽"
+    lrv = "🔼 " + str(dataset['TC52BACK']['online']) + " / " + str(dataset['TC52BACK']['offline']) + " 🔽"
+    return {
+        'title': '',
+        'description': 'Répartition des terminaux En Ligne / Hors Ligne',
+        'big-value': "🔼 " + str(dataset['result']['online']) + " / " + str(dataset['result']['offline']) + " 🔽",
+        'upper-left-label': 'EF500 Vente:',
+        'upper-left-value': ulv,
+        'lower-left-label': 'EF500R Log:',
+        'lower-left-value': llv,
+        'upper-right-label': 'TC52 Vente:',
+        'upper-right-value': urv,
+        'lower-right-label': 'TC52 Log:',
+        'lower-right-value': lrv
+    }
+
+
+def sondeStoreNetWorkByUsage(num=None, name=None, isTest=False, meta=None, dataset=None):
+    TILE_ID = 'bv_shops_network'
+    if num is not None:
+        TILE_ID = f'{TILE_ID}_{str(num)}'
+    data = getStoresNetworkByUsage(dataset=dataset, num=num, name=name)
+    push_values(num, TILE_ID, data, meta, 'big_value', isTest)
+
+
+####################################################################################################################
+
+
+def getStoreUsedByUsage(dataset, num=None, name=None):
+    # dataset = getStoreDeviceUsedByPath(num=num, path=['EF500', 'EF500R', 'TC52BACK', 'TC52FRONT'])
+    ulv = "💼 " + str(dataset['EF500']['used']) + "\t/ " + str(dataset['EF500']['unUsed']) + " 💤"
+    llv = "💼 " + str(dataset['EF500R']['used']) + "\t/ " + str(dataset['EF500R']['unUsed']) + " 💤"
+    urv = "💼 " + str(dataset['TC52FRONT']['used']) + "\t/" + str(dataset['TC52FRONT']['unUsed']) + " 💤"
+    lrv = "💼 " + str(dataset['TC52BACK']['used']) + "\t/ " + str(dataset['TC52BACK']['unUsed']) + " 💤"
+    return {
+        'title': '',
+        'description': 'Répartition des terminaux Utilisés / Libres',
+        'big-value': "💼 " + str(dataset['result']['used']) + " / " + str(dataset['result']['unUsed']) + " 💤",
+        'upper-left-label': 'EF500 Vente:',
+        'upper-left-value': ulv,
+        'lower-left-label': 'EF500R Log:',
+        'lower-left-value': llv,
+        'upper-right-label': 'TC52 Vente:',
+        'upper-right-value': urv,
+        'lower-right-label': 'TC52 Log:',
+        'lower-right-value': lrv
+    }
+
+
+def sondeStoreUsedByUsage(num=None, name=None, isTest=False, meta=None, dataset=None):
+    TILE_ID = 'bv_shops_used'
+    if num is not None:
+        TILE_ID = f'{TILE_ID}_{str(num)}'
+    data = getStoreUsedByUsage(dataset=dataset, num=num, name=name)
+    push_values(num, TILE_ID, data, meta, 'big_value', isTest)
+
+
+#####################################################################################################################
 
 def sondeStoreGenerate():
     print(f'{getTimeStr()} (+) Starting generate store', flush=True)
@@ -461,32 +414,99 @@ def sondeStoreGenerate():
         nom = str(v)
         createStore(num, nom)
         sondeShopByDevices(num, nom, meta=meta)
-        sondeShopNetworkStatus(num, nom , meta=None)
-        sondeShopUsedStatus(num, nom , meta=None)
+        sondeShopNetworkStatus(num, nom, meta=None)
+        sondeShopUsedStatus(num, nom, meta=None)
         sondeStoreByNetWorkUsedByDevice(num, nom, meta=meta)
         sondeStoreNetWorkByUsage(num, nom, meta=meta)
         sondeStoreUsedByUsage(num, nom, meta=meta)
     print(f'{getTimeStr()} (+) Finish generate store', flush=True)
 
 
+########################################################################################################################
+
 def createStore(num, name):
-    path = user_config_dir + "store/" + num + ".yaml"
+    sitefile = user_config_dir + "store/" + num + ".yaml"
+    if os.path.exists(sitefile):
+        print(f'Site {num} - {name} already exists => {sitefile}')
+        return
     template = user_config_dir + "/template/store.yaml"
-    first = True
-    if os.path.exists(path):
-        first = False
+    fileset = open(template, 'rt', encoding="utf-8").read()
+    stream = fileset.replace('XXX', num).replace('NNNNNNNN', name)
+    yamldata = yaml.load(stream, Loader=yaml.FullLoader)
+    with open(sitefile, 'w', encoding="utf-8") as file:
+        yaml.dump(yamldata, file, allow_unicode=True)
 
-    copyfile(template, path)
-    with fileinput.FileInput(path, inplace=True, backup=False) as file:
-        for line in file:
-            print(line.replace('XXX', num).replace('NNNNNNNN', name), end='')
 
-    if first:
-        sondeShopByDevices(num, name, meta=None)
-        sondeStoreByNetWorkUsedByDevice(num, name, meta=None)
-        sondeStoreNetWorkByUsage(num, name, meta=None)
-        sondeStoreUsedByUsage(num, name, meta=None)
+######################################################################################################################
+##Function push value
+def push_values(num, TILE_ID, data, meta, tile_template, isTest):
+    if num is None:
+        num = "All"
+    start_time = time.time()
+    print(f'{getTimeStr()} (+) Starting store for sonde {TILE_ID} by device for {num}', flush=True)
+    tipboardAnswer = sendDataToTipboard(tile_id=TILE_ID, data=data, tile_template=tile_template, meta=meta,
+                                        isTest=isTest)
+    end(title=f'store sonde by device {num} -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer,
+        TILE_ID=TILE_ID)
+
+
+######################################################################################################################
+
+def sondeStore():
+    usages = ['EF500', 'EF500R', 'TC52BACK', 'TC52FRONT']
+    meta = dict(big_value_color=BACKGROUND_TAB[0],
+                fading_background=False)
+    print(f'{getTimeStr()} (+) Starting stores sensors', flush=True)
+
+    getStoreDevices()
+    stores = getListStores()
+    dataset = getStoreDeviceUsedByPath(num=None, path=usages)
+    multiSondeStore(None, None, dataset, meta)
+
+    threads = []
+    for num, name in stores.items():
+        t = threadSondeSotre(num, name, meta, usages)
+        threads.append(t)
+        t.start()
+    for x in threads:
+        x.join()
+
+    print(f'{getTimeStr()} (+) Finish stores sensors', flush=True)
+
+
+#####################################################################################################################
+
+def thread_store(num, name, meta, usages):
+    createStore(num, name)
+    dataset = getStoreDeviceUsedByPath(num=num, path=usages)
+    multiSondeStore(num, name, dataset, meta)
+
+
+#####################################################################################################################
+def multiSondeStore(num, name, dataset, meta):
+    sondeShopByDevices(num=num, name=name, meta=meta, dataset=dataset)
+    sondeShopNetworkStatus(num=num, name=name, meta=meta, dataset=dataset)
+    sondeShopUsedStatus(num=num, name=name, meta=meta, dataset=dataset)
+    sondeStoreByNetWorkUsedByDevice(num=num, name=name, meta=meta, dataset=dataset)
+    sondeStoreNetWorkByUsage(num=num, name=name, meta=meta, dataset=dataset)
+    sondeStoreUsedByUsage(num=num, name=name, meta=meta, dataset=dataset)
+
 
 if __name__ == "__main__":
     print("__main__")
     sondeStore()
+
+
+class threadSondeSotre(Thread):
+    def __init__(self, num, name, meta, usages):
+        Thread.__init__(self)
+        self.num = num
+        self.name = name
+        self.meta = meta
+        self.usages = usages
+
+    def run(self):
+        """Code à exécuter pendant l'exécution du thread."""
+        createStore(self.num, self.name)
+        dataset = getStoreDeviceUsedByPath(num=self.num, path=self.usages)
+        multiSondeStore(self.num, self.name, dataset, self.meta)

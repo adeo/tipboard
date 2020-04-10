@@ -58,7 +58,7 @@ def getStoreDevices():
                     if not m.group(2) in _stores.keys():
                         _stores[m.group(2)] = m.group(3).replace('_', ' ')
 
-                    list_of_devices.append(
+                    storedevices.append(
                         {
                             'serial': data['serial'],
                             'model': data['model'],
@@ -72,7 +72,7 @@ def getStoreDevices():
                         })
         global stores
         stores = sortedDict(_stores)
-        return list_of_devices
+        return storedevices
     raise
 
 

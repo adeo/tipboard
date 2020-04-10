@@ -263,7 +263,7 @@ def getWareHouseUsedStatus(dataset, num=None, name=None):
     return tileData
 
 
-def sondeShopUsedStatus(num=None, name=None, isTest=False, meta=None, dataset=None):
+def sondeWareHouseUsedStatus(num=None, name=None, isTest=False, meta=None, dataset=None):
     TILE_ID = 'hd_wh_device_used'
     if num is not None:
         TILE_ID = f'{TILE_ID}_{str(num)}'
@@ -418,7 +418,7 @@ def multiSondeswarehouse(num, name, dataset, meta):
     sondeWareHouseByDevices(num=num, name=name, meta=meta, dataset=dataset)
     sondeWareHouseScanCount(num=num, name=name, meta=meta)
     sondeWareHouseNetworkStatus(num=num, name=name, meta=meta, dataset=dataset)
-    sondeShopUsedStatus(num=num, name=name, meta=meta, dataset=dataset)
+    sondeWareHouseUsedStatus(num=num, name=name, meta=meta, dataset=dataset)
     sondeWareHouseByNetWorkUsedByDevice(num=num, name=name, meta=meta, dataset=dataset)
     sondeWareHouseNetWorkByUsage(num=num, name=name, meta=meta, dataset=dataset)
     sondeWareHouseUsedByUsage(num=num, name=name, meta=meta, dataset=dataset)
