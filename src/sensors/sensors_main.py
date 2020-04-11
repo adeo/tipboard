@@ -28,10 +28,10 @@ def scheduleYourSensors(scheduler):  # pragma: no cover
     #every = 1 * 30
     #scheduler.add_job(sonde1, 'interval', seconds=60*1)
     #addSchedule(scheduler, sondeStore(first=True), timeToRun=now + timedelta(milliseconds=10 * 1), second=1000*60*60*24)
-    #addSchedule(scheduler, sonde, timeToRun=now + timedelta(milliseconds=1000 * 1), second=every)
-    #addSchedule(scheduler, sonde5, timeToRun=now + timedelta(milliseconds=1000 * 2), second=60*3)
-    addSchedule(scheduler, sondeStore, timeToRun=now + timedelta(milliseconds=1000 * 2), second=every)
-    #addSchedule(scheduler, sondeWarehouse, timeToRun=now + timedelta(milliseconds=1000 * 2), second=every)
+    addSchedule(scheduler, sonde, timeToRun=now + timedelta(milliseconds=1000 * 1), second=every)
+    addSchedule(scheduler, sonde5, timeToRun=now + timedelta(milliseconds=1000 * 2), second=60*3)
+    addSchedule(scheduler, sondeStore, timeToRun=now + timedelta(milliseconds=1000 * 30), second=every)
+    addSchedule(scheduler, sondeWarehouse, timeToRun=now + timedelta(milliseconds=1000 * 90), second=every)
 
     #addSchedule(scheduler, sonde3, timeToRun=now + timedelta(milliseconds=100 * 3), second=every)
     #addSchedule(scheduler, sonde4, timeToRun=now + timedelta(milliseconds=100 * 4), second=every)

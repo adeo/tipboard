@@ -1,3 +1,4 @@
+import multiprocessing
 import os
 import time
 from threading import Thread
@@ -453,6 +454,7 @@ def push_values(num, TILE_ID, data, meta, tile_template, isTest):
 ######################################################################################################################
 
 def sondeStore():
+    start_time = time.time()
     usages = ['EF500', 'EF500R', 'TC52BACK', 'TC52FRONT']
     meta = dict(big_value_color=BACKGROUND_TAB[0],
                 fading_background=False)
@@ -460,23 +462,26 @@ def sondeStore():
 
     getStoreDevices()
     stores = getListStores()
+
     dataset = getStoreDeviceUsedByPath(num=None, path=usages)
     multiSondeStore(None, None, dataset, meta)
 
-    threads = []
+    processCount = 8*os.cpu_count()
+    print(f'Number of CPU : {os.cpu_count()} process : {processCount} ')
+    pool = multiprocessing.Pool(processes=processCount)
+
     for num, name in stores.items():
-        t = threadSondeSotre(num, name, meta, usages)
-        threads.append(t)
-        t.start()
-    for x in threads:
-        x.join()
+        pool.apply_async(storeProcessing, args=(num, name, meta, usages))
+
+    pool.close()
+    pool.join()
 
     print(f'{getTimeStr()} (+) Finish stores sensors', flush=True)
-
+    print(f'Number of CPU : {os.cpu_count()} for {processCount} PoolProcessing --- {time.time() - start_time} seconds ---')
 
 #####################################################################################################################
 
-def thread_store(num, name, meta, usages):
+def storeProcessing(num, name, meta, usages):
     createStore(num, name)
     dataset = getStoreDeviceUsedByPath(num=num, path=usages)
     multiSondeStore(num, name, dataset, meta)
@@ -495,18 +500,3 @@ def multiSondeStore(num, name, dataset, meta):
 if __name__ == "__main__":
     print("__main__")
     sondeStore()
-
-
-class threadSondeSotre(Thread):
-    def __init__(self, num, name, meta, usages):
-        Thread.__init__(self)
-        self.num = num
-        self.name = name
-        self.meta = meta
-        self.usages = usages
-
-    def run(self):
-        """Code à exécuter pendant l'exécution du thread."""
-        createStore(self.num, self.name)
-        dataset = getStoreDeviceUsedByPath(num=self.num, path=self.usages)
-        multiSondeStore(self.num, self.name, dataset, self.meta)

@@ -1,4 +1,5 @@
 import fileinput
+import multiprocessing
 import os
 import time
 import yaml
@@ -394,6 +395,7 @@ def createWareHouse(num, name, matomolist):
 
 #####################################################################################################################
 def sondeWarehouse():
+    start_time = time.time()
     meta = dict(big_value_color=BACKGROUND_TAB[0],
                 fading_background=False)
     print(f'{getTimeStr()} (+) Starting WareHouses sensors', flush=True)
@@ -405,12 +407,28 @@ def sondeWarehouse():
     dataset = getWareHouseDeviceUsedByModel(num=None, path=models)
     multiSondeswarehouse(None, None, dataset, meta)
 
+    processCount = 8*os.cpu_count()
+    print(f'Number of CPU : {os.cpu_count()} process : {processCount} ')
+    pool = multiprocessing.Pool(processes=processCount)
+
     for num, name in warehouses.items():
-        createWareHouse(num, name, matomolist)
-        dataset = getWareHouseDeviceUsedByModel(num=num, path=models)
-        multiSondeswarehouse(num, name, dataset, meta)
+        pool.apply_async(wareHouseProcessing,args=(num, name, meta, matomolist))
+
+    pool.close()
+    pool.join()
 
     print(f'{getTimeStr()} (+) Finish WareHouses sensors', flush=True)
+    print(f'Number of CPU : {os.cpu_count()} for {processCount} PoolProcessing --- {time.time() - start_time} seconds ---')
+
+###############################################################################################################################
+
+def wareHouseProcessing(num, name, meta, matomolist):
+    createWareHouse(num, name, matomolist)
+    dataset = getWareHouseDeviceUsedByModel(num=num, path=models)
+    multiSondeswarehouse(num, name, dataset, meta)
+
+
+###############################################################################################################################
 
 
 def multiSondeswarehouse(num, name, dataset, meta):
