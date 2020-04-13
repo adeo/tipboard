@@ -1,15 +1,16 @@
 import multiprocessing
 import os
-import time
-from threading import Thread
+import threading
 
+import time
 import yaml
 
 from src.sensors.soti_utils import getStoreDeviceUsedByPath, getListStores, getStoreDevices
-from src.sensors.utils import getTimeStr, sendDataToTipboard, end
+from src.sensors.utils import getTimeStr, sendDataToTipboard, end, poolProcessing, waitFinishPool
 from src.tipboard.app.properties import BACKGROUND_TAB, COLOR_TAB, user_config_dir
 
 data = dict()
+usages = ['EF500', 'EF500R', 'TC52BACK', 'TC52FRONT']
 
 
 # def LaunchStore(meta=None):
@@ -455,7 +456,6 @@ def push_values(num, TILE_ID, data, meta, tile_template, isTest):
 
 def sondeStore():
     start_time = time.time()
-    usages = ['EF500', 'EF500R', 'TC52BACK', 'TC52FRONT']
     meta = dict(big_value_color=BACKGROUND_TAB[0],
                 fading_background=False)
     print(f'{getTimeStr()} (+) Starting stores sensors', flush=True)
@@ -465,23 +465,16 @@ def sondeStore():
 
     dataset = getStoreDeviceUsedByPath(num=None, path=usages)
     multiSondeStore(None, None, dataset, meta)
-
-    processCount = 8*os.cpu_count()
-    print(f'Number of CPU : {os.cpu_count()} process : {processCount} ')
-    pool = multiprocessing.Pool(processes=processCount)
-
+    pool = poolProcessing()
     for num, name in stores.items():
-        pool.apply_async(storeProcessing, args=(num, name, meta, usages))
-
-    pool.close()
-    pool.join()
-
+        pool.apply_async(storeProcessing, args=(num, name, meta))
+    waitFinishPool(start_time=start_time, pool=pool)
     print(f'{getTimeStr()} (+) Finish stores sensors', flush=True)
-    print(f'Number of CPU : {os.cpu_count()} for {processCount} PoolProcessing --- {time.time() - start_time} seconds ---')
+
 
 #####################################################################################################################
 
-def storeProcessing(num, name, meta, usages):
+def storeProcessing(num, name, meta):
     createStore(num, name)
     dataset = getStoreDeviceUsedByPath(num=num, path=usages)
     multiSondeStore(num, name, dataset, meta)
@@ -489,12 +482,23 @@ def storeProcessing(num, name, meta, usages):
 
 #####################################################################################################################
 def multiSondeStore(num, name, dataset, meta):
-    sondeShopByDevices(num=num, name=name, meta=meta, dataset=dataset)
-    sondeShopNetworkStatus(num=num, name=name, meta=meta, dataset=dataset)
-    sondeShopUsedStatus(num=num, name=name, meta=meta, dataset=dataset)
-    sondeStoreByNetWorkUsedByDevice(num=num, name=name, meta=meta, dataset=dataset)
-    sondeStoreNetWorkByUsage(num=num, name=name, meta=meta, dataset=dataset)
-    sondeStoreUsedByUsage(num=num, name=name, meta=meta, dataset=dataset)
+    functions = ('sondeShopByDevices', 'sondeShopNetworkStatus',
+                 'sondeShopUsedStatus', 'sondeStoreByNetWorkUsedByDevice',
+                 'sondeStoreNetWorkByUsage', 'sondeStoreUsedByUsage')
+    threads = []
+    for fct in functions:
+        th = threading.Thread(target=eval(fct), kwargs={'num': num, 'name': name, 'meta': meta, 'dataset': dataset})
+        threads.append(th)
+        th.start()
+    for t in threads:
+        t.join()
+
+    # sondeShopByDevices(num=num, name=name, meta=meta, dataset=dataset)
+    # sondeShopNetworkStatus(num=num, name=name, meta=meta, dataset=dataset)
+    # sondeShopUsedStatus(num=num, name=name, meta=meta, dataset=dataset)
+    # sondeStoreByNetWorkUsedByDevice(num=num, name=name, meta=meta, dataset=dataset)
+    # sondeStoreNetWorkByUsage(num=num, name=name, meta=meta, dataset=dataset)
+    # sondeStoreUsedByUsage(num=num, name=name, meta=meta, dataset=dataset)
 
 
 if __name__ == "__main__":

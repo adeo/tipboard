@@ -57,8 +57,7 @@ def getStoreDevices():
                         storepaths.append(m.group(1))
                     if not m.group(2) in _stores.keys():
                         _stores[m.group(2)] = m.group(3).replace('_', ' ')
-
-                    storedevices.append(
+                    list_of_devices.append(
                         {
                             'serial': data['serial'],
                             'model': data['model'],
@@ -70,8 +69,9 @@ def getStoreDevices():
                             'nom': m.group(3).replace('_', ' '),
                             'path': m.group(1)
                         })
-        global stores
+        global stores, storedevices
         stores = sortedDict(_stores)
+        storedevices = list_of_devices
         return storedevices
     raise
 
@@ -93,7 +93,7 @@ def getWareHouseDevices():
                         whousemodels.append(data['model'])
                     if not m.group(2) in _wareHouses.keys():
                         _wareHouses[m.group(2)] = m.group(3).replace('_', ' ')
-                    warehousedevices.append(
+                    list_of_devices.append(
                         {
                             'serial': data['serial'],
                             'model': data['model'],
@@ -106,8 +106,9 @@ def getWareHouseDevices():
                             'path': m.group(1)
 
                         })
-        global wareHouses
+        global wareHouses,warehousedevices
         wareHouses = sortedDict(_wareHouses)
+        warehousedevices = list_of_devices
         return warehousedevices
     raise
 
@@ -326,7 +327,8 @@ if __name__ == "__main__":
     print("__main__")
     # getDevices
     # print(getAllInfoDevices(storedevices , 'path' ,['EF500', 'EF500R', 'TC52BACK', 'TC52FRONT']))
-    # getWareHouseDevices()
+    getWareHouseDevices()
+    getStoreDevices()
     # print(warehousedevices)
     # print(wareHouses)
     # print(getWareHouseDeviceUsedByModel(None, ['TC8000', 'WT6000', 'TC52']))
