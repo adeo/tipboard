@@ -1,5 +1,10 @@
 import datetime, json, requests, time, random
+import multiprocessing
+import os
+
 from src.tipboard.app.properties import TIPBOARD_URL, DEBUG, COLOR_TAB
+
+nb_process_count = 4
 
 
 def printEndOfTipboardCall(tipboardAnswer, TILE_ID):
@@ -74,3 +79,26 @@ def buildChartUpdateRandomly(nbrDataset=None, nbrLabel=None, colorTabIndataset=F
                  backgroundColor=COLOR_TAB[index] if colorTabIndataset is False else COLOR_TAB,
                  borderColor=COLOR_TAB[index] if colorTabIndataset is False else '#525252'))
     return tileData
+
+
+def poolProcessing():
+    process_count = nb_process_count * os.cpu_count()
+    print(f'Number of CPU : {os.cpu_count()} process : {process_count} ')
+    return multiprocessing.Pool(processes=process_count)
+
+
+def waitFinishPool(start_time=None, pool=None):
+    pool.close()
+    pool.join()
+    print(f'Number of CPU : {os.cpu_count()} for {nb_process_count * os.cpu_count()} PoolProcessing --- {time.time() - start_time} seconds ---')
+
+
+def startMutliProcessing(start_time, sites, process, *args):
+    process_count = nb_process_count * os.cpu_count()
+    print(f'Number of CPU : {os.cpu_count()} process : {process_count}')
+    pool = multiprocessing.Pool(processes=process_count)
+    for num, name in sites:
+        pool.apply_async(eval(process), args=(num, name, args))
+    pool.close()
+    pool.join()
+    print(f'Number of CPU : {os.cpu_count()} for {process_count} PoolProcessing --- {time.time() - start_time} seconds ---')

@@ -1,16 +1,19 @@
-import fileinput
+import multiprocessing
+import multiprocessing
 import os
+import threading
+
 import time
 import yaml
-from shutil import copyfile
 
 from src.sensors.matomo_utils import getCountScans, geCountScansByWarehouse, getListCity
 from src.sensors.soti_utils import getDevicesAllWareHouse, getAllDevicesOnLine, getAllDevicesByModel, \
     getCountDevicesByWareHouse, getDevices, getWareHouseDeviceUsedByModel, getWareHouseDevices, getListWareHouses
-from src.sensors.utils import end, sendDataToTipboard, getTimeStr
+from src.sensors.utils import end, sendDataToTipboard, getTimeStr, poolProcessing, waitFinishPool
 from src.tipboard.app.properties import BACKGROUND_TAB, COLOR_TAB, user_config_dir
 
 models = ['TC8000', 'WT6000', 'TC52']
+
 
 def sonde():
     print(f'{getTimeStr()} (+) Starting Warehouses sensors', flush=True)
@@ -191,9 +194,8 @@ def sondeWareHouseByDevices(num=None, name=None, isTest=False, meta=None, datase
     if num is not None:
         TILE_ID = f'{TILE_ID}_{str(num)}'
 
-    data = getWarehouseByDeviceBv(dataset,num=num, name=name)
-    push_big_value(num, TILE_ID , data, meta, 'big_value', isTest)
-
+    data = getWarehouseByDeviceBv(dataset, num=num, name=name)
+    push_big_value(num, TILE_ID, data, meta, 'big_value', isTest)
 
 
 #####################################################################################################################
@@ -216,7 +218,8 @@ def sondeWareHouseScanCount(num=None, name=None, isTest=False, meta=None):
     if num is not None:
         TILE_ID = f'{TILE_ID}_{str(num)}'
     data = getWareHouseScanCount(num, name)
-    push_big_value(num, TILE_ID , data, meta, 'just_value', isTest)
+    push_big_value(num, TILE_ID, data, meta, 'just_value', isTest)
+
 
 #####################################################################################################################
 
@@ -243,7 +246,8 @@ def sondeWareHouseNetworkStatus(num=None, name=None, isTest=False, meta=None, da
         TILE_ID = f'{TILE_ID}_{str(num)}'
 
     data = getWareHouseNetworkStatus(dataset=dataset, num=num, name=name)
-    push_big_value(num, TILE_ID , data, meta, 'half_doughnut_chart', isTest)
+    push_big_value(num, TILE_ID, data, meta, 'half_doughnut_chart', isTest)
+
 
 #####################################################################################################################
 def getWareHouseUsedStatus(dataset, num=None, name=None):
@@ -263,16 +267,17 @@ def getWareHouseUsedStatus(dataset, num=None, name=None):
     return tileData
 
 
-def sondeShopUsedStatus(num=None, name=None, isTest=False, meta=None, dataset=None):
+def sondeWareHouseUsedStatus(num=None, name=None, isTest=False, meta=None, dataset=None):
     TILE_ID = 'hd_wh_device_used'
     if num is not None:
         TILE_ID = f'{TILE_ID}_{str(num)}'
-    data = getWareHouseUsedStatus(dataset=dataset,num=num, name=name)
-    push_big_value(num, TILE_ID , data, meta, 'half_doughnut_chart', isTest)
+    data = getWareHouseUsedStatus(dataset=dataset, num=num, name=name)
+    push_big_value(num, TILE_ID, data, meta, 'half_doughnut_chart', isTest)
+
 
 #####################################################################################################################
 
-def getWareHouseDeviceNetWorkUsed(dataset,num=None, name=None):
+def getWareHouseDeviceNetWorkUsed(dataset, num=None, name=None):
     ulv = dataset['result']['online']
     llv = dataset['result']['offline']
     urv = dataset['result']['used']
@@ -292,12 +297,12 @@ def getWareHouseDeviceNetWorkUsed(dataset,num=None, name=None):
     }
 
 
-def sondeWareHouseByNetWorkUsedByDevice(num=None, name=None, isTest=False, meta=None,dataset=None):
+def sondeWareHouseByNetWorkUsedByDevice(num=None, name=None, isTest=False, meta=None, dataset=None):
     TILE_ID = 'bv_wh'
     if num is not None:
         TILE_ID = f'{TILE_ID}_{str(num)}'
     data = getWareHouseDeviceNetWorkUsed(dataset=dataset, num=num, name=name)
-    push_big_value(num, TILE_ID , data, meta, 'big_value', isTest)
+    push_big_value(num, TILE_ID, data, meta, 'big_value', isTest)
 
 
 #####################################################################################################################
@@ -322,13 +327,14 @@ def getWarehouseNetworkByUsage(dataset, num=None, name=None):
         'lower-right-value': lrv
     }
 
+
 def sondeWareHouseNetWorkByUsage(num=None, name=None, isTest=False, meta=None, dataset=None):
     TILE_ID = 'bv_wh_network'
     if num is not None:
         TILE_ID = f'{TILE_ID}_{str(num)}'
 
     data = getWarehouseNetworkByUsage(dataset=dataset, num=num, name=name)
-    push_big_value(num, TILE_ID , data, meta, 'big_value', isTest)
+    push_big_value(num, TILE_ID, data, meta, 'big_value', isTest)
 
 
 #####################################################################################################################
@@ -358,11 +364,12 @@ def sondeWareHouseUsedByUsage(num=None, name=None, isTest=False, meta=None, data
     if num is not None:
         TILE_ID = f'{TILE_ID}_{str(num)}'
 
-    data = getWareHouseUsedByUsage(dataset=dataset,num=num, name=name)
-    push_big_value(num, TILE_ID , data, meta, 'big_value', isTest)
+    data = getWareHouseUsedByUsage(dataset=dataset, num=num, name=name)
+    push_big_value(num, TILE_ID, data, meta, 'big_value', isTest)
+
 
 #####################################################################################################################
-def push_big_value(num, TILE_ID , data, meta, tile_template ,isTest):
+def push_big_value(num, TILE_ID, data, meta, tile_template, isTest):
     if num is None:
         num = "All"
     start_time = time.time()
@@ -371,6 +378,7 @@ def push_big_value(num, TILE_ID , data, meta, tile_template ,isTest):
                                         isTest=isTest)
     end(title=f'warehouse sonde by device {num} -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer,
         TILE_ID=TILE_ID)
+
 
 #####################################################################################################################
 def createWareHouse(num, name, matomolist):
@@ -394,6 +402,7 @@ def createWareHouse(num, name, matomolist):
 
 #####################################################################################################################
 def sondeWarehouse():
+    start_time = time.time()
     meta = dict(big_value_color=BACKGROUND_TAB[0],
                 fading_background=False)
     print(f'{getTimeStr()} (+) Starting WareHouses sensors', flush=True)
@@ -405,20 +414,44 @@ def sondeWarehouse():
     dataset = getWareHouseDeviceUsedByModel(num=None, path=models)
     multiSondeswarehouse(None, None, dataset, meta)
 
+    pool = poolProcessing()
     for num, name in warehouses.items():
-        createWareHouse(num, name, matomolist)
-        dataset = getWareHouseDeviceUsedByModel(num=num, path=models)
-        multiSondeswarehouse(num, name, dataset, meta)
-
+        pool.apply_async(wareHouseProcessing, args=(num, name, meta, matomolist))
+        # wareHouseProcessing(num, name, meta, matomolist)
+    waitFinishPool(start_time=start_time, pool=pool)
     print(f'{getTimeStr()} (+) Finish WareHouses sensors', flush=True)
 
 
+
+###############################################################################################################################
+
+def wareHouseProcessing(num, name, meta, matomolist):
+    createWareHouse(num, name, matomolist)
+    dataset = getWareHouseDeviceUsedByModel(num=num, path=models)
+    multiSondeswarehouse(num, name, dataset, meta)
+
+
+###############################################################################################################################
+
+
 def multiSondeswarehouse(num, name, dataset, meta):
+    # functions = ('sondeWareHouseByDevices', 'sondeWareHouseScanCount', 'sondeWareHouseNetworkStatus',
+    #              'sondeWareHouseUsedStatus', 'sondeWareHouseByNetWorkUsedByDevice',
+    #              'sondeWareHouseNetWorkByUsage', 'sondeWareHouseUsedByUsage'
+    #              )
+    # threads = []
+    # for fct in functions:
+    #     th = threading.Thread(target=eval(fct), kwargs={'num': num, 'name': name, 'meta': meta, 'dataset': dataset})
+    #     threads.append(th)
+    #     th.start()
+    # for t in threads:
+    #     t.join()
+    # Refaire les thread pour les scans
 
     sondeWareHouseByDevices(num=num, name=name, meta=meta, dataset=dataset)
     sondeWareHouseScanCount(num=num, name=name, meta=meta)
     sondeWareHouseNetworkStatus(num=num, name=name, meta=meta, dataset=dataset)
-    sondeShopUsedStatus(num=num, name=name, meta=meta, dataset=dataset)
+    sondeWareHouseUsedStatus(num=num, name=name, meta=meta, dataset=dataset)
     sondeWareHouseByNetWorkUsedByDevice(num=num, name=name, meta=meta, dataset=dataset)
     sondeWareHouseNetWorkByUsage(num=num, name=name, meta=meta, dataset=dataset)
     sondeWareHouseUsedByUsage(num=num, name=name, meta=meta, dataset=dataset)

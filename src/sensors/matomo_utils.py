@@ -91,19 +91,27 @@ def geCountScansByWarehouse(numsite=None):
     else:
         if numsite not in list(warehouses.keys()):
             return 0
+        if 'onScan' not in warehouses[str(numsite)]['actions'].keys():
+            return 0
         return warehouses[str(numsite)]['actions']['onScan']['nb_events']
 
 
 def getCountScans(params=None):
+    cols = ('nb_uniq_visitors', 'nb_events')
     params = dict()
     response = basicMatomoRequest(method="Events.getAction", query=params)
     if response.status_code == 200:
         list_of_data_to_display = dict()
+        value = dict()
+        for k in cols:
+            value[k] = 0
+        list_of_data_to_display['onScan'] = value
         for data in response.json():
             value = dict()
-            for k in ('nb_uniq_visitors', 'nb_events'):
-                value[k] = data[k]
-            list_of_data_to_display[data['label']] = value
+            if 'label' in data.keys():
+                for k in cols:
+                    value[k] = data[k]
+                list_of_data_to_display[data['label']] = value
         return list_of_data_to_display
     raise
 
@@ -159,6 +167,7 @@ def getScanFor7Days():
 def getListCity():
     whs = dict(zip(getListWareHouses().values(), getListWareHouses().keys()))
     params = dict()
+    params['period'] = 'year'
     response = basicMatomoRequest(method=" UserCountry.getCity", query=params)
     if response.status_code == 200:
         list_of_data_to_display = dict()
@@ -175,7 +184,7 @@ def getListCity():
                 value['segment'] = data['label']
         global warehouses
         warehouses = list_of_data_to_display
-        return list_of_data_to_display
+        return warehouses
         raise
 
 
@@ -184,4 +193,4 @@ if __name__ == "__main__":
     getListCity()
     for site in list(warehouses):
         print(f"Site Numero {site}\t- Nombre de Scans : {str(geCountScansByWarehouse(site))}")
-    print(f"Tous \t\t\t- Nombre de Scans : {str(getCountScans()['onScan']['nb_events'])}")
+    print(f"Tous \t\t\t- Nombre de Scans : {str(geCountScansByWarehouse())}")
