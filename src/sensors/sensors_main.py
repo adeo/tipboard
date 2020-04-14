@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 
-from src.sensors.sensors_entrepot import sondeWarehouse
+from src.sensors.sensors_entrepot import sondeWarehouse, countScanallwWareHouse
 from src.sensors.sensors_stores import sondeStore
 from src.sensors.utils import end
 
@@ -28,9 +28,10 @@ def scheduleYourSensors(scheduler):  # pragma: no cover
     # every = 1 * 30
     # scheduler.add_job(sonde1, 'interval', seconds=60*1)
     # addSchedule(scheduler, sondeStore(first=True), timeToRun=now + timedelta(milliseconds=10 * 1), second=1000*60*60*24)
-
     addSchedule(scheduler, sondeStore, timeToRun=now + timedelta(milliseconds=1000 * 120), second=every)
-    addSchedule(scheduler, sondeWarehouse, timeToRun=now + timedelta(milliseconds=1000 * 10), second=every)
+    addSchedule(scheduler, sondeWarehouse, timeToRun=now + timedelta(milliseconds=1000 * 30), second=every)
+    addSchedule(scheduler, countScanallwWareHouse, timeToRun=now + timedelta(milliseconds=1000 * 15), second=60*5)
+
     print(f"(+) Tipboard starting schedul task", flush=True)
     scheduler.start()
     return True

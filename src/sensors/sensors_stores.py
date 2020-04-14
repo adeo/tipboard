@@ -1,5 +1,6 @@
 import os
 import threading
+from pathlib import Path
 
 import time
 import yaml
@@ -426,7 +427,9 @@ def sondeStoreGenerate():
 ########################################################################################################################
 
 def createStore(num, name):
-    sitefile = user_config_dir + "store/" + num + ".yaml"
+    workdir = user_config_dir + "store"
+    Path(workdir).mkdir(parents=True, exist_ok=True)
+    sitefile = workdir + "/" + num + ".yaml"
     if os.path.exists(sitefile):
         print(f'Site {num} - {name} already exists => {sitefile}')
         return

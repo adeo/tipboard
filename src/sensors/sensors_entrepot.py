@@ -1,8 +1,11 @@
 # coding: utf-8
 import os
+import threading
+from pathlib import Path
 
 import time
 import yaml
+from sys import path
 
 from src.sensors.matomo_utils import geCountScansByWarehouse, getListCity
 from src.sensors.soti_utils import getWareHouseDeviceUsedByModel, getWareHouseDevices, getListWareHouses
@@ -52,11 +55,21 @@ def sondeWareHouseByDevices(num=None, name=None, isTest=False, meta=None, datase
 #####################################################################################################################
 
 
-def getWareHouseScanCount(num=None, name=None):
+def getWareHouseScanCount(num=None, name=None, citylist=None):
     description = f"Nombre de scans sur l'entrepôt {name} - {num}"
-    value = str(geCountScansByWarehouse(num))
     if num is None:
         description = 'Nombre de scans sur tous les entrepots'
+        value = citylist['ALL']['actions']['onScan']['nb_events']
+    else:
+        if num not in list(citylist.keys()):
+            value = 0
+        elif 'onScan' not in citylist[str(num)]['actions'].keys():
+            value = 0
+        else:
+            value = citylist[str(num)]['actions']['onScan']['nb_events']
+
+    #value = str(geCountScansByWarehouse(num))
+
     return {
         'title': '',
         'description': description,
@@ -64,11 +77,11 @@ def getWareHouseScanCount(num=None, name=None):
     }
 
 
-def sondeWareHouseScanCount(num=None, name=None, isTest=False, meta=None):
+def sondeWareHouseScanCount(num=None, name=None, isTest=False, meta=None, citylist=None):
     TILE_ID = 'jv_whs_scans'
     if num is not None:
         TILE_ID = f'{TILE_ID}_{str(num)}'
-    data = getWareHouseScanCount(num, name)
+    data = getWareHouseScanCount(num, name, citylist)
     push_big_value(num, TILE_ID, data, meta, 'just_value', isTest)
 
 
@@ -233,7 +246,9 @@ def push_big_value(num, TILE_ID, data, meta, tile_template, isTest):
 
 #####################################################################################################################
 def createWareHouse(num, name, matomolist):
-    sitefile = user_config_dir + "warehouse/" + num + ".yaml"
+    workdir = user_config_dir + "warehouse"
+    Path(workdir).mkdir(parents=True, exist_ok=True)
+    sitefile = workdir + "/" + num + ".yaml"
     if os.path.exists(sitefile):
         print(f'Site {num} - {name} already exists => {sitefile}')
         return
@@ -259,7 +274,10 @@ def sondeWarehouse():
     print(f'{getTimeStr()} (+) Starting WareHouses sensors', flush=True)
 
     getWareHouseDevices()
-    matomolist = list(getListCity().keys())
+
+    list_city = getListCity()
+
+    matomolist = list(list_city.keys())
     warehouses = getListWareHouses()
 
     dataset = getWareHouseDeviceUsedByModel(num=None, path=models)
@@ -275,6 +293,18 @@ def sondeWarehouse():
 
 ###############################################################################################################################
 
+def countScanallwWareHouse():
+    start_time = time.time()
+    print(f'{getTimeStr()} (+) Starting WareHouses scanner count sensors', flush=True)
+    meta = dict(big_value_color=BACKGROUND_TAB[0],
+                fading_background=False)
+    list_city = getListCity()
+    sondeWareHouseScanCount(num=None, name=None, citylist=list_city, meta=meta)
+    for num, name in getListWareHouses().items():
+        sondeWareHouseScanCount(num=num, name=name, citylist=list_city, meta=meta)
+    print(f'{getTimeStr()} (+) Finish WareHouses scanner count sensors --- in {time.time() - start_time} seconds ---', flush=True)
+
+################################################################################################################################
 def wareHouseProcessing(num, name, meta, matomolist):
     createWareHouse(num, name, matomolist)
     dataset = getWareHouseDeviceUsedByModel(num=num, path=models)
@@ -285,30 +315,30 @@ def wareHouseProcessing(num, name, meta, matomolist):
 
 
 def multiSondeswarehouse(num, name, dataset, meta):
-    # functions = ('sondeWareHouseByDevices', 'sondeWareHouseScanCount', 'sondeWareHouseNetworkStatus',
-    #              'sondeWareHouseUsedStatus', 'sondeWareHouseByNetWorkUsedByDevice',
-    #              'sondeWareHouseNetWorkByUsage', 'sondeWareHouseUsedByUsage'
-    #              )
-    # threads = []
-    # for fct in functions:
-    #     th = threading.Thread(target=eval(fct), kwargs={'num': num, 'name': name, 'meta': meta, 'dataset': dataset})
-    #     threads.append(th)
-    #     th.start()
-    # for t in threads:
-    #     t.join()
-    # Refaire les thread pour les scans
+    functions = ('sondeWareHouseByDevices', 'sondeWareHouseNetworkStatus',
+                 'sondeWareHouseUsedStatus', 'sondeWareHouseByNetWorkUsedByDevice',
+                 'sondeWareHouseNetWorkByUsage', 'sondeWareHouseUsedByUsage'
+                 )
+    threads = []
+    for fct in functions:
+        th = threading.Thread(target=eval(fct), kwargs={'num': num, 'name': name, 'meta': meta, 'dataset': dataset})
+        threads.append(th)
+        th.start()
+    for t in threads:
+        t.join()
 
-    sondeWareHouseByDevices(num=num, name=name, meta=meta, dataset=dataset)
-    sondeWareHouseScanCount(num=num, name=name, meta=meta)
-    sondeWareHouseNetworkStatus(num=num, name=name, meta=meta, dataset=dataset)
-    sondeWareHouseUsedStatus(num=num, name=name, meta=meta, dataset=dataset)
-    sondeWareHouseByNetWorkUsedByDevice(num=num, name=name, meta=meta, dataset=dataset)
-    sondeWareHouseNetWorkByUsage(num=num, name=name, meta=meta, dataset=dataset)
-    sondeWareHouseUsedByUsage(num=num, name=name, meta=meta, dataset=dataset)
+    # sondeWareHouseByDevices(num=num, name=name, meta=meta, dataset=dataset)
+    # sondeWareHouseNetworkStatus(num=num, name=name, meta=meta, dataset=dataset)
+    # sondeWareHouseUsedStatus(num=num, name=name, meta=meta, dataset=dataset)
+    # sondeWareHouseByNetWorkUsedByDevice(num=num, name=name, meta=meta, dataset=dataset)
+    # sondeWareHouseNetWorkByUsage(num=num, name=name, meta=meta, dataset=dataset)
+    # sondeWareHouseUsedByUsage(num=num, name=name, meta=meta, dataset=dataset)
 
 
 if __name__ == "__main__":
-    sondeWarehouse()
+    #sondeWarehouse()
+    getWareHouseDevices()
+    countScanallwWareHouse()
 
 # def updateNormChartTipBoard(bench, tile, isTest=False):
 #     if not "label" in bench[0]:

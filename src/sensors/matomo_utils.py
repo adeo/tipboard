@@ -4,18 +4,28 @@ from datetime import datetime, timedelta
 import requests
 import unidecode
 # ici on enregistre les urls du matomo sur lesquelles on va taper pour les requêtes
+"""
+https://velocity-analytics.apps.op.acp.adeo.com/index.php?date=2020-03-16,2020-04-14&expanded=1&filter_limit=-1&format=JSON&format_metrics=1&idSite=1
+        &label=onScan&method=Events.getAction&module=API&period=week&token_auth=anonymous
 
+http://velocity-analytics-open.apps.op.acp.adeo.com/index.php?date=today&expanded=1&filter_limit=-1&format=JSON&idSite=1&method=Events.getAction
+        &module=API&period=day&token_auth=anonymous&segment=city==Evry
+        
+http://velocity-analytics-open.apps.op.acp.adeo.com/index.php?date=today&expanded=1&filter_limit=-1&format=JSON&idSite=1&method=UserCountry.getCity
+        &module=API&period=day&token_auth=anonymous
+        
+http://velocity-analytics-open.apps.op.acp.adeo.com/index.php?date=today&expanded=1&filter_limit=-1
+    &format=JSON&idSite=1&method=Events.getAction&module=API&period=day&token_auth=anonymous&segment=city==Evry
+"""
 
-from src.sensors.soti_utils import getWareHouseDevices, getListWareHouses
+from src.sensors.soti_utils import getWareHouseDevices, getListWareHouses, warehouse_devices
 
 base_url = "http://velocity-analytics-open.apps.op.acp.adeo.com/index.php?"
 token = "8b44ade2c46279b0b4678356b7241803"
 warehouses = []
 
 
-# http://velocity-analytics-open.apps.op.acp.adeo.com/index.php?date=today&expanded=1&filter_limit=-1&format=JSON&idSite=1&method=Events.getAction&module=API&period=day&token_auth=anonymous&segment=city==Evry
-# http://velocity-analytics-open.apps.op.acp.adeo.com/index.php?date=today&expanded=1&filter_limit=-1&format=JSON&idSite=1&method=UserCountry.getCity&module=API&period=day&token_auth=anonymous
-# http://velocity-analytics-open.apps.op.acp.adeo.com/index.php?date=today&expanded=1&filter_limit=-1&format=JSON&idSite=1&method=Events.getAction&module=API&period=day&token_auth=anonymous&segment=city==Evry
+
 
 
 # Paramètres de base d'une requête Matomo
@@ -113,7 +123,6 @@ def getCountScans(params=None):
                     value[k] = data[k]
                 list_of_data_to_display[data['label']] = value
         return list_of_data_to_display
-    raise
 
 
 def getCountEventForDays(dateValue=None):
@@ -164,8 +173,9 @@ def getScanFor7Days():
     return list_of_data_to_display
 
 
-# noinspection PyUnreachableCode
 def getListCity():
+    if len(getListWareHouses().values()) == 0:
+        getWareHouseDevices()
     whs = dict(zip(getListWareHouses().values(), getListWareHouses().keys()))
     params = dict()
     params['period'] = 'year'
@@ -183,10 +193,14 @@ def getListCity():
                 list_of_data_to_display[whs[ville]] = value
             else:
                 value['segment'] = data['label']
+        allvalue = dict()
+        allvalue['city_name'] = "ALL"
+        allvalue['actions'] = getCountScans()
+        allvalue['segment'] = "city==ALL"
+        list_of_data_to_display['ALL'] = allvalue
         global warehouses
         warehouses = list_of_data_to_display
         return warehouses
-        raise
 
 
 if __name__ == "__main__":
