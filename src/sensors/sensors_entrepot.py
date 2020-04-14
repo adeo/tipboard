@@ -446,6 +446,7 @@ def multiSondeswarehouse(num, name, dataset, meta):
     #     th.start()
     # for t in threads:
     #     t.join()
+    # Refaire les thread pour les scans
 
     sondeWareHouseByDevices(num=num, name=name, meta=meta, dataset=dataset)
     sondeWareHouseScanCount(num=num, name=name, meta=meta)

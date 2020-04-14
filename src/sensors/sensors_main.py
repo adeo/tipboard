@@ -24,7 +24,7 @@ def addSchedule(scheduler, sonde, timeToRun=datetime.now(), second=8):
 def scheduleYourSensors(scheduler):  # pragma: no cover
     print(f"(+) Tipboard  sensors initialisation", flush=True)
     now = datetime.now()
-    every = 60 * 10
+    every = 60 * 30
     # every = 1 * 30
     # scheduler.add_job(sonde1, 'interval', seconds=60*1)
     # addSchedule(scheduler, sondeStore(first=True), timeToRun=now + timedelta(milliseconds=10 * 1), second=1000*60*60*24)
