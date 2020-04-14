@@ -1,13 +1,12 @@
-import re
-
-from django.http import JsonResponse, HttpResponse, Http404, HttpResponseRedirect
+from apscheduler.schedulers.background import BackgroundScheduler
 from django.contrib.staticfiles import finders
+from django.http import JsonResponse, HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
+
+from src.sensors.sensors_main import scheduleYourSensors, stopTheSensors
 from src.tipboard.app.parser import parseXmlLayout, getFlipboardTitle, getConfigNames, getFlipboardTitles
 from src.tipboard.app.properties import TIPBOARD_CSS_STYLES, FLIPBOARD_INTERVAL, LOG, TIPBOARD_JAVASCRIPTS
 from src.tipboard.app.utils import getTimeStr
-from src.sensors.sensors_main import scheduleYourSensors, stopTheSensors
-from apscheduler.schedulers.background import BackgroundScheduler
 
 scheduler = BackgroundScheduler()
 

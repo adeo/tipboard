@@ -1,164 +1,15 @@
-import multiprocessing
-import multiprocessing
+# coding: utf-8
 import os
-import threading
 
 import time
 import yaml
 
-from src.sensors.matomo_utils import getCountScans, geCountScansByWarehouse, getListCity
-from src.sensors.soti_utils import getDevicesAllWareHouse, getAllDevicesOnLine, getAllDevicesByModel, \
-    getCountDevicesByWareHouse, getDevices, getWareHouseDeviceUsedByModel, getWareHouseDevices, getListWareHouses
+from src.sensors.matomo_utils import geCountScansByWarehouse, getListCity
+from src.sensors.soti_utils import getWareHouseDeviceUsedByModel, getWareHouseDevices, getListWareHouses
 from src.sensors.utils import end, sendDataToTipboard, getTimeStr, poolProcessing, waitFinishPool
 from src.tipboard.app.properties import BACKGROUND_TAB, COLOR_TAB, user_config_dir
 
 models = ['TC8000', 'WT6000', 'TC52']
-
-
-def sonde():
-    print(f'{getTimeStr()} (+) Starting Warehouses sensors', flush=True)
-    getDevices()
-    sonde1()
-    sonde2()
-    sonde3()
-    sonde4()
-    print(f'{getTimeStr()} (+) Finish Warehouses sensors', flush=True)
-
-
-def updateAllDeviceCount():
-    """ Simulate some actions for text tile exemple """
-    return {
-        'title': '',
-        'description': 'Nombre de terminaux sur tous les entrepots',
-        'just-value': getDevicesAllWareHouse()
-    }
-
-
-def sonde1(isTest=False):
-    TILE_ID = 'jv_alldevices'
-    print(f'{getTimeStr()} (+) Starting sensors 1', flush=True)
-    start_time = time.time()
-    data = updateAllDeviceCount()
-    meta = dict(big_value_color=BACKGROUND_TAB[0],
-                fading_background=False)
-    tipboardAnswer = sendDataToTipboard(tile_id=TILE_ID, data=data, tile_template='just_value', meta=meta,
-                                        isTest=isTest)
-    end(title=f'sensors1 -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer, TILE_ID=TILE_ID)
-
-
-def updateNetworkStatus():
-    data = getAllDevicesOnLine()
-
-    tileData = dict()
-    tileData['title'] = {'display': False, 'text': 'OnLine / OffLine'}
-    tileData['labels'] = list(data.keys())
-    tileData['borderColor'] = '#525252'
-    tileData['legend'] = dict(display=True)
-    tileData['plugins'] = dict(labels=True)
-    tileData['datasets'] = list()
-    tileData['datasets'].append(
-        dict(label=f'OnLine',
-             data=list(data.values()),
-             backgroundColor=[COLOR_TAB[1], COLOR_TAB[5]],
-             borderColor='#525252'))
-    tileData['option'] = dict()
-    return tileData
-
-
-def sonde2(isTest=False):
-    TILE_ID = 'pie_chart_online'
-    print(f'{getTimeStr()} (+) Starting sensors 2', flush=True)
-    start_time = time.time()
-    data = updateNetworkStatus()
-    tipboardAnswer = sendDataToTipboard(data=data, tile_template='pie_chart', tile_id=TILE_ID, isTest=isTest)
-    end(title=f'sensors2 -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer, TILE_ID=TILE_ID)
-
-
-def updateCountDevicesByModels():
-    data = getAllDevicesByModel()
-    tileData = dict()
-    tileData['title'] = {'display': False, 'text': 'Terminaux par Entrepot'}
-    tileData['labels'] = list(data.keys())
-    tileData['borderColor'] = '#525252'
-    tileData['legend'] = dict(display=True)
-    tileData['datasets'] = list()
-
-    tileData['datasets'].append(
-        dict(label=f'Warehouses',
-             data=list(data.values()),
-             backgroundColor=COLOR_TAB,
-             borderColor='#525252'))
-    tileData['options'] = {
-        "plugins": {
-            "labels": {
-                "render": "value"
-            }
-        }
-    }
-    return tileData
-
-
-def sonde3(isTest=False):
-    TILE_ID = 'pie_model_warehouse'
-    print(f'{getTimeStr()} (+) Starting sensors 3', flush=True)
-    start_time = time.time()
-    data = updateCountDevicesByModels()
-    tipboardAnswer = sendDataToTipboard(data=data, tile_template='pie_chart', tile_id=TILE_ID, isTest=isTest)
-    end(title=f'sensors3 -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer, TILE_ID=TILE_ID)
-
-
-def updateDevicesByWarehouses():
-    data = getCountDevicesByWareHouse()
-    tileData = dict()
-    tileData['title'] = {'display': False, 'text': 'Terminaux par Entrepot'}
-    tileData['labels'] = list(data.keys())
-    tileData['borderColor'] = '#525252'
-    tileData['legend'] = dict(display=True)
-    tileData['datasets'] = list()
-
-    tileData['datasets'].append(
-        dict(label=f'Warehouses',
-             data=list(data.values()),
-             backgroundColor=COLOR_TAB,
-             borderColor='#525252'))
-    tileData['options'] = {
-        "plugins": {
-            "labels": {
-                "render": "value"
-            }
-        }
-    }
-    return tileData
-
-
-def sonde4(isTest=False):
-    TILE_ID = 'doug_devices_by_warehouse'
-    print(f'{getTimeStr()} (+) Starting sensors 4', flush=True)
-    start_time = time.time()
-    data = updateDevicesByWarehouses()
-    tipboardAnswer = sendDataToTipboard(data=data, tile_template='doughnut_chart', tile_id=TILE_ID, isTest=isTest)
-    end(title=f'sensors4 -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer, TILE_ID=TILE_ID)
-
-
-def updateAllScan():
-    """ Simulate some actions for text tile exemple """
-    return {
-        'title': '',
-        'description': 'Nombre de scans sur tous les entrepots',
-        'just-value': getCountScans()['onScan']['nb_events']
-    }
-
-
-def sonde5(isTest=False):
-    TILE_ID = 'jv_whs_scans'
-    print(f'{getTimeStr()} (+) Starting sensors 5', flush=True)
-    start_time = time.time()
-    data = updateAllScan()
-    meta = dict(big_value_color=BACKGROUND_TAB[0],
-                fading_background=False)
-    tipboardAnswer = sendDataToTipboard(tile_id=TILE_ID, data=data, tile_template='just_value', meta=meta,
-                                        isTest=isTest)
-    end(title=f'sensors5 -> {TILE_ID}', start_time=start_time, tipboardAnswer=tipboardAnswer, TILE_ID=TILE_ID)
 
 
 #################################################################################################################
@@ -420,7 +271,6 @@ def sondeWarehouse():
         # wareHouseProcessing(num, name, meta, matomolist)
     waitFinishPool(start_time=start_time, pool=pool)
     print(f'{getTimeStr()} (+) Finish WareHouses sensors', flush=True)
-
 
 
 ###############################################################################################################################

@@ -164,6 +164,7 @@ def getScanFor7Days():
     return list_of_data_to_display
 
 
+# noinspection PyUnreachableCode
 def getListCity():
     whs = dict(zip(getListWareHouses().values(), getListWareHouses().keys()))
     params = dict()
