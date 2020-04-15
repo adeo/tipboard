@@ -19,7 +19,7 @@ models = ['TC8000', 'WT6000', 'TC52']
 def getWarehouseByDeviceBv(dataset, num=None, name=None):
     title = f'{name} - {num}'
     if num is None:
-        title = 'Tous les Entrepôts'
+        title = 'Tous Entrepôts'
 
     bv = dataset['result']['total']
     ulv = dataset['TC8000']['total']
@@ -57,7 +57,7 @@ def sondeWareHouseByDevices(num=None, name=None, isTest=False, meta=None, datase
 def getWareHouseScanCount(num=None, name=None, citylist=None):
     description = f"Nombre de scans sur l'entrepôt {name} - {num}"
     if num is None:
-        description = 'Nombre de scans sur tous les entrepots'
+        description = 'Nombre de scans sur tous entrepots'
         value = citylist['ALL']['actions']['onScan']['nb_events']
     else:
         if num not in list(citylist.keys()):

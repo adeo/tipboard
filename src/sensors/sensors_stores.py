@@ -24,7 +24,7 @@ usages = ['EF500', 'EF500R', 'TC52BACK', 'TC52FRONT']
 def getStoresAllDevice():
     return {
         'title': '',
-        'description': 'Nombre de terminaux sur tous les magasins',
+        'description': 'Nombre de terminaux sur tous magasins',
         'just-value': data['result']['total']
     }
 
@@ -222,7 +222,7 @@ def sondeStore7(isTest=False):
 def getStoresByDeviceBv(dataset, num=None, name=None):
     title = f'{name} - {num}'
     if num is None:
-        title = 'Tous les Magasins'
+        title = 'Tous Magasins'
     bv = dataset['result']['total']
     ulv = dataset['EF500']['total']
     llv = dataset['EF500R']['total']
