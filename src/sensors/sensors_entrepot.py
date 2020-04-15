@@ -5,9 +5,8 @@ from pathlib import Path
 
 import time
 import yaml
-from sys import path
 
-from src.sensors.matomo_utils import geCountScansByWarehouse, getListCity
+from src.sensors.matomo_utils import getListCity
 from src.sensors.soti_utils import getWareHouseDeviceUsedByModel, getWareHouseDevices, getListWareHouses
 from src.sensors.utils import end, sendDataToTipboard, getTimeStr, poolProcessing, waitFinishPool
 from src.tipboard.app.properties import BACKGROUND_TAB, COLOR_TAB, user_config_dir
@@ -68,7 +67,7 @@ def getWareHouseScanCount(num=None, name=None, citylist=None):
         else:
             value = citylist[str(num)]['actions']['onScan']['nb_events']
 
-    #value = str(geCountScansByWarehouse(num))
+    # value = str(geCountScansByWarehouse(num))
 
     return {
         'title': '',
@@ -304,6 +303,7 @@ def countScanallwWareHouse():
         sondeWareHouseScanCount(num=num, name=name, citylist=list_city, meta=meta)
     print(f'{getTimeStr()} (+) Finish WareHouses scanner count sensors --- in {time.time() - start_time} seconds ---', flush=True)
 
+
 ################################################################################################################################
 def wareHouseProcessing(num, name, meta, matomolist):
     createWareHouse(num, name, matomolist)
@@ -336,7 +336,7 @@ def multiSondeswarehouse(num, name, dataset, meta):
 
 
 if __name__ == "__main__":
-    #sondeWarehouse()
+    # sondeWarehouse()
     getWareHouseDevices()
     countScanallwWareHouse()
 
