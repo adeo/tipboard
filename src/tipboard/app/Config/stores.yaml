@@ -1,5 +1,5 @@
 details:
-  page_title: Tous les Magasins
+  page_title: Tous Magasins
 layout:
   - row_1_of_2:
       - col_1_of_2:
@@ -18,7 +18,7 @@ layout:
       - col_1_of_2 :
           - tile_template: half_doughnut_chart
             tile_id: hd_devise_used
-            title: Nombre de Terminal Utilisé
+            title: Nombre de Terminaux Utilisés
             classes:
 
 
