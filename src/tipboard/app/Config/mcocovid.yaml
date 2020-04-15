@@ -33,24 +33,25 @@ layout:
               classes:
 
         - col_1_of_2 flip-time-6:
-            - tile_template: half_doughnut_chart
-              tile_id: hd_online_shop
-              title: Magasins - Terminaux OnLine / Offline
-              classes:
-
             - tile_template: big_value
               tile_id: bv_shops_network
               title: Terminaux Magasins
               classes:
-                -
+
+            - tile_template: half_doughnut_chart
+              tile_id: hd_online_shop
+              title: Magasins - Terminaux OnLine / Offline
+              classes:
+                  -
         - col_1_of_2 flip-time-6:
+            - tile_template: big_value
+              tile_id: bv_shops_used
+              title: Terminaux Magasins
+              classes:
+
             - tile_template: half_doughnut_chart
               tile_id: hd_devise_used
               title: Magasins - Nombre de Terminal Utilisé
               classes:
 
-            - tile_template: big_value
-              tile_id: bv_shops_used
-              title: Terminaux Magasins
-              classes:
 
