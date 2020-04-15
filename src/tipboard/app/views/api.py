@@ -113,6 +113,9 @@ def push_api(request, unsecured=False):
             return HttpData
         data = HttpData.get('data', None)
         tile_id = HttpData.get('tile_id', None)
+
+        set_tile(tile_id, HttpData)
+
         error = is_meta_present_in_request(HttpData.get('meta', None), tile_id)
         if error:  # protect against update for tile_id not present in redis
             HttpResponseBadRequest(f'{tile_id} is not present in cache')
@@ -120,6 +123,15 @@ def push_api(request, unsecured=False):
                                  tile_template=HttpData.get('tile_template', None),
                                  data=json.dumps(json.loads(data)['data']) if 'data' in json.loads(data) else data)
     raise Http404
+
+
+def set_tile(tile_id, HttpData):
+    cache = getCache()
+    tilePrefix = getRedisPrefix(tile_id)
+    if not cache.redis.exists(tilePrefix):
+        print(f"(+) tile {tilePrefix} not exist")
+        buildFakeDataFromTemplate(tile_id, HttpData.get('tile_template'), cache)
+        print(f"(+) tile {tilePrefix} has been created")
 
 
 def is_meta_present_in_request(meta, tile_id):  # pragma: no cover
