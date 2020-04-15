@@ -1,19 +1,19 @@
+# coding: utf-8
 import time
 from datetime import datetime, timedelta
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 
-from src.sensors.sensors_entrepot import sonde, sonde1, sonde2, sonde5, sondeWarehouse
+from src.sensors.sensors_entrepot import sondeWarehouse, countScanallwWareHouse
 from src.sensors.sensors_stores import sondeStore
 from src.sensors.utils import end
 
 
 def launch_sensors(isTest=False, checker=None, fakeClient=None):
     if isTest:
-        sonde1(isTest)
-        sonde2(isTest)
+        sondeStore()
+        sondeWarehouse()
     else:
-        # sondeStore(first=True)
         scheduleYourSensors(BlockingScheduler())  # If you need actualized data :)
 
 
@@ -28,14 +28,10 @@ def scheduleYourSensors(scheduler):  # pragma: no cover
     # every = 1 * 30
     # scheduler.add_job(sonde1, 'interval', seconds=60*1)
     # addSchedule(scheduler, sondeStore(first=True), timeToRun=now + timedelta(milliseconds=10 * 1), second=1000*60*60*24)
-
-    addSchedule(scheduler, sonde, timeToRun=now + timedelta(milliseconds=1000 * 1), second=every)
-    addSchedule(scheduler, sonde5, timeToRun=now + timedelta(milliseconds=1000 * 2), second=60 * 3)
     addSchedule(scheduler, sondeStore, timeToRun=now + timedelta(milliseconds=1000 * 120), second=every)
-    addSchedule(scheduler, sondeWarehouse, timeToRun=now + timedelta(milliseconds=1000 * 10), second=every)
+    addSchedule(scheduler, sondeWarehouse, timeToRun=now + timedelta(milliseconds=1000 * 30), second=every)
+    addSchedule(scheduler, countScanallwWareHouse, timeToRun=now + timedelta(milliseconds=1000 * 15), second=60*5)
 
-    # addSchedule(scheduler, sonde3, timeToRun=now + timedelta(milliseconds=100 * 3), second=every)
-    # addSchedule(scheduler, sonde4, timeToRun=now + timedelta(milliseconds=100 * 4), second=every)
     print(f"(+) Tipboard starting schedul task", flush=True)
     scheduler.start()
     return True

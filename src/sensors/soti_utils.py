@@ -9,11 +9,11 @@ from src.sensors.utils import getTimeStr
 # ici on enregistre les urls du matomo sur lesquelles on va taper pour les requêtes
 base_url = "http://api-preprod.mobile.leroymerlin.fr/soti/devices/?"
 stores = dict()
-warehousedevices = []
-storedevices = []
-storemodels = []
-storepaths = []
-whousemodels = []
+warehouse_devices = []
+store_devices = []
+store_models = []
+store_paths = []
+warehouse_models = []
 wareHouses = dict()
 
 
@@ -51,10 +51,10 @@ def getStoreDevices():
                     m = q.search(data['path'])
                     if data['serial'].startswith('EF500R'):
                         data['model'] = 'EF500R'
-                    if not data['model'] in storemodels:
-                        storemodels.append(data['model'])
-                    if not m.group(1) in storepaths:
-                        storepaths.append(m.group(1))
+                    if not data['model'] in store_models:
+                        store_models.append(data['model'])
+                    if not m.group(1) in store_paths:
+                        store_paths.append(m.group(1))
                     if not m.group(2) in _stores.keys():
                         _stores[m.group(2)] = m.group(3).replace('_', ' ')
                     list_of_devices.append(
@@ -69,11 +69,10 @@ def getStoreDevices():
                             'nom': m.group(3).replace('_', ' '),
                             'path': m.group(1)
                         })
-        global stores, storedevices
+        global stores, store_devices
         stores = sortedDict(_stores)
-        storedevices = list_of_devices
-        return storedevices
-    raise
+        store_devices = list_of_devices
+        return store_devices
 
 
 def getWareHouseDevices():
@@ -89,8 +88,8 @@ def getWareHouseDevices():
                 q = re.compile('^/Leroy_Merlin_France/PROD/ENTREPOT/(.*)/([0-9]{3})_-_(.*)$')
                 if q.match(data['path']):
                     m = q.search(data['path'])
-                    if not m.group(1) in whousemodels:
-                        whousemodels.append(data['model'])
+                    if not m.group(1) in warehouse_models:
+                        warehouse_models.append(data['model'])
                     if not m.group(2) in _wareHouses.keys():
                         _wareHouses[m.group(2)] = m.group(3).replace('_', ' ')
                     list_of_devices.append(
@@ -106,28 +105,13 @@ def getWareHouseDevices():
                             'path': m.group(1)
 
                         })
-        global wareHouses,warehousedevices
+        global wareHouses, warehouse_devices
         wareHouses = sortedDict(_wareHouses)
-        warehousedevices = list_of_devices
-        return warehousedevices
-    raise
+        warehouse_devices = list_of_devices
+        return warehouse_devices
 
 
-def getAllDevicesOnLine():
-    data = dict()
-    onLine = 0
-    offline = 0
-    for device in warehousedevices:
-        if device['online'] == True:
-            onLine += 1
-        else:
-            offline += 1
-    data['online'] = onLine
-    data['offline'] = offline
-    return data
-
-
-def getAllInfoDevices(devicelist, colname='path', parses=storepaths):
+def getAllInfoDevices(devicelist, colname='path', parses=store_paths):
     data = dict()
     o = dict()
     o['online'] = []
@@ -160,12 +144,7 @@ def getAllDevicesByModel():
     return getCountFilter('model')
 
 
-def getDevicesAllWareHouse():
-    return warehousedevices.__len__()
-    raise
-
-
-def getAllInfoDevicesbySite(num, devicelist, colname='path', parses=storepaths):
+def getAllInfoDevicesbySite(num, devicelist, colname='path', parses=store_paths):
     data = dict()
     o = dict()
     o['online'] = []
@@ -199,7 +178,7 @@ def getAllInfoDevicesbySite(num, devicelist, colname='path', parses=storepaths):
 def getStoreDeviceUsedByPath(path):
     o = dict()
     result = dict()
-    data = getAllInfoDevices(storedevices, 'path', storepaths)
+    data = getAllInfoDevices(store_devices, 'path', store_paths)
     o['total'] = 0
     for item in data['result'].keys():
         o[item] = 0
@@ -215,13 +194,12 @@ def getStoreDeviceUsedByPath(path):
         result[i] = v
     result['result']['total'] = result['result']['online'] + result['result']['offline']
     return result
-    raise
 
 
 def getStoreDeviceUsedByPath(num=None, path=None):
     o = dict()
     result = dict()
-    data = getAllInfoDevicesbySite(num, storedevices, 'path', storepaths)
+    data = getAllInfoDevicesbySite(num, store_devices, 'path', store_paths)
     o['total'] = 0
     for item in data['result'].keys():
         o[item] = 0
@@ -237,12 +215,12 @@ def getStoreDeviceUsedByPath(num=None, path=None):
         result[i] = v
     result['result']['total'] = result['result']['online'] + result['result']['offline']
     return result
-    raise
+
 
 def getWareHouseDeviceUsedByModel(num=None, path=None):
     o = dict()
     result = dict()
-    data = getAllInfoDevicesbySite(num, warehousedevices, colname='model', parses=path)
+    data = getAllInfoDevicesbySite(num, warehouse_devices, colname='model', parses=path)
     o['total'] = 0
     for item in data['result'].keys():
         o[item] = 0
@@ -258,7 +236,7 @@ def getWareHouseDeviceUsedByModel(num=None, path=None):
         result[i] = v
     result['result']['total'] = result['result']['online'] + result['result']['offline']
     return result
-    raise
+
 
 def getCountDevicesByWareHouse():
     return sortedDict(getCountFilter('nom'))
@@ -266,7 +244,7 @@ def getCountDevicesByWareHouse():
 
 def getCountFilter(colname):
     data = dict()
-    for device in warehousedevices:
+    for device in warehouse_devices:
         col = device[colname]
         if col in data:
             data[col] = data[col] + 1
@@ -293,26 +271,21 @@ def listeData(listDevices):
 
 def getDevices():
     print(f'{getTimeStr()} (+) Generate list Devices of WareHouse')
-    global warehousedevices
-    warehousedevices = getWareHouseDevices()
+    global warehouse_devices
+    warehouse_devices = getWareHouseDevices()
 
 
 def getStoresDevices():
     print(f'{getTimeStr()} (+) Generate list Devices of Stores')
-    global storedevices
-    storedevices = getDevicesStore()
+    global store_devices
+    store_devices = getDevicesStore()
 
 
 def getDevicesStore():
     print(f'{getTimeStr()} (+) Generate list Devices of Store')
-    global storedevices
-    global storemodels
-    storedevices = getStoreDevices()
-
-
-def getDevicesAllStores():
-    return storedevices.__len__()
-    raise
+    global store_devices
+    global store_models
+    store_devices = getStoreDevices()
 
 
 def getListStores():
