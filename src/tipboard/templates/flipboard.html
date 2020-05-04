@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% load template_filter %}
+
+{% block page_title %}{{ page_title }}{% endblock %}
+
+{% block put_body %}
+
+<body class="flipboard">
+
+  <iframe src="" data-fliptime-interval="{{flipboard_interval}}" >
+    <p> Your browser does not support iframes. </p><br>
+    <p> Check your SysAdmin(Or Secu team), or uninstall I.E :) </p>
+  </iframe>
+
+</body>
+
+{% endblock %}
+
+

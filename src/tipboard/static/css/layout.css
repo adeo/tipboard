@@ -1,0 +1,211 @@
+/**
+    Project:    Tipboard
+    Author:     ...
+    Date:       2013/11/28
+ */
+html, body {
+    height: 100%;
+}
+
+h2  {
+    text-align: center;
+    color: #FFFFFF;
+}
+
+h3 {
+    color: #FFFFFF;
+    text-align: center;
+}
+
+h6 {
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.grid {
+	display: flex;
+	flex-direction: column;
+}
+
+.grid-group {
+	display: flex;
+	flex: 1;
+}
+
+.grid-cell {
+	flex: 1;
+    margin: 2px;
+}
+
+/**
+    COMPONENTS
+ */
+.tile {
+    background-color: #313131;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    overflow: hidden;
+}
+
+.tile > .tile-header {
+    height: 36px;
+    line-height: 36px;
+    text-transform: full-width;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-top: 2%;
+}
+
+.tile > .tile-header h3 {
+    overflow: hidden;
+    width: 99%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: calc(15px + (24 - 15) * ((100vw - 300px) / (1600 - 300)));
+}
+
+.tile > .tile-content {
+    padding: 0 10px;
+}
+
+.tile > .tile-content .result {
+    color: #dcedc8;
+}
+
+.tile > .tile-content .label {
+    text-transform: uppercase;
+    color: #dcedc8;
+}
+
+/**
+    TILES
+ */
+.tile > .chart-container {
+    position: relative;
+    height: 95%;
+}
+
+@keyframes fading-background-color {
+    100% {
+        background-color: transparent;
+    }
+}
+
+@-webkit-keyframes fading-background-color {
+    100% {
+        background-color: transparent;
+    }
+}
+
+.fading-background-color {
+    animation-name: fading-background-color;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+
+    -webkit-animation-name: fading-background-color;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+}
+
+/**
+    FLIP
+ */
+@keyframes flip {
+    0% {
+        transform: rotateX(90deg);
+    }
+    100% {
+        transform: rotateX(0deg);
+    }
+}
+
+@-webkit-keyframes flip {
+    0% {
+        -webkit-transform: rotateX(90deg);
+    }
+    100% {
+        -webkit-transform: rotateX(0deg);
+    }
+}
+
+.flippable {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.flippedforward {
+    opacity: 1;
+    display: block;
+    animation-name: flip;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    -webkit-animation-name: flip;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: 1;
+}
+
+/**
+    FLIPBOARD
+ */
+body.flipboard {
+    overflow: hidden;
+}
+
+iframe {
+    height: 100%;
+    width: 100%;
+    border: 0;
+}
+
+@keyframes fadeIn-anim {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeIn-anim {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+.fadeIn {
+    opacity: 1;
+    animation-name: fadeIn-anim;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+    -webkit-animation-name: fadeIn-anim;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: linear;
+}
+
+/**
+    MEDIA QUERIES
+ */
+@media (max-width: 600px) {
+    .grid-group {
+        display: block;
+        flex: 1;
+    }
+
+    .grid-cell {
+        height: 400px;
+        margin: 2px;
+    }
+
+}

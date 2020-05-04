@@ -1,0 +1,72 @@
+details:
+    page_title: Magasin et Entrepot MCO
+layout:
+    - row_1_of_2:
+        - col_1_of_2 flip-time-6:
+            - tile_template: big_value
+              tile_id: bv_wh_bydevices
+              title: Entrepots - Nombre de terminaux
+              classes:
+
+            - tile_template: big_value
+              tile_id: bv_wh
+              title: Terminaux
+              classes:
+
+        - col_1_of_2 flip-time-6:
+            - tile_template: big_value
+              tile_id: bv_wh_network
+              title: Répartition des terminaux
+              classes:
+
+            - tile_template: half_doughnut_chart
+              tile_id: hd_online_wh
+              title: Entrepots - Terminaux OnLine / Offline
+              classes:
+
+        - col_1_of_2 flip-time-6:
+            - tile_template: big_value
+              tile_id: bv_wh_used
+              title: Répartition des Terminaux
+              classes:
+
+            - tile_template: just_value
+              tile_id: jv_whs_scans
+              title: Entrepots - Nombre de scans Total
+              classes:
+                
+    - row_1_of_2 :
+        - col_1_of_2 flip-time-6:
+            - tile_template: big_value
+              tile_id: bv_shops_bydevices
+              title: Magasin - Nombre de Terminaux
+              classes:
+
+            - tile_template: big_value
+              tile_id: bv_shops
+              title: Terminaux Magasins
+              classes:
+
+        - col_1_of_2 flip-time-6:
+            - tile_template: big_value
+              tile_id: bv_shops_network
+              title: Terminaux Magasins
+              classes:
+
+            - tile_template: half_doughnut_chart
+              tile_id: hd_online_shop
+              title: Magasins - Terminaux OnLine / Offline
+              classes:
+                  -
+        - col_1_of_2 flip-time-6:
+            - tile_template: big_value
+              tile_id: bv_shops_used
+              title: Terminaux Magasins
+              classes:
+
+            - tile_template: half_doughnut_chart
+              tile_id: hd_devise_used
+              title: Magasins - Nombre de Terminaux Utilisés
+              classes:
+
+
